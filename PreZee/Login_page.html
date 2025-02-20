@@ -12,6 +12,8 @@
      <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> <!--for icon-->
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <style>
 
@@ -19,8 +21,11 @@
     background-color: #1B4D3E !important; /* Bootstrap primary blue */
     padding-left: 30px;
     padding-right: 25px ;
-
+    height: 60px; /* Adjust as needed */
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
+
 
 .navbar .nav-link,
 .navbar .navbar-brand,
@@ -249,33 +254,38 @@
 <body >
 
 <!-- Navbar -->
-<div class="navbar navbar-expand-md bg-body-tertiary fixed-top ">
+<div class="navbar navbar-expand-md bg-body-tertiary fixed-top">
     <div class="container-fluid">
-            <a href="#" class="navbar-brand text-decoration-none ms-2"><img src="images/prezee2.png" style="width: 50px;"></a>
+        <a href="Login_page.html" class="navbar-brand text-decoration-none ms-2">
+            <img src="images/prezee2.png" style="width: 50px;">
+        </a>
 
-            <button class="navbar-toggler" data-bs-target="#links" data-bs-toggle="collapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-                <div id="links" class="collapse navbar-collapse justify-content-end ">
-                    <ul class="navbar-nav">
-                        <li class="nav-item mt-1"><a href="#services" class="nav-link pt-3 me-2">Services</a></li>
-                        <li class="nav-item mt-1"><a href="#plans" class="nav-link pt-3 me-2">View Plans</a></li>
-                        <li class="nav-item mt-1"><a href="#terms" class="nav-link pt-3 me-2">Terms</a></li>
-                        <li class="nav-item mt-1"><a href="#contact" class="nav-link pt-3 me-2">Contact Us</a></li>
+        <button class="navbar-toggler" data-bs-target="#links" data-bs-toggle="collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                        <button type="button" class="btn" data-toggle="tooltip" data-placement="bottom" title="Login">
-                            <li class="nav-item "><a href="profilevalidation.html" class="nav-link me-2">
-                                <i class="bi bi-person-fill text-white fs-5 pt-5 ps-1"></i></a>
-                            </li>
+        <div id="links" class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav align-items-center">
+                <li class="nav-item"><a href="#services" class="nav-link me-2">Services</a></li>
+                <li class="nav-item"><a href="#plans" class="nav-link me-2">View Plans</a></li>
+                <li class="nav-item"><a href="#terms" class="nav-link me-2">Terms</a></li>
+                <li class="nav-item"><a href="#contact" class="nav-link me-2">Contact Us</a></li>
+                <li class="nav-item">
+                    <a href="profilevalidation.html" class="nav-link me-2">
+                        <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login">
+                            <i class="bi bi-person-circle text-white fs-5"></i>
                         </button>
-                    </ul>
-                </div>
+                    </a>                    
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 
 
+
     <!-- 3D Carousel -->
-    <div class="container-fluid d-flex justify-content-center align-items-center mt-5 pt-5 mb-4">
+    <div class="container-fluid d-flex justify-content-center align-items-center mt-4 pt-5 mb-4">
 
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
@@ -361,7 +371,7 @@
             </div>
         </div>
         <div class="text-center mt-4">
-            <a href="user.html"  class="btn mt-3 w-35" style="background-color: #1B4D3E; color:white;">Explore Plans</a>
+            <a href="QuickPayPage.html"  class="btn mt-3 w-35 pt-3 pb-3 ps-5 pe-5 fs-5 rounded-3 " style="background-color: #1B4D3E; color:white;">Quick Pay</a>
         </div>
     </div>
     
@@ -564,6 +574,12 @@
     <!-- Swiper Initialization -->
     <script>
 
+    document.addEventListener("DOMContentLoaded", function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl, { placement: 'bottom' });
+        });
+    });
 
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow",
