@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile-prepay</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+     <!-- Swiper JS for carosule -->
+     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> <!--for icon-->
+
+
+    <style>
+
+.navbar {
+    background-color: #1B4D3E !important; /* Bootstrap primary blue */
+    padding-left: 30px;
+    padding-right: 25px ;
+
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand,
+.navbar .nav-link.dropdown-toggle {
+    color: white !important; /* Ensures text is white */
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+    color: #f8f9fa !important; /* Lighter shade on hover */
+}
+
+        /* Full-Width Carousel */
+        .swiper {
+            width: 95%;
+            height: 450px;
+            margin-top: 10px;
+            perspective: 1200px;
+        }
+
+        .swiper-slide {
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Change Swiper Navigation Buttons to White */
+.swiper-button-prev,
+.swiper-button-next {
+    color: white !important;  /* Makes buttons white */
+    background: rgba(255, 255, 255, 0.3); /* Adds a semi-transparent white background */
+    border-radius: 50%; /* Makes buttons circular */
+    width: 50px;
+    height: 50px;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    font-size: 24px;  /* Increases arrow size */
+    font-weight: bold;
+    color: white !important; /* Ensures arrows stay white */
+}
+
+/* Hover Effect */
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    background: rgba(255, 255, 255, 0.6); /* Increases opacity on hover */
+}
+
+
+
+        /* Toggle Switch */
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .toggle-switch {
+            width: 40%; /* Set width to 40% of the screen */
+            height: 50px;
+            background: #ddd;
+            border-radius: 25px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .toggle-switch::before {
+            content: "Subscriber";
+            width: 50%;
+            height: 45px;
+            background: white;
+            border-radius: 25px;
+            position: absolute;
+            top: 2px;
+            left: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            transition: 0.3s;
+        }
+
+        .toggle-checkbox {
+            display: none;
+        }
+
+        .toggle-checkbox:checked + .toggle-switch {
+            background:#1B4D3E;
+        }
+
+        .toggle-checkbox:checked + .toggle-switch::before {
+            transform: translateX(100%);
+            content: "Admin";
+            color: white;
+            background: #1B4D3E;
+        }
+
+
+
+        .breadcrumbs {
+    font-size: 16px;
+    padding: 10px;
+    background-color: #f8f9fa; /* Light background */
+    border-radius: 5px;
+    width: fit-content;
+    margin-top: 60px; /* Adjust margin for visibility */
+}
+
+.text-faded {
+    color: rgba(0, 0, 0, 0.5); /* Adjust opacity */
+}
+
+
+.breadcrumbs a {
+    text-decoration: none;
+    color: #1B4D3E; /* Green color matching navbar */
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+    color: #145A32; /* Darker shade on hover */
+}
+
+.breadcrumbs span {
+    font-weight: bold;
+    color: #555;
+}
+
+
+        
+        #phone_number{
+
+            border-radius: 10px;
+        }
+      
+        #buttonplan{
+            margin-left: 54px;
+        }
+ 
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #333;
+        }
+        .reasons {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .reason {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 30%;
+            margin-bottom: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .reason:hover {
+            transform: scale(1.05);
+        }
+        .reason h2 {
+            font-size: 24px;
+            color: #2c3e50;
+        }
+        .reason p {
+            font-size: 16px;
+            color: #7f8c8d;
+        }
+        .icon {
+            font-size: 40px;
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+
+        /* plan */
+
+        .plan-card {
+    width: 100%;
+    max-width: 22rem;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.plan-card:hover {
+    transform: translateY(-8px); /* Moves the card slightly up */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
+}
+
+
+    /* service */
+    .service-card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        border-radius: 15px;
+    }
+
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .service-card i {
+        padding: 15px;
+        border-radius: 50%;
+        background-color: rgba(0, 128, 0, 0.1);
+    }
+
+  
+    </style>
+</head>
+
+<body >
+
+<!-- Navbar -->
+<div class="navbar navbar-expand-md bg-body-tertiary fixed-top ">
+    <div class="container-fluid">
+            <a href="#" class="navbar-brand text-decoration-none ms-2"><img src="images/prezee2.png" style="width: 50px;"></a>
+
+            <button class="navbar-toggler" data-bs-target="#links" data-bs-toggle="collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+                <div id="links" class="collapse navbar-collapse justify-content-end ">
+                    <ul class="navbar-nav">
+                        <li class="nav-item mt-1"><a href="#services" class="nav-link pt-3 me-2">Services</a></li>
+                        <li class="nav-item mt-1"><a href="#plans" class="nav-link pt-3 me-2">View Plans</a></li>
+                        <li class="nav-item mt-1"><a href="#terms" class="nav-link pt-3 me-2">Terms</a></li>
+                        <li class="nav-item mt-1"><a href="#contact" class="nav-link pt-3 me-2">Contact Us</a></li>
+
+                        <button type="button" class="btn" data-toggle="tooltip" data-placement="bottom" title="Login">
+                            <li class="nav-item "><a href="profilevalidation.html" class="nav-link me-2">
+                                <i class="bi bi-person-fill text-white fs-5 pt-5 ps-1"></i></a>
+                            </li>
+                        </button>
+                    </ul>
+                </div>
+    </div>
+</div>
+
+
+    <!-- 3D Carousel -->
+    <div class="container-fluid d-flex justify-content-center align-items-center mt-5 pt-5 mb-4">
+
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" style="background-image: url('images/Screenshot\ \(753\).png');"></div>
+                <div class="swiper-slide" style="background-image: url('images/happy.jpg');"></div>
+                <div class="swiper-slide" style="background-image: url('images/photo-19.avif');"></div>
+                <div class="swiper-slide" style="background-image: url('images/pexels-photo-3791664.webp');"></div>
+            </div>
+            
+            <!-- Pagination & Navigation -->
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+
+    <!-- Toggle Switch Section (Auto-Navigation on Change) -->
+    <div class="toggle-container" id="login">
+        <input type="checkbox" id="toggle-role" class="toggle-checkbox">
+        <label for="toggle-role" class="toggle-switch"></label>
+    </div>
+
+<!--For user Login form -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4 shadow rounded-4"> <!-- Added rounded-4 here -->
+                <h3 class="text-center mb-3" style="color:#1B4D3E;"><b>Subscriber Login</b></h3>
+                <form>
+                    <div class="mb-3">
+                        <label for="phone_number" required class="form-label">Phone Number <span style="color: red;">*</span></label>
+                        <input type="tel" class="form-control" id="phone_number" placeholder="Enter your Phone Number" required>
+                        <div id="error" style="color: red;"></div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn rounded-4 w-25" id="userlogin" style="background-color: #1B4D3E; color:white"><b>Verify</b></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!--For plans-->
+    <div class="container" id="plans">
+        <h2 class="text-center mb-4" style="color: #1B4D3E;"><b>Choose Your Plan</b></h2>
+        <div class="row g-4 justify-content-center">
+            <!-- Plan 1 -->
+            <div class="col-md-4">
+                <div class="card text-center shadow plan-card">
+                    <div class="card-body">
+                        <h5 class="card-title display-6 mb-3"><b>₹ 925</b></h5>
+                        <h6 class="text-muted">84 Days | 2GB/DAY</h6>
+                        <h6 class="text-muted">Validity | Data</h6>
+                        <a href="#login" class="btn mt-3" style="background-color: #1B4D3E; color:white;">Recharge</a>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Plan 2 -->
+            <div class="col-md-4">
+                <div class="card text-center shadow plan-card">
+                    <div class="card-body">
+                        <h5 class="card-title display-6 mb-3"><b>₹ 3999</b></h5>
+                        <h6 class="text-muted">1 Year | 2GB/DAY</h6>
+                        <h6 class="text-muted">Validity | Data</h6>
+                        <a href="#login" class="btn mt-3" style="background-color: #1B4D3E; color:white;">Recharge</a>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Plan 3 -->
+            <div class="col-md-4">
+                <div class="card text-center shadow plan-card">
+                    <div class="card-body">
+                        <h5 class="card-title display-6 mb-3"><b>₹ 769</b></h5>
+                        <h6 class="text-muted">64 Days | 1.5GB/DAY</h6>
+                        <h6 class="text-muted">Validity | Data</h6>
+                        <a href="#login" class="btn mt-3" style="background-color: #1B4D3E; color:white;">Recharge</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="user.html"  class="btn mt-3 w-35" style="background-color: #1B4D3E; color:white;">Explore Plans</a>
+        </div>
+    </div>
+    
+
+<!--for services-->
+
+<!-- Services Section -->
+<section id="services" class="container py-5">
+    <h2 class="text-center mb-4" style="color: #1B4D3E;"><b>Our Services</b></h2>
+    <div class="row g-4">
+        <!-- Mobile Recharge -->
+        <div class="col-md-4">
+            <div class="card text-center shadow service-card">
+                <div class="card-body">
+                    <i class="bi bi-phone-fill fs-1 text-success"></i>
+                    <h4 class="mt-3">Instant Mobile Recharge</h4>
+                    <p>Recharge your mobile anytime, anywhere with our fast and secure prepay service.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- WiFi Recharge -->
+        <div class="col-md-4">
+            <div class="card text-center shadow service-card">
+                <div class="card-body">
+                    <i class="bi bi-wifi fs-1 text-primary"></i>
+                    <h4 class="mt-3">WiFi Subscription</h4>
+                    <p>Prepay for your WiFi plans seamlessly and enjoy uninterrupted connectivity.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subscription Management -->
+        <div class="col-md-4">
+            <div class="card text-center shadow service-card">
+                <div class="card-body">
+                    <i class="bi bi-credit-card-fill fs-1 text-warning"></i>
+                    <h4 class="mt-3">Smart Auto-Prepay</h4>
+                    <p>Enable auto-prepay for stress-free, uninterrupted service renewals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!--for accordion-->
+<div class="container">
+    <h1>FAQ's</h1>
+    <div class="accordion" id="faqAccordion">
+       
+        <!-- Question 2 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Can I track my spending on the app?
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Yes, you can easily track your spending by navigating to the "Transaction History" section within the app. Here, you will find a detailed breakdown of all your transactions and expenses.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    What should I do if I experience a technical issue with the app?
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    If you're experiencing technical issues, please contact our support team through the "Help" section of the app. You can also reach out via email at support@example.com, and we'll assist you in resolving the issue.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    How do I update my account details?
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    To update your account details, go to the "Account Settings" section in the app. From there, you can edit your personal information, payment methods, and notification preferences.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    Are there any fees for using the prepay service?
+                </button>
+            </h2>
+            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    There are no hidden fees for using the prepay service. However, certain payment methods may incur processing fees. These will be clearly displayed before you confirm your transaction.
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingSix">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                    How can I request a refund?
+                </button>
+            </h2>
+            <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    If you need to request a refund, please visit the "Refund Request" section in the app. Fill out the form with the necessary details, and our team will process your request within 3-5 business days.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  <!--Why do you choose us?-->
+    <div class="container">
+        <h1>Why PreZee?</h1>
+        <div class="reasons">
+            <div class="reason">
+                <div class="icon">&#128179;</div>
+                <h2>Secure and Reliable</h2>
+                <p>Our platform ensures your transactions are secure, providing you peace of mind while making payments on the go.</p>
+            </div>
+            <div class="reason">
+                <div class="icon">&#128225;</div>
+                <h2>Easy and Fast</h2>
+                <p>With our intuitive interface, making payments has never been easier and faster. Just a few taps and you're done.</p>
+            </div>
+            <div class="reason">
+                <div class="icon">&#128241;</div>
+                <h2>24/7 Support</h2>
+                <p>Our dedicated customer support team is available around the clock to assist you with any queries or issues.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--Terms and condition-->
+<div id="terms">
+    <h1>Terms and Conditions</h1>
+    <div class="container mt-2" id="terms">
+        <div class="row">
+            <!-- Card 1: Introduction -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Introduction</h5>
+                        <p class="card-text">This document outlines the terms and conditions with which you may use our services, including our website, mobile app, and other products.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Card 2: Definitions -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Definitions</h5>
+                        <p class="card-text">Throughout this document, 'we,' 'us,' and 'our' refer to the company, and 'you' refers to any user of our services.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Card 3: Eligibility -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Eligibility</h5>
+                        <p class="card-text"> You must have a valid Mobi-Comm SIM to purchase and use our services. Our platform is exclusively available for Mobi-Comm users, and services will not be accessible with other network providers.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Card 4: Privacy Policy -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Privacy Policy</h5>
+                        <p class="card-text">We prioritize your privacy and ensure that your personal information is securely handled. Our services are designed exclusively for Mobi-Comm users, and data is protected in accordance with industry standards.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+   
+    <!-- Swiper Initialization -->
+    <script>
+
+
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            coverflowEffect: {
+                rotate: 0,  
+                stretch: 0,
+                depth: 400,
+                modifier: 1,
+                slideShadows: false,
+            },
+            loop: true,
+            autoplay: {
+                delay: 2500,  
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            }
+        });
+
+        // Toggle Switch Logic with Auto-Navigation
+        document.getElementById("toggle-role").addEventListener("change", function() {
+            if (this.checked) {
+                window.location.href = "admin.html";  // Redirect to Admin page
+            } 
+            else {
+                window.location.href = "Login_page.html";   // Redirect to Login_page
+            }
+        });
+
+
+        // Subscriber login checking using  phonenumber(empty or not)
+        //userlogin is my Login button ID
+    document.getElementById("userlogin").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent form submission
+    let phoneNumber = document.getElementById("phone_number").value.trim();
+    let mess = document.querySelector("#error");
+
+    // Regular expression to check if the phone number contains exactly 10 digits
+    let phonePattern = /^[0-9]{10}$/;
+
+    if (phoneNumber === "") {
+        mess.textContent = "Phone number cannot be empty.";
+    } 
+    else if (!phonePattern.test(phoneNumber)) {
+        mess.textContent = "Phone number is invalid. Enter a 10-digit number.";
+    } 
+    else {            
+        window.location.href = "user.html"; // Redirect to user page
+        document.getElementById("plans-section").style.display = "block"; // Show plans section
+            displayRandomPlans(); 
+    } 
+});
+
+</script>
+
+
+<!-- Footer -->
+<footer class="footer mt-5 bg-dark text-white py-4" id="contact">
+    <div class="container text-center text-md-start">
+        <div class="row">
+            <!-- About Us -->
+            <div class="col-md-4 mb-3">
+                <h5>About Mobile Prepay</h5>
+                <p>Mobile Prepay offers seamless prepaid mobile services with affordable plans, high-speed data, and excellent connectivity. Stay connected anytime, anywhere.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#plans" class="text-white text-decoration-none">Browse Plans</a></li>
+                    <li><a href="#terms" class="text-white text-decoration-none">Terms & Conditions</a></li>
+                    <li><a href="#contact" class="text-white text-decoration-none">Contact Support</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <p>Email: support@mobileprepay.com</p>
+                <p>Phone: +1 800 123 4567</p>
+                <p>Address: 123, Digital Tower, Tech City</p>
+                <table>
+                    <h5>Follow us on </h5>
+                    <tr>
+                        <td><i class="bi bi-instagram m-2"></i></td>
+                        <td><i class="bi bi-twitter-x  m-2"></i></td>
+                        <td><i class="bi bi-facebook  m-2"></i></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <hr class="bg-light">
+
+        <!-- Copyright Notice -->
+        <div class="text-center mt-3">
+            <p class="mb-0">
+                “PreZee” trademark is owned by Mobi-Comm Limited and licensed to its affiliates and subsidiaries. 
+                All rights to this website, including copyright in content represented thereat, vest in TechM Limited 
+                and/or its respective affiliates and subsidiaries. All rights reserved.
+            </p>
+        </div>
+    </div>
+</footer>
+
+
+
+</body>
+</html>

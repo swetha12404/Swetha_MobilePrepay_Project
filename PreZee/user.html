@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+     <!-- Swiper JS for carosule -->
+     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> <!--for icon-->
+    
+<style>
+.navbar {
+    background-color: #1B4D3E !important; /* Bootstrap primary blue */
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand,
+.navbar .nav-link.dropdown-toggle {
+    color: white !important; /* Ensures text is white */
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+    color: #f8f9fa !important; /* Lighter shade on hover */
+}
+
+
+.breadcrumbs {
+    font-size: 16px;
+    padding: 10px;
+    background-color: #f8f9fa; /* Light background */
+    border-radius: 5px;
+    width: fit-content;
+    margin-top: 60px; /* Adjust margin for visibility */
+}
+
+.breadcrumbs a {
+    text-decoration: none;
+    color: #1B4D3E; /* Green color matching navbar */
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.breadcrumbs a:hover {
+    background-color: white;
+    color: #145A32; /* Darker shade on hover */
+}
+
+.breadcrumbs span {
+    font-weight: bold;
+    color: #555;
+}
+
+        /* Make Categories Sidebar Full Height */
+        .categories-sidebar {
+            height: 100vh;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            padding: 15px;
+        }
+
+        .category:hover {
+            cursor: pointer;
+            background-color:#1B4D3E;
+            color: white;
+        }
+
+        #selected-category {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+<div class="navbar navbar-expand-md bg-body-tertiary fixed-top">
+    <div class="container-fluid">
+            <a href="Login_page.html" class="navbar-brand text-decoration-none  ms-2"><img src="images/prezee2.png" style="width: 50px;"></a>
+
+            <button class="navbar-toggler" data-bs-target="#links" data-bs-toggle="collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div id="links" class="collapse navbar-collapse justify-content-end">
+                <div id="links" class="collapse navbar-collapse justify-content-end ">
+                    <ul class="navbar-nav">
+                        <li class="nav-item mt-1"><a href="#services" class="nav-link me-2">Services</a></li>
+                        <li class="nav-item mt-1"><a href="#" class="nav-link me-2">View Plans</a></li>
+                        <li class="nav-item mt-1"><a href="#terms" class="nav-link me-2">Terms</a></li>
+                        <li class="nav-item mt-1"><a href="#contact" class="nav-link me-2">Contact Us</a></li>
+                        <li class="nav-item mt-1"><a href="profilevalidation.html" class="nav-link me-2">
+                            <i class="bi bi-person-fill text-white fs-5 ps-2"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+<nav class="breadcrumbs"> 
+    <a href=""></a> &lt;
+    <a href="Login_page.html">Home</a> &lt; 
+    <a href="user.html">Plan</a> 
+</nav>
+
+
+    <!-- Main Content -->
+    <div class="container-fluid mt-1 pt-4" id="plans1">
+        <div class="row">
+            <!-- Sidebar Categories -->
+            <div class="col-md-3 categories-sidebar">
+                <h5 class="text-center mb-3 ">Categories</h5>
+                <ul class="list-group" id="categories">
+                    <li class="list-group-item category p-4" data-category="Popular Plans">Popular Plans</li>
+                    <li class="list-group-item category p-4" data-category="Validity Plans">Validity Plans</li>
+                    <li class="list-group-item category p-4" data-category="Unlimited Plans">Unlimited Plans</li>
+                    <li class="list-group-item category p-4" data-category="Data Plans">Data Plans</li>
+                    <li class="list-group-item category p-4" data-category="Annual Plans">Annual Plans</li>
+                </ul>
+            </div>
+            
+            <!-- Plans Display -->
+            <div class="col-md-9">
+                <h2 id="selected-category"></h2> <!-- Plan category title -->
+                <div id="plan-container" class="row">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+    const plans = {
+        "Popular Plans": [
+            { name: "₹249 Plan", details: "1GB/day | 28 days | Unlimited Calls | 100 SMS/day" },
+            { name: "₹399 Plan", details: "1.5GB/day | 56 days | Unlimited Calls | 200 SMS/day" },
+            { name: "₹599 Plan", details: "2GB/day | 84 days | Unlimited Calls | 300 SMS/day" },
+            { name: "₹799 Plan", details: "2.5GB/day | 70 days | Unlimited Calls | 400 SMS/day" },
+            { name: "₹999 Plan", details: "3GB/day | 90 days | Unlimited Calls | 500 SMS/day" },
+            { name: "₹1199 Plan", details: "3.5GB/day | 100 days | Unlimited Calls | 600 SMS/day" }
+        ],
+        "Validity Plans": [
+            { name: "₹149 Plan", details: "2GB Total Data | 28 days | 300 SMS" },
+            { name: "₹299 Plan", details: "4GB Total Data | 56 days | Unlimited Calls" },
+            { name: "₹499 Plan", details: "6GB Total Data | 84 days | 1000 SMS" },
+            { name: "₹699 Plan", details: "10GB Total Data | 120 days | Unlimited Calls" },
+            { name: "₹899 Plan", details: "15GB Total Data | 150 days | 500 SMS" },
+            { name: "₹1099 Plan", details: "20GB Total Data | 180 days | Unlimited Calls" },
+            { name: "₹1299 Plan", details: "25GB Total Data | 200 days | Unlimited Calls" },
+            { name: "₹1499 Plan", details: "30GB Total Data | 250 days | 1000 SMS" },
+            { name: "₹1699 Plan", details: "35GB Total Data | 300 days | Unlimited Calls" }
+        ],
+        "Unlimited Plans": [
+            { name: "₹99 Plan", details: "Unlimited Calls | 1GB Data | 7 days" },
+            { name: "₹199 Plan", details: "Unlimited Calls | 2GB Data | 14 days" },
+            { name: "₹349 Plan", details: "Unlimited Calls | 5GB Data | 30 days" },
+            { name: "₹499 Plan", details: "Unlimited Calls | 10GB Data | 45 days" },
+            { name: "₹699 Plan", details: "Unlimited Calls | 20GB Data | 60 days" },
+            { name: "₹999 Plan", details: "Unlimited Calls | 50GB Data | 90 days" }
+        ],
+        "Data Plans": [
+            { name: "₹48 Plan", details: "3GB Data | 3 days" },
+            { name: "₹98 Plan", details: "6GB Data | 10 days" },
+            { name: "₹198 Plan", details: "12GB Data | 20 days" },
+            { name: "₹298 Plan", details: "30GB Data | 30 days" },
+            { name: "₹499 Plan", details: "50GB Data | 60 days" },
+            { name: "₹799 Plan", details: "100GB Data | 90 days" }
+        ],
+        "Annual Plans": [
+            { name: "₹1999 Plan", details: "2GB/day | 365 days | Unlimited Calls | 1000 SMS" },
+            { name: "₹2499 Plan", details: "3GB/day | 365 days | Unlimited Calls | 1500 SMS" },
+            { name: "₹2999 Plan", details: "4GB/day | 365 days | Unlimited Calls | 2000 SMS" }
+        ]
+    };
+
+
+            // Function to display plans of a selected category
+    function displayPlans(category) {
+    const planContainer = document.getElementById("plan-container"); //plan container
+    const categoryTitle = document.getElementById("selected-category"); //plan category
+
+    categoryTitle.textContent = category; // Show category name
+    planContainer.innerHTML = "";
+
+    if (plans[category]) {
+        plans[category].forEach(plan => {
+            const planCard = `
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">${plan.name}</h5>
+                            <p class="card-text">${plan.details}</p>
+                            <div style="margin-left:130px ">
+                                 <button class="btn rounded-2 buy-btn" style="background-color:#1B4D3E; color:white; margin-left:120px
+                                    data-name="${plan.name}" 
+                                    data-details="${plan.details}" 
+                                    style="margin-left:120px; width:90px">
+                                    <div style="width:60px">
+                                          Buy
+                                    </div>
+                                       
+                                 </button>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            `;
+            planContainer.innerHTML += planCard;
+        });
+
+        // Attach event listener to "Buy" buttons AFTER adding them to the DOM
+        document.querySelectorAll(".buy-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const selectedPlan = {
+                    name: this.getAttribute("data-name"),
+                    details: this.getAttribute("data-details")
+                };
+                localStorage.setItem("selectedPlan", JSON.stringify(selectedPlan));
+                window.location.href = "payment.html"; // Redirect to payment page
+
+                
+            });
+        });
+    }
+}
+
+
+            // Function to get a random category and display its plans on page load
+            function displayRandomPlans() {
+                const categories = Object.keys(plans);
+                const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+                displayPlans(randomCategory);
+            }
+
+            // Click event for categories
+            document.querySelectorAll(".category").forEach(category => {
+                category.addEventListener("click", function () {
+                    const selectedCategory = this.getAttribute("data-category");
+                    displayPlans(selectedCategory);
+                });
+            });
+
+            // Show random category plans on first load
+            displayRandomPlans();
+        });
+
+
+    </script>
+
+    
+<!--for services-->
+
+<!-- Services Section -->
+<section id="services" class="container py-5">
+    <h2 class="text-center mb-4" style="color: #1B4D3E;"><b>Our Services</b></h2>
+    <div class="row g-4">
+        <!-- Mobile Recharge -->
+        <div class="col-md-4">
+            <div class="card text-center shadow service-card">
+                <div class="card-body">
+                    <i class="bi bi-phone-fill fs-1 text-success"></i>
+                    <h4 class="mt-3">Instant Mobile Recharge</h4>
+                    <p>Recharge your mobile anytime, anywhere with our fast and secure prepay service.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- WiFi Recharge -->
+        <div class="col-md-4">
+            <div class="card text-center shadow service-card">
+                <div class="card-body">
+                    <i class="bi bi-wifi fs-1 text-primary"></i>
+                    <h4 class="mt-3">WiFi Subscription</h4>
+                    <p>Prepay for your WiFi plans seamlessly and enjoy uninterrupted connectivity.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subscription Management -->
+        <div class="col-md-4">
+            <div class="card text-center shadow service-card">
+                <div class="card-body">
+                    <i class="bi bi-credit-card-fill fs-1 text-warning"></i>
+                    <h4 class="mt-3">Smart Auto-Prepay</h4>
+                    <p>Enable auto-prepay for stress-free, uninterrupted service renewals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="terms">
+    <h1 class="text-center">Terms and Conditions</h1>
+    <div class="container mt-2" id="terms">
+        <div class="row">
+            <!-- Card 1: Introduction -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Introduction</h5>
+                        <p class="card-text">This document outlines the terms and conditions with which you may use our services, including our website, mobile app, and other products.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Card 2: Definitions -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Definitions</h5>
+                        <p class="card-text">Throughout this document, 'we,' 'us,' and 'our' refer to the company, and 'you' refers to any user of our services.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Card 3: Eligibility -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Eligibility</h5>
+                        <p class="card-text"> You must have a valid Mobi-Comm SIM to purchase and use our services. Our platform is exclusively available for Mobi-Comm users, and services will not be accessible with other network providers.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Card 4: Privacy Policy -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Privacy Policy</h5>
+                        <p class="card-text">We prioritize your privacy and ensure that your personal information is securely handled. Our services are designed exclusively for Mobi-Comm users, and data is protected in accordance with industry standards.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+<!-- Footer -->
+<footer class="footer mt-5 bg-dark text-white py-4" id="contact">
+    <div class="container text-center text-md-start">
+        <div class="row">
+            <!-- About Us -->
+            <div class="col-md-4 mb-3">
+                <h5>About Mobile Prepay</h5>
+                <p>Mobile Prepay offers seamless prepaid mobile services with affordable plans, high-speed data, and excellent connectivity. Stay connected anytime, anywhere.</p>
+            </div>
+
+
+             <!-- Quick Links -->
+             <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#plans" class="text-white text-decoration-none">Browse Plans</a></li>
+                    <li><a href="#terms" class="text-white text-decoration-none">Terms & Conditions</a></li>
+                    <li><a href="#contact" class="text-white text-decoration-none">Contact Support</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Information -->
+             <!-- Contact Information -->
+             <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <p>Email: support@mobileprepay.com</p>
+                <p>Phone: +1 800 123 4567</p>
+                <p>Address: 123, Digital Tower, Tech City</p>
+                <table>
+                    <h5>Follow us on </h5>
+                    <tr>
+                        <td><i class="bi bi-instagram m-2"></i></td>
+                        <td><i class="bi bi-twitter-x  m-2"></i></td>
+                        <td><i class="bi bi-facebook  m-2"></i></td>
+                    </tr>
+                </table>
+            </div>
+        
+
+        <hr class="bg-light">
+
+        <!-- Copyright Notice -->
+        <div class="text-center mt-3">
+            <p class="mb-0">
+                “PreZee” trademark is owned by TechM Limited and licensed to its affiliates and subsidiaries. 
+                All rights to this website, including copyright in content represented thereat, vest in TechM Limited 
+                and/or its respective affiliates and subsidiaries. All rights reserved.
+            </p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
