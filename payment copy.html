@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            background-color: #1B4D3E;
+        }
+
+        .breadcrumbs {
+            font-size: 16px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            width: fit-content;
+            margin-top: 40px;
+            margin-left: 30px;
+        }
+
+        .breadcrumbs a {
+            text-decoration: none;
+            color: #1B4D3E;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .breadcrumbs a:hover {
+            background-color: white;
+            color: #145A32;
+        }
+
+        .breadcrumbs span {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .body {
+            background-color: #f4f7fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+        }
+
+        .payment-container {
+            width: 400px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            max-height: 600px;
+        }
+
+        .header {
+            background-color: #236954;
+            color: white;
+            padding: 10px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .upi-options label, .card-options label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .upi-options label:hover, .card-options label:hover {
+            background-color: #f0f0f0;
+        }
+
+        .pay-button {
+            width: 100%;
+            background-color: #288468;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .pay-button:hover {
+            background-color: #1B4D3E;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="breadcrumbs">
+        <a href="Login_page.html">Home</a> &lt; 
+        <a href="user.html">Plan</a> &lt; 
+        <a href="#">Payment</a>
+    </nav>
+
+    <div class="body">
+        <div class="payment-container">
+            <div class="header">
+                Payment
+                <p id="pay-amount">Amount payable: ₹</p>
+            </div>
+
+            <!-- UPI Section -->
+            <p class="m-3 h4"><b>UPI</b></p>
+            <div class="upi-options">
+                <label><input type="radio" name="payment" value="PayTM" onclick="toggleUPIInput()"> PayTM</label>
+                <label><input type="radio" name="payment" value="Google Pay" onclick="toggleUPIInput()"> Google Pay</label>
+                <label><input type="radio" name="payment" value="PhonePe" onclick="toggleUPIInput()"> PhonePe</label>
+            </div>
+            <input type="text" id="upi-id" class="form-control mt-2" placeholder="Enter UPI ID" style="display: none;">
+
+            <!-- Card Payment Section -->
+            <p class="m-3 h4"><b>Credit/Debit Card</b></p>
+            <div class="card-options">
+                <label><input type="radio" name="payment" value="Visa" onclick="toggleCardInput()"> Visa</label>
+                <label><input type="radio" name="payment" value="MasterCard" onclick="toggleCardInput()"> MasterCard</label>
+                <label><input type="radio" name="payment" value="RuPay" onclick="toggleCardInput()"> RuPay</label>
+            </div>
+            
+            <div id="card-details" style="display: none;">
+                <input type="text" id="card-number" class="form-control mt-2" placeholder="Card Number (16-digit)">
+                <input type="text" id="card-name" class="form-control mt-2" placeholder="Cardholder Name">
+                <input type="text" id="expiry-date" class="form-control mt-2" placeholder="Expiry Date (MM/YY)">
+                <input type="text" id="cvv" class="form-control mt-2" placeholder="CVV (3-digit)">
+            </div>
+
+            <button class="pay-button mt-3" onclick="showPaymentModal()">Proceed to Pay</button>
+        </div>
+    </div>
+
+    <!-- Payment Confirmation Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modal-message"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+                    <button type="button" class="btn btn-success" onclick="confirmPayment()">Confirm Payment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const plan = JSON.parse(localStorage.getItem("selectedPlan"));
+            if (plan) {
+                document.getElementById("pay-amount").textContent = `Amount payable: ₹${plan.amount}`;
+            }
+        });
+
+        function toggleUPIInput() {
+            document.getElementById("upi-id").style.display = "block";
+            document.getElementById("card-details").style.display = "none";
+        }
+
+        function toggleCardInput() {
+            document.getElementById("card-details").style.display = "block";
+            document.getElementById("upi-id").style.display = "none";
+        }
+
+        function showPaymentModal() {
+            const selectedPayment = document.querySelector("input[name='payment']:checked");
+            const upiID = document.getElementById("upi-id").value.trim();
+            const cardNumber = document.getElementById("card-number").value.trim();
+            const cardName = document.getElementById("card-name").value.trim();
+            const expiryDate = document.getElementById("expiry-date").value.trim();
+            const cvv = document.getElementById("cvv").value.trim();
+            const modalMessage = document.getElementById("modal-message");
+
+            if (!selectedPayment) return showToast("Please select a payment mode");
+
+            if (["PayTM", "Google Pay", "PhonePe"].includes(selectedPayment.value) && !upiID) 
+                return showToast("Please enter your UPI ID");
+
+            if (["Visa", "MasterCard", "RuPay"].includes(selectedPayment.value) && 
+                (!cardNumber || !cardName || !expiryDate || !cvv)) 
+                return showToast("Please enter all card details");
+
+            modalMessage.textContent = `You have selected ${selectedPayment.value}. Do you want to proceed?`;
+            new bootstrap.Modal(document.getElementById("paymentModal")).show();
+        }
+
+        function showToast(message) {
+            alert(message);
+        }
+
+        function confirmPayment() {
+            localStorage.removeItem("selectedPlan");
+            window.location.href = "conformation.html";
+        }
+    </script>
+</body>
+</html>
