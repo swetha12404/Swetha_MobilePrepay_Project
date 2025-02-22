@@ -116,18 +116,18 @@
 
     
     <!-- Phone Number Form -->
-    <form style="display: flex; flex-direction: column;margin-top: 90px; border: 2px solid black; padding: 20px; border-radius: 10px; width: 440px; height: 350px; margin-left: auto; margin-right: auto;">
+    <form style="display: flex; flex-direction: column;margin-top: 90px; border: 2px solid rgb(159, 157, 157); padding: 20px; border-radius: 10px; width: 440px; height: 350px; margin-left: auto; margin-right: auto;">
         <div>
-            <label for="phoneNumber" class="form-label mt-5">Phone Number <span style="color: red;">*</span></label>
-            <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter your Phone Number" required style="width: 300px; padding: 5px;margin-left: 5px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px;">
-            <div id="phoneError" style="color: red; font-size: 14px;"></div>
+            <label for="phoneNumber" class="form-label mt-5 ms-5">Phone Number <span style="color: red;">*</span></label>
+            <input type="tel" class="form-control ms-5" id="phoneNumber" placeholder="Enter your Phone Number" required style="width: 300px; padding: 5px;margin-left: 5px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px;">
+            <div id="phoneError" style="color: red; font-size: 14px;margin-left: 45px;"></div>
             <div class="generatebutton" style="display:block;text-align: center;">
                 <button type="button" onclick="validatePhone()" style="margin-top: 20px; padding: 10px; background-color: #1B4D3E; color: white; border: none; border-radius: 5px; cursor: pointer;">Generate OTP</button>
             </div>
         </div>
 
         <div id="otpSection" style="display: none; margin-top: 20px;">
-            <label style="display: block;">Enter OTP:</label>
+            <label style="display: block;margin-left: 30px;">Enter OTP:</label>
             <input type="text" id="otpInput" maxlength="4" style="border: 1px solid #ccc; border-radius: 5px; margin-right: 10px; margin-left: 5px ">
 
             <div class="buttonverify1" style="display:block; text-align: center;">
@@ -135,7 +135,7 @@
             </div>
             <p id="otpError" style="color: red;"></p>
         </div>
-    </form>c:\Users\Dell\OneDrive\Desktop\Basic_HTML\Copy_Swetha_Mobicom_Project\PreZee\form_otp.html
+    </form>
 
     <script>
         let generatedOTP = "";
@@ -178,8 +178,9 @@
 
             if (userOTP === generatedOTP) {
                 alert("OTP verified successfully!");
-                window.location.href = "toastpayment.html";
-            } else {
+                window.location.href = "Payment1.html";
+            } 
+            else {
                 otpError.textContent = "Incorrect OTP. Please try again.";
             }
         }

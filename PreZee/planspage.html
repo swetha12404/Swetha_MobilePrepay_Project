@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quick Pay</title>
+    <title>Planspage</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -39,7 +39,6 @@
 .breadcrumbs {
     font-size: 16px;
     padding: 10px;
-    background-color: #f8f9fa; /* Light background */
     border-radius: 5px;
     width: fit-content;
     margin-top: 60px; /* Adjust margin for visibility */
@@ -50,6 +49,11 @@
     color: #1B4D3E; /* Green color matching navbar */
     font-weight: bold;
     margin-right: 5px;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+    color: #145A32; /* Darker shade on hover */
 }
 
 
@@ -82,8 +86,8 @@
         }
 
         .body{
-            margin-left: 30px;
             margin-right: 25px;
+
         }
        
 
@@ -124,7 +128,7 @@
                 <li class="nav-item"><a href="#terms" class="nav-link me-2">Terms</a></li>
                 <li class="nav-item"><a href="#contact" class="nav-link me-2">Contact Us</a></li>
                 <li class="nav-item">
-                    <a href="profilevalidation.html" class="nav-link me-1">
+                    <a href="QuickProfileValidation.html" class="nav-link me-1">
                         <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login">
                             <i class="bi bi-person-circle text-white fs-5"></i>
                         </button>
@@ -148,7 +152,7 @@
 <div class="body">
 
     <!-- Main Content -->
-    <div class="container-fluid mt-1 pt-4" id="plans1">
+    <div class="container-fluid mt-1 pt-4 ps-5" id="plans1" >
         <div class="row">
             <!-- Sidebar Categories -->
             <div class="col-md-3 categories-sidebar">
@@ -226,7 +230,9 @@
         "Student Exclusive Plans": [
         { name: "₹199 Plan", details: "1GB/day | 30 days | Free E-learning Access" },
         { name: "₹399 Plan", details: "2GB/day | 60 days | Free Online Courses" },
-        { name: "₹799 Plan", details: "Unlimited Data | 90 days | Free Coding Platform Subscription" }
+        { name: "₹799 Plan", details: "Unlimited Data | 90 days | Free Coding Platform Subscription" },
+        { name: "₹299 Plan", details: "1GB/day | 30 days | Free E-learning Access" },
+        { name: "₹519 Plan", details: "3GB/day | 80 days | Free Online Courses" }
     ],
     "Work From Home Plans": [
         { name: "₹299 Plan", details: "Unlimited Calls | 10GB Data/day | 30 days | Free VPN" },
@@ -280,7 +286,7 @@
                     details: this.getAttribute("data-details")
                 };
                 localStorage.setItem("selectedPlan", JSON.stringify(selectedPlan));
-                window.location.href = "form_otp.html"; // Redirect to payment page
+                window.location.href = "Payment1.html"; // Redirect to payment page
 
                 
             });
