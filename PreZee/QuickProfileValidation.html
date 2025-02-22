@@ -166,13 +166,14 @@
             <input type="text" class="otp-input" maxlength="1" onkeyup="moveNext(this, 3)">
         </div>
         
+        <p id="otp-error" class="error-message"></p>
         <p class="mt-2">Didn't get the code? <a class="resend-link" onclick="generateOTP()">Click to resend</a></p>
         
         <div class="d-flex justify-content-between mt-3">
             <button class="btn btn-secondary" onclick="cancelOTP()">Cancel</button>
             <button class="btn btn-success" onclick="verifyOTP()">Verify</button>
         </div>
-        <p id="otp-error" class="error-message"></p>
+       
     </div>
 </div>
 
@@ -429,7 +430,7 @@
             
             if (enteredOTP === generatedOTP) {
                 alert("OTP Verified Successfully!");
-                window.location.href = "toastpayment.html";
+                window.location.href = "Payment1.html";
             } else {
                 otpError.innerText = "Please check your OTP";
             }
