@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Existing styles remain the same */
+        .navbar {
+            background-color: #1B4D3E !important;
+            height: 55px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        
+        .navbar .nav-link,
+        .navbar .navbar-brand {
+            color: white !important;
+        }
+        .navbar .nav-link:hover {
+            color: #f8f9fa !important;
+        }
+
+        body {
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #f8f9fa;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+        .sidebar a:hover {
+            background-color:#1B4D3E;
+            color: white;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        /* New styles */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+        }
+
+        .toast.error {
+            border-left: 4px solid #dc3545;
+        }
+
+        .toast.success {
+            border-left: 4px solid #28a745;
+        }
+
+        .plan-form {
+            max-width: 500px;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .plan-form input, .plan-form select {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar remains the same -->
+    <div class="navbar navbar-expand-md fixed-top">
+        <div class="container-fluid">
+            <a href="admin.html" class="navbar-brand ms-4">
+                <img src="images/prezee2.png" style="width: 50px;">
+            </a>
+
+            <a href="Dashboard.html" download="Report.pdf" style="margin-left: 1250px; padding-top: 15px;"><b><i class="bi bi-download text-white fs-4"></i></b></a>              
+            <a href="#" class="nav-link">
+                <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#links">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="links" class="collapse navbar-collapse justify-content-end">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link me-5">
+                                <i class="bi bi-person-circle text-white fs-4"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" style="margin-top: 50px; margin-right: 30px; padding-top: 30px;padding-left: 20px;">
+        <a href="#" class="active" onclick="loadDashboard()">Dashboard</a>
+        <a href="#" onclick="loadSubscriberManagement()">Subscriber Management</a>
+        <a href="#" onclick="loadPlanManagement()">Plan Management</a>
+        <a href="#" onclick="loadReportAnalysis()">Report & Analysis</a>
+        <a href="#" onclick="handleLogout()">Logout</a>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Main Content Area -->
+    <div class="content" id="main-content" style="margin-top: 60px;">
+        <!-- Content will be loaded dynamically -->
+    </div>
+
+    <script>
+        // Load and store JSON data
+        let plansData = {};
+        let usersData = [];
+
+        Promise.all([
+            fetch('plans.json').then(res => res.json()),
+            fetch('user.json').then(res => res.json())
+        ]).then(([plans, users]) => {
+            plansData = plans;
+            usersData = users;
+            loadDashboard(); // Initial load
+        });
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.getElementById('toastContainer').appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function loadDashboard() {
+            const totalPlans = Object.values(plansData).reduce((acc, curr) => acc + curr.length, 0);
+            const totalSubscribers = usersData.length;
+            const expiringUsers = getExpiringUsers(3).slice(0, 2);
+
+            document.getElementById('main-content').innerHTML = `
+                <h2 class="ms-4 mb-3">Dashboard</h2>
+                <div class="d-flex gap-3">
+                    <div class="p-3 mx-4 bg-secondary text-white rounded" style="width: 150px;">
+                        <b>Total Plans<br>${totalPlans}</b>
+                    </div>
+                    <div class="p-3 mx-4 bg-secondary text-white rounded">
+                        <b>Total Customers<br>${totalSubscribers}</b>
+                    </div>
+                    <div class="p-3 mx-4 bg-secondary text-white rounded" style="width: 150px;">
+                        <b>Total Revenue<br>₹${calculateTotalRevenue()}</b>
+                    </div>
+                </div>
+                
+                <h3 class="mt-4 ms-4">Subscribers Expiring Soon</h3>
+                <table class="table table-bordered ms-3">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Plan Details</th>
+                            <th>Expiry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${expiringUsers.map(user => `
+                            <tr>
+                                <td>${user.name}</td>
+                                <td>${getPlanDetails(user.plan_id)}</td>
+                                <td>${formatDate(user.expiry)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>`;
+        }
+
+  
+    function loadSubscriberManagement() {
+    const totalPlans = Object.values(plansData).reduce((acc, curr) => acc + curr.length, 0);
+    const totalSubscribers = usersData.length;
+
+    document.getElementById('main-content').innerHTML = `
+        <h2 class="mb-4">Subscriber Management</h2>
+        
+        <h3>All Subscribers</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Plan ID</th>
+                    <th>Plan Details</th>
+                    <th>Expiry Date</th>
+                    <th>Status</th>
+                    <th>Recharge History</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${usersData.map(user => `
+                    <tr>
+                        <td>${user.name}</td>
+                        <td>${user.mobile}</td>
+                        <td>${user.plan_id}</td>
+                        <td>${getPlanDetails(user.plan_id)}</td>
+                        <td>${formatDate(user.expiry)}</td>
+                        <td>${user.status}</td>
+                        <td>
+                            <ul>
+                                ${user.rechargeHistory.map(history => `
+                                    <li>${history.planName} - ${formatDate(history.date)} (${history.paymentType})</li>
+                                `).join('')}
+                            </ul>
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>`;
+}
+        
+
+
+        function loadPlanManagement() {
+            document.getElementById('main-content').innerHTML = `
+                <h2 class="mb-4">Plan Management</h2>
+                <div class="d-flex gap-4">
+                    <button class="btn btn-primary" onclick="showAddPlanForm()">Add Plan</button>
+                    <button class="btn btn-danger" onclick="showDeletePlanForm()">Delete Plan</button>
+                </div>
+                <div id="planForm"></div>`;
+        }
+
+        function showAddPlanForm() {
+            document.getElementById('planForm').innerHTML = `
+                <div class="plan-form">
+                    <h3>Add New Plan</h3>
+                    <form onsubmit="handleAddPlan(event)">
+                        <select class="form-control" name="category" required>
+                            <option value="">Select Category</option>
+                            <option value="">Validity Plans</option>
+                            <option value="">Popular Plans</option>
+                            <option value="">Unlimited Plans</option>
+                            <option value="">Data Plans</option>
+                            <option value="">Annual Plans</option>
+                            <option value="">Student Exclusive Plans"</option>
+                            ${Object.keys(plansData).map(category => 
+                                `<option value="${category}">${category}</option>`
+                            ).join('')}
+                        </select>
+                        <input type="text" class="form-control" name="plan_id" placeholder="Plan ID" required>
+                        <input type="text" class="form-control" name="name" placeholder="Plan Name" required>
+                        <input type="text" class="form-control" name="details" placeholder="Plan Details" required>
+                        <button type="submit" class="btn btn-success" onclick=successmessage()>Add Plan</button>
+                    </form>
+                </div>`;
+        }
+        function successmessage(){
+            alert("Plan added successfully");
+        }
+
+        function showDeletePlanForm() {
+            document.getElementById('planForm').innerHTML = `
+                <div class="plan-form">
+                    <h3>Delete Plan</h3>
+                    <form onsubmit="handleDeletePlan(event)">
+                        <input type="text" class="form-control" name="plan_id" placeholder="Enter Plan ID" required>
+                        <button type="submit" class="btn btn-danger" onclick=successfulDelete()>Delete Plan</button>
+                    </form>
+                </div>`;
+        }
+        function successfulDelete(){
+            alert("Plan is successfully Delected");
+        }
+        
+
+
+        
+        function handleAddPlan(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const newPlan = {
+                plan_id: formData.get('plan_id'),
+                name: formData.get('name'),
+                details: formData.get('details')
+            };
+            const category = formData.get('category');
+
+            if (plansData[category]) {
+                plansData[category].push(newPlan);
+                showToast('Plan added successfully!', 'success');
+                event.target.reset();
+            }
+        }
+
+        function handleDeletePlan(event) {
+            event.preventDefault();
+            const planId = event.target.plan_id.value;
+            let planFound = false;
+
+            for (const category in plansData) {
+                const index = plansData[category].findIndex(plan => plan.plan_id === planId);
+                if (index !== -1) {
+                    plansData[category].splice(index, 1);
+                    planFound = true;
+                    break;
+                }
+            }
+
+            if (planFound) {
+                showToast('Plan deleted successfully!', 'success');
+            } else {
+                showToast(`Plan ID ${planId} not found in the database`, 'error');
+            }
+            event.target.reset();
+        }
+
+        function loadReportAnalysis() {
+            const expiringUsers = getExpiringUsers(3);
+            const planCategories = Object.keys(plansData);
+            const planCounts = planCategories.map(category => ({
+                category,
+                count: plansData[category].length
+            }));
+
+            document.getElementById('main-content').innerHTML = `
+                <h2 class="mb-4">Report & Analysis</h2>
+                
+                <h3>Users with Expiring Plans (Next 3 Days)</h3>
+                <table class="table table-bordered mb-5">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
+                            <th>Plan Details</th>
+                            <th>Expiry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${expiringUsers.map(user => `
+                            <tr>
+                                <td>${user.name}</td>
+                                <td>${user.mobile}</td>
+                                <td>${user.email}</td>
+                                <td>${getPlanDetails(user.plan_id)}</td>
+                                <td>${formatDate(user.expiry)}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+
+                <h3>Plans Distribution</h3>
+                <div style="height: 400px;">
+                    <canvas id="plansChart"></canvas>
+                </div>`;
+
+            // Create chart
+            const ctx = document.getElementById('plansChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: planCounts.map(item => item.category),
+                    datasets: [{
+                        label: 'Number of Plans',
+                        data: planCounts.map(item => item.count),
+                        backgroundColor: '#1B4D3E',
+                        borderColor: '#1B4D3E',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'Login_page.html';
+            }
+        }
+
+        // Utility functions
+        function getExpiringUsers(days) {
+            const today = new Date();
+            const threeDaysFromNow = new Date(today);
+            threeDaysFromNow.setDate(today.getDate() + days);
+
+            return usersData.filter(user => {
+                const expiryDate = new Date(user.expiry);
+                return expiryDate <= threeDaysFromNow && expiryDate >= today;
+            });
+        }
+
+        function getPlanDetails(planId) {
+            for (const category in plansData) {
+                const plan = plansData[category].find(p => p.plan_id === planId);
+                if (plan) return plan.details;
+            }
+            return 'Plan not found';
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        function calculateTotalRevenue() {
+            return Object.values(plansData)
+                .flat()
+                .reduce((total, plan) => {
+                    const amount = parseInt(plan.name.match(/₹(\d+)/)[1]);
+                    return total + amount;
+                }, 0)
+                .toLocaleString('en-IN');
+        }
+    </script>
+</body>
+</html>
+

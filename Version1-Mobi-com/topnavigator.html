@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll to Top Button</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            height: 2000px; /* To enable scrolling */
+            margin: 20px;
+        }
+
+        /* Scroll to Top Button */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none; /* Hidden by default */
+            background-color: #1B4D3E;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        #scrollTopBtn:hover {
+            background-color: #14563C;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Scroll Down to See the Button</h1>
+    <p>Keep scrolling, and a "Back to Top" button will appear at the bottom right.</p>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" onclick="scrollToTop()">⬆ Top</button>
+
+    <script>
+        let scrollBtn = document.getElementById("scrollTopBtn");
+
+        // Show button when user scrolls down 300px
+        window.onscroll = function() {
+            if (document.documentElement.scrollTop > 300) {
+                scrollBtn.style.display = "block";
+            } else {
+                scrollBtn.style.display = "none";
+            }
+        };
+
+        // Scroll to top smoothly
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    </script>
+
+</body>
+</html>
