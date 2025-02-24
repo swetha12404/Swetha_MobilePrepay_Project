@@ -33,6 +33,23 @@
     color: #f8f9fa !important; /* Lighter shade on hover */
     }
 
+    #scrollTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        #scrollTopBtn:hover {
+            background-color: #14563C;
+            color: white;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -77,7 +94,7 @@
     top: 0;
     left: 0;
     margin-top: 100px;
-    background-color: white;
+    background-color: #f4f9f6;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     padding-top: 20px;
 }
@@ -117,8 +134,8 @@
     </div>
 </div>
 
-<div class="container-fluid" style="background-color:#e4eee8; ">
-    <nav class="breadcrumbs" style="background-color:#e4eee8; margin-left: 27px; padding-top: 15px;"> 
+<div class="container-fluid" style="background-color:#f4f9f6">
+    <nav class="breadcrumbs" style="background-color:#f4f9f6; margin-left: 27px; padding-top: 15px;"> 
         <a href="Login_page.html">Home</a>&lt; 
         <a href="planspage.html"> &nbsp;Plan</a>&lt;
     </nav>
@@ -128,7 +145,7 @@
 
     <!-- Sidebar Offcanvas -->
     <div id="sidebar">
-        <h2 class="text-lg font-bold ps-5" style="background-color: #f2f5f3;color: rgb(15, 0, 0);">Profile Menu</h2>
+        <h2 class="text-lg font-bold ps-5" style="color: rgb(15, 0, 0);">Profile Menu</h2>
         <nav class="mt-2 ps-4">
             <ul>
                 <li><button class="menu-item block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200" data-target="details">View Details</button></li>
@@ -253,7 +270,28 @@
         </div>
     </div>
 
+    
+<!-- Scroll to Top Button -->
+<button id="scrollTopBtn" onclick="scrollToTop()"><i class="bi bi-arrow-up text-color: #1B4D3E"></i></button>
+
     <script>
+
+        
+let scrollBtn = document.getElementById("scrollTopBtn");
+
+// Show button when user scrolls down 300px
+window.onscroll = function() {
+    if (document.documentElement.scrollTop > 300) {
+        scrollBtn.style.display = "block";
+    } else {
+        scrollBtn.style.display = "none";
+    }
+};
+
+// Scroll to top smoothly
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
        
         // Menu item click event
         document.querySelectorAll('.menu-item').forEach(button => {
