@@ -86,6 +86,25 @@
         .plan-form input, .plan-form select {
             margin-bottom: 15px;
         }
+        // Add this CSS to your existing styles
+.list-group-item.active {
+    background-color: #1B4D3E;
+    border-color: #1B4D3E;
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef;
+}
+
+.plan-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
     </style>
 </head>
 <body>
@@ -193,11 +212,20 @@
                 </table>`;
         }
 
-  
-    function loadSubscriberManagement() {
-    const totalPlans = Object.values(plansData).reduce((acc, curr) => acc + curr.length, 0);
-    const totalSubscribers = usersData.length;
+        let currentPage = 1;
+const pageSize = 4; // Change this value to show more/less users per page
 
+function loadSubscriberManagement(page = 1) {
+    currentPage = page;
+    const totalSubscribers = usersData.length;
+    const totalPages = Math.ceil(totalSubscribers / pageSize);
+    
+    // Get the subset of users for the current page
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize;
+    const paginatedUsers = usersData.slice(start, end);
+
+    // Generate HTML for the table
     document.getElementById('main-content').innerHTML = `
         <h2 class="mb-4">Subscriber Management</h2>
         
@@ -215,7 +243,7 @@
                 </tr>
             </thead>
             <tbody>
-                ${usersData.map(user => `
+                ${paginatedUsers.map(user => `
                     <tr>
                         <td>${user.name}</td>
                         <td>${user.mobile}</td>
@@ -233,104 +261,191 @@
                     </tr>
                 `).join('')}
             </tbody>
-        </table>`;
+        </table>
+
+        <!-- Pagination Controls -->
+        <div class="d-flex justify-content-center align-items-center mt-3">
+            <button class="btn btn-secondary me-2" onclick="loadSubscriberManagement(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>Previous</button>
+            <span> Page ${currentPage} of ${totalPages} </span>
+            <button class="btn btn-secondary ms-2" onclick="loadSubscriberManagement(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>
+        </div>
+    `;
 }
-        
 
 
-        function loadPlanManagement() {
-            document.getElementById('main-content').innerHTML = `
-                <h2 class="mb-4">Plan Management</h2>
-                <div class="d-flex gap-4">
-                    <button class="btn btn-primary" onclick="showAddPlanForm()">Add Plan</button>
-                    <button class="btn btn-danger" onclick="showDeletePlanForm()">Delete Plan</button>
+function loadPlanManagement() {
+    const categories = Object.keys(plansData);
+    document.getElementById('main-content').innerHTML = `
+        <h2 class="mb-4">Plan Management</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group">
+                    ${categories.map(category => `
+                        <a href="#" class="list-group-item list-group-item-action" 
+                           onclick="showPlansForCategory('${category}')">${category}</a>
+                    `).join('')}
                 </div>
-                <div id="planForm"></div>`;
-        }
+            </div>
+            <div class="col-md-9">
+                <div id="plansList"></div>
+            </div>
+        </div>`;
+}
 
-        function showAddPlanForm() {
-            document.getElementById('planForm').innerHTML = `
-                <div class="plan-form">
-                    <h3>Add New Plan</h3>
-                    <form onsubmit="handleAddPlan(event)">
-                        <select class="form-control" name="category" required>
-                            <option value="">Select Category</option>
-                            <option value="">Validity Plans</option>
-                            <option value="">Popular Plans</option>
-                            <option value="">Unlimited Plans</option>
-                            <option value="">Data Plans</option>
-                            <option value="">Annual Plans</option>
-                            <option value="">Student Exclusive Plans"</option>
-                            ${Object.keys(plansData).map(category => 
-                                `<option value="${category}">${category}</option>`
-                            ).join('')}
-                        </select>
-                        <input type="text" class="form-control" name="plan_id" placeholder="Plan ID" required>
-                        <input type="text" class="form-control" name="name" placeholder="Plan Name" required>
-                        <input type="text" class="form-control" name="details" placeholder="Plan Details" required>
-                        <button type="submit" class="btn btn-success" onclick=successmessage()>Add Plan</button>
-                    </form>
-                </div>`;
-        }
-        function successmessage(){
-            alert("Plan added successfully");
-        }
+function showPlansForCategory(category) {
+    const plans = plansData[category];
+    document.getElementById('plansList').innerHTML = `
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>${category}</h3>
+            <button class="btn btn-primary" onclick="showAddPlanForm('${category}')">
+                <i class="bi bi-plus-circle"></i> Add Plan
+            </button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Plan ID</th>
+                        <th>Name</th>
+                        <th>Details</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${plans.map(plan => `
+                        <tr>
+                            <td>${plan.plan_id}</td>
+                            <td>${plan.name}</td>
+                            <td>${plan.details}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="showEditPlanForm('${category}', '${plan.plan_id}')">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="confirmDeletePlan('${category}', '${plan.plan_id}')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>`;
+}
 
-        function showDeletePlanForm() {
-            document.getElementById('planForm').innerHTML = `
-                <div class="plan-form">
-                    <h3>Delete Plan</h3>
-                    <form onsubmit="handleDeletePlan(event)">
-                        <input type="text" class="form-control" name="plan_id" placeholder="Enter Plan ID" required>
-                        <button type="submit" class="btn btn-danger" onclick=successfulDelete()>Delete Plan</button>
-                    </form>
-                </div>`;
-        }
-        function successfulDelete(){
-            alert("Plan is successfully Delected");
-        }
+function showAddPlanForm(category) {
+    document.getElementById('plansList').innerHTML = `
+        <div class="plan-form">
+            <h3>Add New Plan to ${category}</h3>
+            <form onsubmit="handleAddPlan(event, '${category}')">
+                <div class="mb-3">
+                    <label class="form-label">Plan ID</label>
+                    <input type="text" class="form-control" name="plan_id" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Plan Name</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Plan Details</label>
+                    <input type="text" class="form-control" name="details" required>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">Add Plan</button>
+                    <button type="button" class="btn btn-secondary" onclick="showPlansForCategory('${category}')">Cancel</button>
+                </div>
+            </form>
+        </div>`;
+}
+
+function showEditPlanForm(category, planId) {
+    const plan = plansData[category].find(p => p.plan_id === planId);
+    if (!plan) {
+        showToast('Plan not found', 'error');
+        return;
+    }
+
+    document.getElementById('plansList').innerHTML = `
+        <div class="plan-form">
+            <h3>Edit Plan</h3>
+            <form onsubmit="handleEditPlan(event, '${category}', '${planId}')">
+                <div class="mb-3">
+                    <label class="form-label">Plan ID</label>
+                    <input type="text" class="form-control" value="${planId}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Plan Name</label>
+                    <input type="text" class="form-control" name="name" value="${plan.name}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Plan Details</label>
+                    <input type="text" class="form-control" name="details" value="${plan.details}" required>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" onclick="showPlansForCategory('${category}')">Cancel</button>
+                </div>
+            </form>
+        </div>`;
+}
+
+function handleAddPlan(event, category) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const newPlan = {
+        plan_id: formData.get('plan_id'),
+        name: formData.get('name'),
+        details: formData.get('details')
+    };
+
+    // Check if plan ID already exists
+    const planExists = Object.values(plansData).some(plans => 
+        plans.some(plan => plan.plan_id === newPlan.plan_id)
+    );
+
+    if (planExists) {
+        showToast('Plan ID already exists', 'error');
+        return;
+    }
+
+    plansData[category].push(newPlan);
+    showToast('Plan added successfully!', 'success');
+    showPlansForCategory(category);
+}
+
+function handleEditPlan(event, category, planId) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const planIndex = plansData[category].findIndex(p => p.plan_id === planId);
+
+    if (planIndex === -1) {
+        showToast('Plan not found', 'error');
+        return;
+    }
+
+    plansData[category][planIndex] = {
+        ...plansData[category][planIndex],
+        name: formData.get('name'),
+        details: formData.get('details')
+    };
+
+    showToast('Plan updated successfully!', 'success');
+    showPlansForCategory(category);
+}
+
+function confirmDeletePlan(category, planId) {
+    if (confirm('Are you sure you want to delete this plan?')) {
+        const planIndex = plansData[category].findIndex(p => p.plan_id === planId);
         
-
-
-        
-        function handleAddPlan(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const newPlan = {
-                plan_id: formData.get('plan_id'),
-                name: formData.get('name'),
-                details: formData.get('details')
-            };
-            const category = formData.get('category');
-
-            if (plansData[category]) {
-                plansData[category].push(newPlan);
-                showToast('Plan added successfully!', 'success');
-                event.target.reset();
-            }
+        if (planIndex === -1) {
+            showToast('Plan not found', 'error');
+            return;
         }
 
-        function handleDeletePlan(event) {
-            event.preventDefault();
-            const planId = event.target.plan_id.value;
-            let planFound = false;
-
-            for (const category in plansData) {
-                const index = plansData[category].findIndex(plan => plan.plan_id === planId);
-                if (index !== -1) {
-                    plansData[category].splice(index, 1);
-                    planFound = true;
-                    break;
-                }
-            }
-
-            if (planFound) {
-                showToast('Plan deleted successfully!', 'success');
-            } else {
-                showToast(`Plan ID ${planId} not found in the database`, 'error');
-            }
-            event.target.reset();
-        }
+        plansData[category].splice(planIndex, 1);
+        showToast('Plan deleted successfully!', 'success');
+        showPlansForCategory(category);
+    }
+}
 
         function loadReportAnalysis() {
             const expiringUsers = getExpiringUsers(3);
