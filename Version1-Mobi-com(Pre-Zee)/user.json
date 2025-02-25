@@ -3,7 +3,7 @@
       "name": "Aarav Sharma",
       "mobile": "9876543210",
       "plan_id": "P001",
-      "expiry": "2025-02-18",
+      "expiry": "2025-02-28",
       "email": "aarav.sharma@example.com",
       "status": "active",
       "rechargeHistory": [
@@ -15,7 +15,7 @@
       "name": "Ishita Verma",
       "mobile": "8765432109",
       "plan_id": "P002",
-      "expiry": "2025-02-19",
+      "expiry": "2025-02-27",
       "email": "ishita.verma@example.com",
       "status": "inactive",
       "rechargeHistory": [
@@ -27,7 +27,7 @@
       "name": "Rahul Mishra",
       "mobile": "7654321098",
       "plan_id": "P003",
-      "expiry": "2025-02-20",
+      "expiry": "2025-03-02",
       "email": "rahul.mishra@example.com",
       "status": "active",
       "rechargeHistory": [
@@ -39,7 +39,7 @@
       "name": "Sneha Iyer",
       "mobile": "6543210987",
       "plan_id": "P004",
-      "expiry": "2025-02-21",
+      "expiry": "2025-03-03",
       "email": "sneha.iyer@example.com",
       "status": "inactive",
       "rechargeHistory": [
@@ -51,7 +51,7 @@
       "name": "Karan Singh",
       "mobile": "5432109876",
       "plan_id": "P005",
-      "expiry": "2025-02-22",
+      "expiry": "2025-02-26",
       "email": "karan.singh@example.com",
       "status": "active",
       "rechargeHistory": [
