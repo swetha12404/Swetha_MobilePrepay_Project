@@ -474,12 +474,17 @@ function showSubscriberList(type) {
                                 ${user.status}
                             </span>
                         </td>
-                        
+                    
                         <td>
-                             <button style="background-color:#1B4D3E; color:white; border-radius:10px; padding:2px 6px; border:none;">
-                               <i class="bi bi-eye-fill"></i> View
-                             </button>
-
+                            ${type === 'expiring' ? `
+                                <button style="background-color:#ffc107; color:white; border-radius:10px; padding:2px 6px; border:none;" onclick="notifyUser('${user.email}')">
+                                    <i class="bi bi-bell-fill"></i> Notify
+                                </button>
+                            ` : `
+                                <button style="background-color:#1B4D3E; color:white; border-radius:10px; padding:2px 6px; border:none;">
+                                    <i class="bi bi-eye-fill"></i> View
+                                </button>
+                            `}
                         </td>
                     </tr>
                 `).join('')}
@@ -538,6 +543,8 @@ style.innerHTML = `
     }
 `;
 document.head.appendChild(style);
+
+
 function loadPlanManagement() {
     const categories = Object.keys(plansData);
     document.getElementById('main-content').innerHTML = `

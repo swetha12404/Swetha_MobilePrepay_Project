@@ -110,13 +110,49 @@
   {
     "name": "Siddharth Bose",
     "mobile": "5432012345",
-    "plan_id": "S011",
+    "plan_id": "S001",
     "expiry": "2025-03-28",
     "email": "siddharth.bose@example.com",
     "status": "active",
     "rechargeHistory": [
       { "planName": "Work From Home", "date": "2024-12-22", "paymentType": "UPI" },
       { "planName": "Data Plan", "date": "2025-02-12", "paymentType": "Debit Card" }
+    ]
+  },
+  {
+    "name": "Swetha Murugan",
+    "mobile": "9432012345",
+    "plan_id": "S004",
+    "expiry": "2025-03-05",
+    "email": "swethamurugan@example.com",
+    "status": "active",
+    "rechargeHistory": [
+      { "planName": "Student Exclusive Plans", "date": "2024-12-24", "paymentType": "UPI" },
+      { "planName": "Work From Home Plans", "date": "2025-02-12", "paymentType": "Debit Card" }
+    ]
+  },
+  {
+    "name": "Elise perry",
+    "mobile": "9543012745",
+    "plan_id": "D004",
+    "expiry": "2025-03-25",
+    "email": "elise_perry@example.com",
+    "status": "active",
+    "rechargeHistory": [
+      { "planName": "Entertainment Pack", "date": "2024-11-18", "paymentType": "Debit Card" },
+      { "planName": "Data Plans", "date": "2025-01-05", "paymentType": "UPI" }
+    ]
+  },
+  {
+    "name": "Smriti Mandhana",
+    "mobile": "2109876543",
+    "plan_id": "W003",
+    "expiry": "2025-11-24",
+    "email": "SmritiMandhana@example.com",
+    "status": "inactive",
+    "rechargeHistory": [
+      { "planName": "Validity Plans", "date": "2025-02-05", "paymentType": "Debit Card" },
+      { "planName": "Super Hero", "date": "2025-02-20", "paymentType": "Credit Card" }
     ]
   }
 ]
