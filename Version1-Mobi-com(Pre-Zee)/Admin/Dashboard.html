@@ -35,7 +35,7 @@
         }
         .sidebar {
             width: 300px;
-            height: 100vh;
+            height:150vh;
             background:#ebf2f0;
             padding-top: 20px;
             padding-bottom: 40px;
@@ -100,7 +100,6 @@
         .plan-form input, .plan-form select {
             margin-bottom: 15px;
         }
-        // Add this CSS to your existing styles
 .list-group-item.active {
     background-color: #1B4D3E;
     border-color: #1B4D3E;
@@ -148,9 +147,10 @@
         </div>
 
     <!-- Sidebar -->
-    <div class="sidebar" style="margin-top: 50px; margin-right: 30px; padding-top: 30px;padding-left: 20px;">
+    
+    <div class="sidebar" style="margin-top: 50px; margin-right: 30px; padding-top: 50px;padding-left: 20px;">
         <a href="#" class="active" onclick="loadDashboard()">
-            <i class="fas fa-chart-line"></i> Dashboard
+            <i class="fas fa-chart-line "></i> Dashboard
         </a>
         <a href="#" onclick="loadSubscriberManagement()">
             <i class="fas fa-user-check"></i> Subscriber Management
@@ -181,8 +181,8 @@
         let usersData = [];
 
         Promise.all([
-            fetch('plans.json').then(res => res.json()),
-            fetch('user.json').then(res => res.json())
+            fetch('/Json_files/plans.json').then(res => res.json()),
+            fetch('/Json_files/user.json').then(res => res.json())
         ]).then(([plans, users]) => {
             plansData = plans;
             usersData = users;
@@ -197,121 +197,310 @@
             setTimeout(() => toast.remove(), 3000);
         }
 
-        function loadDashboard() {
-            const totalPlans = Object.values(plansData).reduce((acc, curr) => acc + curr.length, 0);
-            const totalSubscribers = usersData.length;
-            const expiringUsers = getExpiringUsers(3).slice(0, 2);
+    // for dashboard
+function loadDashboard() {
+    const totalPlans = Object.values(plansData).reduce((acc, curr) => acc + curr.length, 0);
+    const totalSubscribers = usersData.length;
+    const expiringUsers = getExpiringUsers(3).slice(0, 2);
 
-            document.getElementById('main-content').innerHTML = `
-                <h2 class="ms-4 mb-3">Dashboard</h2>
-                <div class="d-flex gap-3">
-                    <div class="p-3 mx-4 bg-secondary text-white rounded" style="width: 150px;">
-                        <b>Total Plans<br>${totalPlans}</b>
-                    </div>
-                    <div class="p-3 mx-4 bg-secondary text-white rounded">
-                        <b>Total Customers<br>${totalSubscribers}</b>
-                    </div>
-                    <div class="p-3 mx-4 bg-secondary text-white rounded" style="width: 150px;">
-                        <b>Total Revenue<br>₹${calculateTotalRevenue()}</b>
-                    </div>
+    // Count active and inactive users
+    const activeUsers = usersData.filter(user => user.status.toLowerCase() === 'active').length;
+    const inactiveUsers = totalSubscribers - activeUsers;
+
+    // Prepare month-wise user growth data
+    const monthlyGrowth = {};
+    usersData.forEach(user => {
+        user.rechargeHistory.forEach(recharge => {
+            const month = recharge.date.slice(0, 7); // Extract YYYY-MM
+            monthlyGrowth[month] = (monthlyGrowth[month] || 0) + 1;
+        });
+    });
+
+    const months = Object.keys(monthlyGrowth).sort();
+    const userCounts = months.map(month => monthlyGrowth[month]);
+
+    // Inject HTML
+    document.getElementById('main-content').innerHTML = `
+       <h2 class="ms-4 mb-4 mt-3">Dashboard</h2>
+    <div class="d-flex gap-3">
+        <div class="p-3 mx-4 bg-secondary text-white rounded" style="width: 200px;height:120px">
+            <i class="fa-solid fa-file-alt ms-4"></i> <!-- Total Plans Icon -->
+            <b>Total Plans<br>
+                <div class="d-flex justify-content-center mt-3">
+                    ${totalPlans}</b>
                 </div>
-                
-                <h3 class="mt-4 ms-4">Subscribers Expiring Soon</h3>
-                <table class="table table-bordered ms-3">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Plan Details</th>
-                            <th>Expiry Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${expiringUsers.map(user => `
-                            <tr>
-                                <td>${user.name}</td>
-                                <td>${getPlanDetails(user.plan_id)}</td>
-                                <td>${formatDate(user.expiry)}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>`;
+        </div>
+        <div class="p-3 mx-4 bg-secondary text-white rounded">
+            <i class="fa-solid fa-users"></i> <!-- Total Customers Icon -->
+            <b>Total Customers<br>${totalSubscribers}</b>
+        </div>
+        <div class="p-3 mx-4 bg-secondary text-white rounded" style="width: 200px;">
+            <i class="fa-solid fa-indian-rupee-sign"></i> <!-- Total Revenue Icon -->
+            <b>Total Revenue<br>₹${calculateTotalRevenue()}</b>
+        </div>
+    </div>
+    
+    <h3 class="ms-4 mb-4 mt-5">Subscribers Expiring Soon</h3>
+<table class="table table-bordered ms-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Plan Details</th>
+            <th>Expiry Date</th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        ${expiringUsers.map(user => `
+            <tr>
+                <td>${user.name}</td>
+                <td>${user.email}</td>
+                <td>${getPlanDetails(user.plan_id)}</td>
+                <td>${formatDate(user.expiry)}</td>
+                <td>
+                    <button style="background-color: #1B4D3E;color:white">
+                        Notify
+                    </button>
+                </td>
+            </tr>
+        `).join('')}
+    </tbody>
+</table>
+
+    <div class="row mt-5 ms-3 pt-3">
+        <div class="col-md-6 d-flex flex-column align-items-center">
+            <h3 class="mb-3">Active vs Inactive Users</h3>
+            <canvas id="userPieChart" style="max-width: 400px; max-height: 300px;"></canvas>
+        </div>
+        <div class="col-md-6 d-flex flex-column align-items-center">
+            <h3 class="mb-3">Users grouth</h3>
+            <canvas id="userGrowthChart" style="max-width: 500px; max-height: 300px;"></canvas>
+        </div>
+    </div>
+    `;
+
+    // Render Pie Chart
+    const ctxPie = document.getElementById('userPieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'pie',
+        data: {
+            labels: ['Active Users', 'Inactive Users'],
+            datasets: [{
+                data: [activeUsers, inactiveUsers],
+                backgroundColor: ['#28a745', '#dc3545'], // Green & Red
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
         }
+    });
+
+    // Render Line Chart for User Growth
+    const ctxLine = document.getElementById('userGrowthChart').getContext('2d');
+    new Chart(ctxLine, {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'User Growth',
+                data: userCounts,
+                borderColor: '#007bff',
+                backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: { title: { display: true, text: 'Month' } },
+                y: { title: { display: true, text: 'Expiring Users' }, beginAtZero: true }
+            }
+        }
+    });
+}
+
+
+
 
         let currentPage = 1;
 const pageSize = 4; // Change this value to show more/less users per page
 
-function loadSubscriberManagement(page = 1) {
-    currentPage = page;
-    const totalSubscribers = usersData.length;
-    const totalPages = Math.ceil(totalSubscribers / pageSize);
-    
-    // Get the subset of users for the current page
-    const start = (page - 1) * pageSize;
-    const end = start + pageSize;
-    const paginatedUsers = usersData.slice(start, end);
+function loadSubscriberManagement() {
+    const activeSubscribers = usersData.filter(user => user.status.toLowerCase() === 'active');
+    const inactiveSubscribers = usersData.filter(user => user.status.toLowerCase() === 'inactive');
+    const expiringSubscribers = getExpiringUsers(3);
 
-    // Generate HTML for the table
     document.getElementById('main-content').innerHTML = `
         <h2 class="mb-4">Subscriber Management</h2>
-        
-        <h3>All Subscribers</h3>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Mobile</th>
-                    <th>Plan ID</th>
-                    <th>Plan Details</th>
-                    <th>Expiry Date</th>
-                    <th>Status</th>
-                    <th>Recharge History</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${paginatedUsers.map(user => `
-                    <tr>
-                        <td>${user.name}</td>
-                        <td>${user.mobile}</td>
-                        <td>${user.plan_id}</td>
-                        <td>${getPlanDetails(user.plan_id)}</td>
-                        <td>${formatDate(user.expiry)}</td>
-                        <td>${user.status}</td>
-                        <td>
-                            <ul>
-                                ${user.rechargeHistory.map(history => `
-                                    <li>${history.planName} - ${formatDate(history.date)} (${history.paymentType})</li>
-                                `).join('')}
-                            </ul>
-                        </td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-
-        <!-- Pagination Controls -->
-        <div class="d-flex justify-content-center align-items-center mt-3">
-            <button class="btn btn-secondary me-2" onclick="loadSubscriberManagement(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>Previous</button>
-            <span> Page ${currentPage} of ${totalPages} </span>
-            <button class="btn btn-secondary ms-2" onclick="loadSubscriberManagement(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="subscriber-card" onclick="showSubscriberList('active')">
+                    <h4>Active Subscribers</h4>
+                    <p class="h2">${activeSubscribers.length}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="subscriber-card" onclick="showSubscriberList('inactive')">
+                    <h4>Inactive Subscribers</h4>
+                    <p class="h2">${inactiveSubscribers.length}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="subscriber-card" onclick="showSubscriberList('expiring')">
+                    <h4>Expiring Soon</h4>
+                    <p class="h2">${expiringSubscribers.length}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="subscriber-card" onclick="showSubscriberList('all')">
+                    <h4>All Subscribers</h4>
+                    <p class="h2">${usersData.length}</p>
+                </div>
+            </div>
         </div>
+        <div id="subscriber-list"></div>
     `;
 }
 
-// Function to handle sidebar link selection
-function setActiveSidebarLink(clickedElement) {
-    // Remove "active" class from all sidebar links
-    document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active'));
+let currentSubscriberPage = 1;
+const subscribersPerPage = 5;
 
-    // Add "active" class to the clicked link
-    clickedElement.classList.add('active');
+function showSubscriberList(type, page = 1, searchQuery = '') {
+    let subscribers;
+    let title;
+    
+    switch(type) {
+        case 'active':
+            subscribers = usersData.filter(user => user.status.toLowerCase() === 'active');
+            title = 'Active Subscribers';
+            break;
+        case 'inactive':
+            subscribers = usersData.filter(user => user.status.toLowerCase() === 'inactive');
+            title = 'Inactive Subscribers';
+            break;
+        case 'expiring':
+            subscribers = getExpiringUsers(3);
+            title = 'Expiring Soon';
+            break;
+        default:
+            subscribers = usersData;
+            title = 'All Subscribers';
+    }
+
+    // Filter by search query if provided
+    if (searchQuery) {
+        subscribers = subscribers.filter(user => user.mobile.includes(searchQuery));
+    }
+
+    const totalPages = Math.ceil(subscribers.length / subscribersPerPage);
+    const start = (page - 1) * subscribersPerPage;
+    const paginatedSubscribers = subscribers.slice(start, start + subscribersPerPage);
+
+    const subscriberList = document.getElementById('subscriber-list');
+    subscriberList.innerHTML = `
+        <h3 class="mt-4">${title}</h3>
+        <div class="search-container">
+            <input type="text" 
+                   placeholder="Search by phone number..." 
+                   onkeyup="handleSearch('${type}', this.value)"
+                   value="${searchQuery}">
+        </div>
+        ${subscribers.length === 0 ? `
+            <div class="not-found">
+                ${searchQuery ? 
+                    `No subscriber found with phone number: ${searchQuery}` : 
+                    'No subscribers in this category'}
+            </div>
+        ` : `
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                        <th>Plan Details</th>
+                        <th>Expiry Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${paginatedSubscribers.map(user => `
+                        <tr>
+                            <td>${user.name}</td>
+                            <td>${user.mobile}</td>
+                            <td>${user.email}</td>
+                            <td>${getPlanDetails(user.plan_id)}</td>
+                            <td>${formatDate(user.expiry)}</td>
+                            <td>
+                                <span class="badge ${user.status.toLowerCase() === 'active' ? 
+                                    'bg-success' : 'bg-danger'}">
+                                    ${user.status}
+                                </span>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+            <div class="pagination">
+                ${generatePaginationControls(page, totalPages, type, searchQuery)}
+            </div>
+        `}
+    `;
 }
 
-// Attach event listeners to all sidebar links
-document.querySelectorAll('.sidebar a').forEach(link => {
-    link.addEventListener('click', function() {
-        setActiveSidebarLink(this);
+function generatePaginationControls(currentPage, totalPages, type, searchQuery) {
+    let controls = '';
+    
+    if (totalPages > 1) {
+        controls += `
+            <button onclick="showSubscriberList('${type}', ${currentPage - 1}, '${searchQuery}')"
+                    ${currentPage === 1 ? 'disabled' : ''}>
+                Previous
+            </button>
+        `;
+
+        for (let i = 1; i <= totalPages; i++) {
+            controls += `
+                <button onclick="showSubscriberList('${type}', ${i}, '${searchQuery}')"
+                        class="${currentPage === i ? 'active' : ''}">
+                    ${i}
+                </button>
+            `;
+        }
+
+        controls += `
+            <button onclick="showSubscriberList('${type}', ${currentPage + 1}, '${searchQuery}')"
+                    ${currentPage === totalPages ? 'disabled' : ''}>
+                Next
+            </button>
+        `;
+    }
+
+    return controls;
+}
+
+function handleSearch(type, query) {
+    showSubscriberList(type, 1, query);
+}
+
+// Add this to your existing getExpiringUsers function if not already present
+function getExpiringUsers(days) {
+    const today = new Date();
+    const futureDate = new Date(today);
+    futureDate.setDate(today.getDate() + days);
+
+    return usersData.filter(user => {
+        const expiryDate = new Date(user.expiry);
+        return expiryDate >= today && expiryDate <= futureDate;
     });
-});
+}
 
 
 function loadPlanManagement() {
@@ -524,7 +713,7 @@ function confirmDeletePlan(category, planId) {
                 </table>
 
                 <h3>Plans Distribution</h3>
-                <div style="height: 400px;">
+                <div style="height: 350px; width:420px">
                     <canvas id="plansChart"></canvas>
                 </div>`;
 

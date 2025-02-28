@@ -1,0 +1,146 @@
+[
+  {
+      "name": "Aarav Sharma",
+      "mobile": "9876543210",
+      "plan_id": "P001",
+      "expiry": "2025-02-28",
+      "email": "aarav.sharma@example.com",
+      "status": "active",
+      "rechargeHistory": [
+          { "planName": "Basic Monthly", "date": "2024-11-10", "paymentType": "UPI" },
+          { "planName": "Data Plan", "date": "2025-01-15", "paymentType": "Debit Card" }
+      ]
+  },
+  {
+      "name": "Ishita Verma",
+      "mobile": "8765432109",
+      "plan_id": "P002",
+      "expiry": "2025-02-27",
+      "email": "ishita.verma@example.com",
+      "status": "inactive",
+      "rechargeHistory": [
+          { "planName": "Standard Monthly", "date": "2024-12-05", "paymentType": "Credit Card" },
+          { "planName": "OTT", "date": "2025-02-08", "paymentType": "Bank Transfer" }
+      ]
+  },
+  {
+      "name": "Rahul Mishra",
+      "mobile": "7654321098",
+      "plan_id": "P003",
+      "expiry": "2025-03-02",
+      "email": "rahul.mishra@example.com",
+      "status": "active",
+      "rechargeHistory": [
+          { "planName": "Premium Monthly", "date": "2024-10-22", "paymentType": "UPI" },
+          { "planName": "Combo/Validity", "date": "2025-01-10", "paymentType": "Debit Card" }
+      ]
+  },
+  {
+      "name": "Sneha Iyer",
+      "mobile": "6543210987",
+      "plan_id": "P004",
+      "expiry": "2025-03-03",
+      "email": "sneha.iyer@example.com",
+      "status": "inactive",
+      "rechargeHistory": [
+          { "planName": "Basic Monthly", "date": "2024-09-12", "paymentType": "Bank Transfer" },
+          { "planName": "Top Up", "date": "2025-02-05", "paymentType": "Credit Card" }
+      ]
+  },
+  {
+      "name": "Karan Singh",
+      "mobile": "5432109876",
+      "plan_id": "P005",
+      "expiry": "2025-02-27",
+      "email": "karan.singh@example.com",
+      "status": "active",
+      "rechargeHistory": [
+          { "planName": "Standard Monthly", "date": "2024-08-25", "paymentType": "Debit Card" },
+          { "planName": "OTT", "date": "2025-01-30", "paymentType": "UPI" }
+      ]
+  },
+  {
+      "name": "Ananya Reddy",
+      "mobile": "4321098765",
+      "plan_id": "P006",
+      "expiry": "2025-02-28",
+      "email": "ananya.reddy@example.com",
+      "status": "inactive",
+      "rechargeHistory": [
+          { "planName": "Basic Monthly", "date": "2024-07-05", "paymentType": "UPI" },
+          { "planName": "Top Up", "date": "2025-02-15", "paymentType": "Debit Card" }
+      ]
+  },
+  {
+      "name": "Vikram Nair",
+      "mobile": "3210987654",
+      "plan_id": "P007",
+      "expiry": "2025-02-24",
+      "email": "vikram.nair@example.com",
+      "status": "active",
+      "rechargeHistory": [
+          { "planName": "Standard Monthly", "date": "2024-06-18", "paymentType": "Credit Card" },
+          { "planName": "Data Plan", "date": "2025-01-12", "paymentType": "Bank Transfer" }
+      ]
+  },
+  {
+      "name": "Priya Chauhan",
+      "mobile": "2109876543",
+      "plan_id": "P008",
+      "expiry": "2025-02-25",
+      "email": "priya.chauhan@example.com",
+      "status": "active",
+      "rechargeHistory": [
+          { "planName": "Premium Monthly", "date": "2024-05-09", "paymentType": "Debit Card" },
+          { "planName": "Super Hero", "date": "2025-02-20", "paymentType": "Credit Card" }
+      ]
+  },
+  {
+      "name": "Manish Rao",
+      "mobile": "1987654321",
+      "plan_id": "P009",
+      "expiry": "2025-02-22",
+      "email": "manish.rao@example.com",
+      "status": "active",
+      "rechargeHistory": [
+          { "planName": "Annual Plan", "date": "2024-04-15", "paymentType": "UPI" },
+          { "planName": "Data Plan", "date": "2025-02-02", "paymentType": "Credit Card" }
+      ]
+  },
+  {
+      "name": "Meera Joshi",
+      "mobile": "9876512340",
+      "plan_id": "P010",
+      "expiry": "2025-02-26",
+      "email": "meera.joshi@example.com",
+      "status": "inactive",
+      "rechargeHistory": [
+          { "planName": "Student Plan", "date": "2024-03-01", "paymentType": "Debit Card" },
+          { "planName": "OTT", "date": "2025-01-08", "paymentType": "UPI" }
+      ]
+  },
+  {
+      "name": "Rajesh Nanda",
+      "mobile": "8765401298",
+      "plan_id": "P011",
+      "expiry": "2025-02-21",
+      "email": "rajesh.nanda@example.com",
+      "status": "active",
+      "rechargeHistory": [
+          { "planName": "Basic Monthly", "date": "2024-02-22", "paymentType": "Credit Card" },
+          { "planName": "Work From Home", "date": "2025-02-10", "paymentType": "Debit Card" }
+      ]
+  },
+  {
+      "name": "Sara Fernandes",
+      "mobile": "7654213098",
+      "plan_id": "P012",
+      "expiry": "2025-03-05",
+      "email": "sara.fernandes@example.com",
+      "status": "active",
+      "rechargeHistory": [
+          { "planName": "Top Up", "date": "2024-01-12", "paymentType": "Bank Transfer" },
+          { "planName": "Super Hero", "date": "2025-01-20", "paymentType": "UPI" }
+      ]
+  }
+]
