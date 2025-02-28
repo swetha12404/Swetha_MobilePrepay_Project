@@ -222,8 +222,8 @@ function setActive(element) {
         let usersData = [];
 
         Promise.all([
-            fetch('/Json_files/plans.json').then(res => res.json()),
-            fetch('/Json_files/user.json').then(res => res.json())
+            fetch('/Version1-Mobi-com(Pre-Zee)/Json_files/plans.json').then(res => res.json()),
+            fetch('/Version1-Mobi-com(Pre-Zee)/Json_files/user.json').then(res => res.json())
         ]).then(([plans, users]) => {
             plansData = plans;
             usersData = users;
