@@ -4,47 +4,195 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Confirmation</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> <!--for icon-->
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     
     <style>
+        /* Your existing styles remain unchanged */
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f7fc;
-        }
-        .confirmation-box {
-            width: 400px;
-            height: 250px;
-            background: white;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
             padding: 20px;
-            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .confirmation-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
             text-align: center;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
-        .back-button {
-            background-color: #1B4D3E ;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
+
+        .success-icon {
+            color: #28a745;
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #1B4D3E;
+            margin-bottom: 20px;
+        }
+
+        .payment-details {
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .payment-details p {
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .payment-details strong {
+            color: #1B4D3E;
+            min-width: 150px;
+            display: inline-block;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 6px;
             text-decoration: none;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        h2{
-            color:  #1B4D3E ;
+
+        .download-btn {
+            background-color: #1B4D3E;
+            color: white;
+            border: none;
+        }
+
+        .download-btn:hover {
+            background-color: #145A32;
+        }
+
+        .back-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+        }
+
+        .back-btn:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
 <body>
-
-    <div class="confirmation-box">
-        <h2>Payment Successful!</h2>
-        <h2 class="text-center"><i class="bi bi-patch-check-fill fs-900 mb-5" style="color: #1B4D3E ;"></i></h2>
-        <p class="h5 mb-5">Thank you for your purchase.</p>
-        <a href="planspage.html" class="back-button">Back to Plans Page</a>
+    <div class="container">
+        <div class="confirmation-card">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h1>Payment Successful!</h1>
+            <div id="paymentDetails" class="payment-details">
+                <!-- Payment details will be inserted here -->
+            </div>
+            <div class="button-container">
+                <button class="btn download-btn" onclick="downloadInvoice()">Download Invoice</button>
+                <a href="planspage.html" class="btn back-btn">Back to Plans</a>
+            </div>
+        </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get payment details from localStorage
+            const selectedPlan = JSON.parse(localStorage.getItem('selectedPlan'));
+            const phoneNumber = localStorage.getItem('userPhoneNumber');
+            const selectedPaymentMode = localStorage.getItem('selectedPaymentMode') || 
+                document.querySelector('.payment-mode.active')?.textContent.trim() || 'Not Specified';
+
+            if (selectedPlan) {
+                // Display payment details
+                const detailsHtml = `
+                    <p><strong>Phone Number:</strong> ${phoneNumber || 'Not Available'}</p>
+                    <p><strong>Plan Name:</strong> ${selectedPlan.name}</p>
+                    <p><strong>Plan ID:</strong> ${selectedPlan.plan_id}</p>
+                    <p><strong>Category:</strong> ${selectedPlan.category}</p>
+                    <p><strong>Details:</strong> ${selectedPlan.details}</p>
+                    <p><strong>Amount Paid:</strong> ₹${selectedPlan.amount}</p>
+                    <p><strong>Payment Mode:</strong> ${selectedPaymentMode}</p>
+                    <p><strong>Transaction Date:</strong> ${new Date().toLocaleString()}</p>
+                `;
+                document.getElementById('paymentDetails').innerHTML = detailsHtml;
+            }
+        });
+
+        function downloadInvoice() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Get payment details from localStorage
+            const selectedPlan = JSON.parse(localStorage.getItem('selectedPlan'));
+            const phoneNumber = localStorage.getItem('userPhoneNumber');
+            const selectedPaymentMode = localStorage.getItem('selectedPaymentMode') || 
+                document.querySelector('.payment-mode.active')?.textContent.trim() || 'Not Specified';
+            const paymentDate = new Date().toLocaleString();
+            const invoiceNumber = `INV-${selectedPlan.plan_id}-${Date.now()}`;
+
+            if (!selectedPlan) return;
+
+            // Invoice Header
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(18);
+            doc.text("Prepay Mobile Recharge Invoice", 20, 20);
+
+            // Date at top-right corner
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "normal");
+            const dateText = `Date: ${paymentDate}`;
+            const textWidth = doc.getTextWidth(dateText);
+            doc.text(dateText, 210 - textWidth - 10, 20); // Right-aligned
+
+            // Invoice Details (above table)
+            doc.setFontSize(12);
+            doc.text(`Invoice No: ${invoiceNumber}`, 20, 30);
+            doc.text(`Customer Mobile: ${phoneNumber || 'Not Available'}`, 20, 40);
+
+            // Table for Plan Details
+            doc.autoTable({
+                startY: 50,
+                head: [['Field', 'Details']],
+                body: [
+                    ['Plan Name', selectedPlan.name],
+                    ['Plan ID', selectedPlan.plan_id],
+                    ['Category', selectedPlan.category],
+                    ['Details', selectedPlan.details],
+                    ['Amount Paid', `₹${selectedPlan.amount}`],
+                    ['Payment Mode', selectedPaymentMode],
+                    ['Transaction Date', paymentDate]
+                ],
+                styles: {
+                    fontSize: 10,
+                    cellPadding: 3,
+                    overflow: 'linebreak',
+                },
+                headStyles: {
+                    fillColor: [27, 77, 62], // #1B4D3E
+                    textColor: [255, 255, 255],
+                    fontStyle: 'bold',
+                },
+                columnStyles: {
+                    0: { fontStyle: 'bold', textColor: [51, 51, 51] },
+                    1: { maxWidth: 120 }
+                },
+                margin: { left: 20, right: 20 },
+            });
+
+            // Save the PDF
+            doc.save(`Invoice_${selectedPlan.plan_id}.pdf`);
+        }
+    </script>
 </body>
 </html>

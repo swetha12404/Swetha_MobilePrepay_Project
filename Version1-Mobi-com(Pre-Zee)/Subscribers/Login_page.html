@@ -8,41 +8,37 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
-     <!-- Swiper JS for carosule -->
+     <!-- Swiper JS for carousel -->
      <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> <!--for icon-->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
     <style>
-
-.navbar {
-    background-color: #1B4D3E !important; /* Bootstrap primary blue */
-    padding-left: 30px;
-    padding-right: 25px ;
-    height: 60px; /* Adjust as needed */
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-
-.navbar .nav-link,
-.navbar .navbar-brand,
-.navbar .nav-link.dropdown-toggle {
-    color: white !important; /* Ensures text is white */
-}
-
-.navbar .nav-link:hover,
-.navbar .nav-link:focus {
-    color: #f8f9fa !important; /* Lighter shade on hover */
-}
+        /* Navbar */
+        body, h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar {
+            background-color: #1B4D3E !important;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Added shadow */
+            padding: 10px 30px; /* Updated padding */
+            height: 70px; /* Increased height */
+        }
+        .navbar .nav-link,
+        .navbar .navbar-brand {
+            color: white !important;
+            transition: transform 0.3s ease; /* Added transition for hover effect */
+        }
+        .navbar .nav-link:hover {
+            transform: scale(1.1); /* Scale on hover */
+        }
 
         /* Full-Width Carousel */
         .swiper {
             width: 95%;
-            height: 450px;
-            margin-top: 10px;
+            height: 500px; /* Updated height */
+            margin-top: 20px; /* Adjusted margin */
             perspective: 1200px;
         }
 
@@ -50,33 +46,48 @@
             background-size: cover;
             background-position: center;
             border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+            position: relative; /* For caption positioning */
+        }
+
+        /* Carousel Caption */
+        .slide-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px 25px;
+            border-radius: 10px;
+            animation: fadeInUp 1s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Change Swiper Navigation Buttons to White */
-.swiper-button-prev,
-.swiper-button-next {
-    color: white !important;  /* Makes buttons white */
-    background: rgba(255, 255, 255, 0.3); /* Adds a semi-transparent white background */
-    border-radius: 50%; /* Makes buttons circular */
-    width: 50px;
-    height: 50px;
-}
+        .swiper-button-prev,
+        .swiper-button-next {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
 
-.swiper-button-prev::after,
-.swiper-button-next::after {
-    font-size: 24px;  /* Increases arrow size */
-    font-weight: bold;
-    color: white !important; /* Ensures arrows stay white */
-}
+        .swiper-button-prev::after,
+        .swiper-button-next::after {
+            font-size: 24px;
+            font-weight: bold;
+            color: white !important;
+        }
 
-/* Hover Effect */
-.swiper-button-prev:hover,
-.swiper-button-next:hover {
-    background: rgba(255, 255, 255, 0.6); /* Increases opacity on hover */
-}
-
-
+        /* Hover Effect */
+        .swiper-button-prev:hover,
+        .swiper-button-next:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
 
         /* Toggle Switch */
         .toggle-container {
@@ -87,7 +98,7 @@
         }
 
         .toggle-switch {
-            width: 40%; /* Set width to 40% of the screen */
+            width: 40%;
             height: 50px;
             background: #ddd;
             border-radius: 25px;
@@ -119,7 +130,7 @@
         }
 
         .toggle-checkbox:checked + .toggle-switch {
-            background:#1B4D3E;
+            background: #1B4D3E;
         }
 
         .toggle-checkbox:checked + .toggle-switch::before {
@@ -129,38 +140,35 @@
             background: #1B4D3E;
         }
 
-
-
         .breadcrumbs {
-    font-size: 16px;
-    padding: 10px;
-    background-color: #f8f9fa; /* Light background */
-    border-radius: 5px;
-    width: fit-content;
-    margin-top: 60px; /* Adjust margin for visibility */
-}
+            font-size: 16px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            width: fit-content;
+            margin-top: 60px;
+        }
 
-.text-faded {
-    color: rgba(0, 0, 0, 0.5); /* Adjust opacity */
-}
+        .text-faded {
+            color: rgba(0, 0, 0, 0.5);
+        }
 
+        .breadcrumbs a {
+            text-decoration: none;
+            color: #1B4D3E;
+            font-weight: bold;
+            margin-right: 5px;
+        }
 
-.breadcrumbs a {
-    text-decoration: none;
-    color: #1B4D3E; /* Green color matching navbar */
-    font-weight: bold;
-    margin-right: 5px;
-}
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+            color: #145A32;
+        }
 
-.breadcrumbs a:hover {
-    text-decoration: underline;
-    color: #145A32; /* Darker shade on hover */
-}
-
-.breadcrumbs span {
-    font-weight: bold;
-    color: #555;
-}
+        .breadcrumbs span {
+            font-weight: bold;
+            color: #555;
+        }
 
         #scrollTopBtn {
             position: fixed;
@@ -179,17 +187,14 @@
             color: white;
         }
 
-
-        
-        #phone_number{
-
+        #phone_number {
             border-radius: 10px;
         }
-      
-        #buttonplan{
+
+        #buttonplan {
             margin-left: 54px;
         }
- 
+
         .container {
             width: 80%;
             margin: 0 auto;
@@ -208,7 +213,7 @@
         .reason {
             background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             padding: 30px;
             width: 30%;
             margin-bottom: 30px;
@@ -233,54 +238,67 @@
         }
 
         /* plan */
-
         .plan-card {
-    width: 100%;
-    max-width: 22rem;
-    border-radius: 15px;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
+            width: 100%;
+            max-width: 22rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
 
-.plan-card:hover {
-    transform: translateY(-8px); /* Moves the card slightly up */
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
-}
+        .plan-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
 
+        /* service */
+        .service-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border-radius: 15px;
+        }
 
-    /* service */
-    .service-card {
-        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        border-radius: 15px;
-    }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
 
-    .service-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    }
+        .service-card i {
+            padding: 15px;
+            border-radius: 50%;
+            background-color: rgba(0, 128, 0, 0.1);
+        }
 
-    .service-card i {
-        padding: 15px;
-        border-radius: 50%;
-        background-color: rgba(0, 128, 0, 0.1);
-    }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(27, 77, 62, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(27, 77, 62, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(27, 77, 62, 0); }
+        }
 
-  
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1B4D3E, #0F2A22); /* Gradient background */
+        }
+        .footer i {
+            font-size: 24px;
+            transition: transform 0.3s ease, color 0.3s ease; /* Hover effects */
+        }
+        .footer i:hover {
+            transform: scale(1.3);
+            color: #00C4B4; /* Accent color on hover */
+        }
     </style>
 </head>
 
-<body >
+<body>
 
 <!-- Navbar -->
-<div class="navbar navbar-expand-md bg-body-tertiary fixed-top">
+<div class="navbar navbar-expand-md bg-body-tertiary fixed-top h6">
     <div class="container-fluid">
-        <a href="Login_page.html" class="navbar-brand text-decoration-none ms-2">
+        <a href="Login_page.html" class="navbar-brand">
             <img src="images/prezee2.png" style="width: 50px;">
         </a>
-
         <button class="navbar-toggler" data-bs-target="#links" data-bs-toggle="collapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div id="links" class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav align-items-center">
                 <li class="nav-item"><a href="#services" class="nav-link me-2">Services</a></li>
@@ -292,44 +310,60 @@
                         <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login">
                             <i class="bi bi-person-circle text-white fs-5"></i>
                         </button>
-                    </a>                    
+                    </a>
                 </li>
             </ul>
         </div>
     </div>
 </div>
 
-
-
-    <!-- 3D Carousel -->
-    <div class="container-fluid d-flex justify-content-center align-items-center mt-4 pt-5 mb-4">
-
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide" style="background-image: url('images/Screenshot\ \(753\).png');"></div>
-                <div class="swiper-slide" style="background-image: url('images/happy.jpg');"></div>
-                <div class="swiper-slide" style="background-image: url('images/photo-19.avif');"></div>
-                <div class="swiper-slide" style="background-image: url('images/pexels-photo-3791664.webp');"></div>
+<!-- 3D Carousel -->
+<div class="container-fluid d-flex justify-content-center align-items-center mt-4 pt-5 mb-4">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" style="background-image: url('images/Screenshot (753).png');">
+                <div class="slide-caption">
+                    <h3>Fast & Secure Recharge</h3>
+                    <p>Top up in seconds!</p>
+                </div>
             </div>
-            
-            <!-- Pagination & Navigation -->
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
+            <div class="swiper-slide" style="background-image: url('images/happy.jpg');">
+                <div class="slide-caption">
+                    <h3>Stay Connected</h3>
+                    <p>Enjoy seamless connectivity.</p>
+                </div>
+            </div>
+            <div class="swiper-slide" style="background-image: url('images/photo-19.avif');">
+                <div class="slide-caption">
+                    <h3>Affordable Plans</h3>
+                    <p>Value for every penny.</p>
+                </div>
+            </div>
+            <div class="swiper-slide" style="background-image: url('images/pexels-photo-3791664.webp');">
+                <div class="slide-caption">
+                    <h3>24/7 Support</h3>
+                    <p>We’re here for you.</p>
+                </div>
+            </div>
         </div>
+        <!-- Pagination & Navigation -->
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </div>
+</div>
 
-    <!-- Toggle Switch Section (Auto-Navigation on Change) -->
-    <div class="toggle-container" id="login">
-        <input type="checkbox" id="toggle-role" class="toggle-checkbox">
-        <label for="toggle-role" class="toggle-switch"></label>
-    </div>
+<!-- Toggle Switch Section (Auto-Navigation on Change) -->
+<div class="toggle-container" id="login">
+    <input type="checkbox" id="toggle-role" class="toggle-checkbox">
+    <label for="toggle-role" class="toggle-switch"></label>
+</div>
 
 <!--For user Login form -->
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card p-4 shadow rounded-4"> <!-- Added rounded-4 here -->
+            <div class="card p-4 shadow rounded-4">
                 <h3 class="text-center mb-3" style="color:#1B4D3E;"><b>Subscriber Login</b></h3>
                 <form>
                     <div class="mb-3">
@@ -346,57 +380,50 @@
     </div>
 </div>
 
-
-    <!--For plans-->
-    <div class="container" id="plans">
-        <h2 class="text-center mb-4" style="color: #1B4D3E;"><b>Popular Plans</b></h2>
-        <div class="row g-4 justify-content-center">
-            <!-- Plan 1 -->
-            <div class="col-md-4">
-                <div class="card text-center shadow plan-card">
-                    <div class="card-body">
-                        <h5 class="card-title display-6 mb-3"><b>₹ 925</b></h5>
-                        <h6 class="text-muted">84 Days | 2GB/DAY</h6>
-                        <h6 class="text-muted">Validity | Data</h6>
-                        <a href="#login" class="btn mt-3" style="background-color: #1B4D3E; color:white;">Recharge</a>
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Plan 2 -->
-            <div class="col-md-4">
-                <div class="card text-center shadow plan-card">
-                    <div class="card-body">
-                        <h5 class="card-title display-6 mb-3"><b>₹ 3999</b></h5>
-                        <h6 class="text-muted">1 Year | 2GB/DAY</h6>
-                        <h6 class="text-muted">Validity | Data</h6>
-                        <a href="#login" class="btn mt-3" style="background-color: #1B4D3E; color:white;">Recharge</a>
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Plan 3 -->
-            <div class="col-md-4">
-                <div class="card text-center shadow plan-card">
-                    <div class="card-body">
-                        <h5 class="card-title display-6 mb-3"><b>₹ 769</b></h5>
-                        <h6 class="text-muted">64 Days | 1.5GB/DAY</h6>
-                        <h6 class="text-muted">Validity | Data</h6>
-                        <a href="#login" class="btn mt-3" style="background-color: #1B4D3E; color:white;">Recharge</a>
-                    </div>
+<!--For plans-->
+<div class="container" id="plans">
+    <h2 class="text-center mb-4" style="color: #1B4D3E;"><b>Popular Plans</b></h2>
+    <div class="row g-4 justify-content-center">
+        <!-- Plan 1 -->
+        <div class="col-md-4">
+            <div class="card text-center shadow plan-card">
+                <div class="card-body">
+                    <h5 class="card-title display-6 mb-3"><b>₹ 925</b></h5>
+                    <h6 class="text-muted">84 Days | 2GB/DAY</h6>
+                    <h6 class="text-muted">Validity | Data</h6>
                 </div>
             </div>
         </div>
-        <div class="text-center mt-4">
-            <a href="QuickPay_planPage.html"  class="btn mt-3 w-35 pt-3 pb-3 ps-5 pe-5 fs-5 rounded-3 " style="background-color: #1B4D3E; color:white;">Quick Pay</a>
+    
+        <!-- Plan 2 -->
+        <div class="col-md-4">
+            <div class="card text-center shadow plan-card">
+                <div class="card-body">
+                    <h5 class="card-title display-6 mb-3"><b>₹ 3999</b></h5>
+                    <h6 class="text-muted">1 Year | 2GB/DAY</h6>
+                    <h6 class="text-muted">Validity | Data</h6>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Plan 3 -->
+        <div class="col-md-4">
+            <div class="card text-center shadow plan-card">
+                <div class="card-body">
+                    <h5 class="card-title display-6 mb-3"><b>₹ 769</b></h5>
+                    <h6 class="text-muted">64 Days | 1.5GB/DAY</h6>
+                    <h6 class="text-muted">Validity | Data</h6>
+                </div>
+            </div>
         </div>
     </div>
-    
-
-<!--for services-->
+    <div class="text-center mt-4">
+        <a href="QuickPay_planPage.html" class="btn mt-3 w-35 pt-3 pb-3 ps-5 pe-5 fs-5 rounded-3" style="background-color: #1B4D3E; color:white;">Quick Pay</a>
+    </div>
+</div>
 
 <!-- Services Section -->
-<section id="services" class="container py-5" >
+<section id="services" class="container py-5">
     <h2 class="text-center mb-4" style="color: #1B4D3E;"><b>Our Services</b></h2>
     <div class="row g-4">
         <!-- Mobile Recharge -->
@@ -432,16 +459,47 @@
             </div>
         </div>
     </div>
+    <!-- Additional Services -->
+    <div class="row g-4 mt-3">
+        <!-- 24/7 Support -->
+        <div class="col-md-4">
+            <div class="card text-center shadow service-card">
+                <div class="card-body">
+                    <i class="bi bi-graph-up fs-1 text-purple"></i>
+                    <h4 class="mt-3">Usage Tracking</h4>
+                    <p>Monitor your recharge and subscription usage with real-time insights.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multiple Payment Methods -->
+        <div class="col-md-4">
+            <div class="card text-center shadow service-card">
+                <div class="card-body">
+                    <i class="bi bi-wallet2 fs-1 text-success"></i>
+                    <h4 class="mt-3">Multiple Payment Options</h4>
+                    <p>Pay your way with a variety of secure methods, from cards to digital wallets.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service Usage Tracking -->
+        <div class="col-md-4">
+            <div class="card text-center shadow service-card">
+                <div class="card-body">
+                    <i class="bi bi-headset fs-1 text-info"></i>
+                    <h4 class="mt-3">24/7 Customer Support</h4>
+                    <p>Get assistance anytime with our dedicated support team, available round-the-clock.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
-
-
-
 
 <!--for accordion-->
 <div class="container">
-    <h1  style="color: #1B4D3E;"> FAQ's</h1>
+    <h1 style="color: #1B4D3E;">FAQ's</h1>
     <div class="accordion" id="faqAccordion">
-       
         <!-- Question 2 -->
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingTwo">
@@ -514,35 +572,31 @@
     </div>
 </div>
 
-
-  <!--Why do you choose us?-->
-    <div class="container">
-        <h1  style="color: #1B4D3E;">Why PreZee?</h1>
-        <div class="reasons">
-            <div class="reason">
-                <div class="icon">&#128179;</div>
-                <h2>Secure and Reliable</h2>
-                <p>Our platform ensures your transactions are secure, providing you peace of mind while making payments on the go.</p>
-            </div>
-            <div class="reason">
-                <div class="icon">&#128225;</div>
-                <h2>Easy and Fast</h2>
-                <p>With our intuitive interface, making payments has never been easier and faster. Just a few taps and you're done.</p>
-            </div>
-            <div class="reason">
-                <div class="icon">&#128241;</div>
-                <h2>24/7 Support</h2>
-                <p>Our dedicated customer support team is available around the clock to assist you with any queries or issues.</p>
-            </div>
+<!--Why do you choose us?-->
+<div class="container">
+    <h1 style="color: #1B4D3E; margin-bottom: 50px;">Why PreZee?</h1>
+    <div class="reasons">
+        <div class="reason">
+            <div class="icon">💳</div>
+            <h2>Secure and Reliable</h2>
+            <p>Our platform ensures your transactions are secure, providing you peace of mind while making payments on the go.</p>
+        </div>
+        <div class="reason">
+            <div class="icon">📡</div>
+            <h2>Easy and Fast</h2>
+            <p>With our intuitive interface, making payments has never been easier and faster. Just a few taps and you're done.</p>
+        </div>
+        <div class="reason">
+            <div class="icon">📱</div>
+            <h2>24/7 Support</h2>
+            <p>Our dedicated customer support team is available around the clock to assist you with any queries or issues.</p>
         </div>
     </div>
+</div>
 
-
-
-
-    <!--Terms and condition-->
+<!--Terms and condition-->
 <div id="terms">
-    <h1  style="color: #1B4D3E;">Terms and Conditions</h1>
+    <h1 style="color: #1B4D3E;">Terms and Conditions</h1>
     <div class="container mt-2" id="terms">
         <div class="row">
             <!-- Card 1: Introduction -->
@@ -588,14 +642,11 @@
     </div>
 </div>
 
-
-
 <!-- Scroll to Top Button -->
 <button id="scrollTopBtn" onclick="scrollToTop()"><i class="bi bi-arrow-up text-color: #1B4D3E"></i></button>
 
-    <!-- Swiper Initialization -->
-    <script>
-
+<!-- Swiper Initialization -->
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -603,120 +654,103 @@
         });
     });
 
-        var swiper = new Swiper(".mySwiper", {
-            effect: "coverflow",
-            grabCursor: true,
-            centeredSlides: true,
-            slidesPerView: "auto",
-            coverflowEffect: {
-                rotate: 0,  
-                stretch: 0,
-                depth: 400,
-                modifier: 1,
-                slideShadows: false,
-            },
-            loop: true,
-            autoplay: {
-                delay: 2500,  
-                disableOnInteraction: false,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            }
-        });
-
-        // Toggle Switch Logic with Auto-Navigation
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("toggle-role").addEventListener("change", function() {
-                if (this.checked) {
-                    window.location.href = "../Admin/admin.html";
-                } else {
-                    window.location.href = "Login_page.html";
-                }
-            });
-        });
-
-
-
-        // Subscriber login checking using  phonenumber(empty or not)
-        //userlogin is my Login button ID
-        // Sample JSON data (this would be fetched from a file in a real-world scenario)
-const users = [
-    {"firstname": "Aarav", "phone_number": "9876543210", "email": "aarav.sharma@example.com", "card_number": "4111-1111-1111-1111", "address": "12 MG Road, Mumbai, Maharashtra"},
-    {"firstname": "Ishita", "phone_number": "8765432109", "email": "ishita.verma@example.com", "card_number": "5500-0000-0000-0004", "address": "34 Park Street, Kolkata, West Bengal"},
-    {"firstname": "Rahul", "phone_number": "7654321098", "email": "rahul.mishra@example.com", "card_number": "3400-0000-0000-009", "address": "56 Civil Lines, Delhi"},
-    {"firstname": "Sneha", "phone_number": "6543210987", "email": "sneha.iyer@example.com", "card_number": "6011-0000-0000-0004", "address": "78 MG Road, Chennai, Tamil Nadu"},
-    {"firstname": "Karan", "phone_number": "5432109876", "email": "karan.singh@example.com", "card_number": "3000-0000-0000-04", "address": "90 Brigade Road, Bangalore, Karnataka"},
-    {"firstname": "Ananya", "phone_number": "4321098765", "email": "ananya.reddy@example.com", "card_number": "6011-1111-1111-1117", "address": "45 Jubilee Hills, Hyderabad, Telangana"},
-    {"firstname": "Vikram", "phone_number": "3210987654", "email": "vikram.nair@example.com", "card_number": "4111-2222-3333-4444", "address": "23 Marine Drive, Kochi, Kerala"},
-    {"firstname": "Priya", "phone_number": "2109876543", "email": "priya.chauhan@example.com", "card_number": "5500-1111-2222-3333", "address": "67 Janpath, Jaipur, Rajasthan"},
-    {"firstname": "Rohan", "phone_number": "1098765432", "email": "rohan.patel@example.com", "card_number": "3400-5555-6666-7777", "address": "89 SG Highway, Ahmedabad, Gujarat"},
-    {"firstname": "Meera", "phone_number": "9597220942", "email": "meera.das@example.com", "card_number": "6011-7777-8888-9999", "address": "11 VIP Road, Bhubaneswar, Odisha"}
-];
-
-// Function to check phone number        
-    document.getElementById("userlogin").addEventListener("click", function(event) {
-    event.preventDefault(); // Prevent form submission
-    let phoneNumber = document.getElementById("phone_number").value.trim();
-    let mess = document.querySelector("#error");
-
-    // Regular expression to check if the phone number contains exactly 10 digits
-    let phonePattern = /^[0-9]{10}$/;
-
-    if (phoneNumber === "") {
-        mess.textContent = "Phone number cannot be empty.";
-    } 
-    else if (!phonePattern.test(phoneNumber)) {
-        mess.textContent = "Phone number is invalid. Enter a 10-digit number.";
-    } 
-    else {
-        let userExists = users.some(user => user.phone_number === phoneNumber);
-
-        if (userExists){
-            localStorage.setItem("userPhoneNumber", phoneNumber);
-
-            window.location.href = "planspage.html"; // Redirect to user page
-            document.getElementById("plans-section").style.display = "block"; // Show plans section
-            displayRandomPlans(); 
+    var swiper = new Swiper(".mySwiper", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        coverflowEffect: {
+            rotate: 0,  
+            stretch: 0,
+            depth: 400,
+            modifier: 1,
+            slideShadows: false,
+        },
+        loop: true,
+        autoplay: {
+            delay: 2500,  
+            disableOnInteraction: false,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
         }
+    });
 
-        else {
-           //send error message
-           mess.textContent="Please enter a valid Pre-Zee PhoneNumber";
-        }
-    }
-
-});
-
-
-
-
-
-        let scrollBtn = document.getElementById("scrollTopBtn");
-
-        // Show button when user scrolls down 300px
-        window.onscroll = function() {
-            if (document.documentElement.scrollTop > 300) {
-                scrollBtn.style.display = "block";
+    // Toggle Switch Logic with Auto-Navigation
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("toggle-role").addEventListener("change", function() {
+            if (this.checked) {
+                window.location.href = "../Admin/admin.html";
             } else {
-                scrollBtn.style.display = "none";
+                window.location.href = "Login_page.html";
             }
-        };
+        });
+    });
 
-        // Scroll to top smoothly
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: "smooth" });
+    // Subscriber login checking using phonenumber (empty or not)
+    const users = [
+        {"firstname": "Aarav", "phone_number": "9876543210", "email": "aarav.sharma@example.com", "card_number": "4111-1111-1111-1111", "address": "12 MG Road, Mumbai, Maharashtra"},
+        {"firstname": "Ishita", "phone_number": "8765432109", "email": "ishita.verma@example.com", "card_number": "5500-0000-0000-0004", "address": "34 Park Street, Kolkata, West Bengal"},
+        {"firstname": "Rahul", "phone_number": "7654321098", "email": "rahul.mishra@example.com", "card_number": "3400-0000-0000-009", "address": "56 Civil Lines, Delhi"},
+        {"firstname": "Sneha", "phone_number": "6543210987", "email": "sneha.iyer@example.com", "card_number": "6011-0000-0000-0004", "address": "78 MG Road, Chennai, Tamil Nadu"},
+        {"firstname": "Karan", "phone_number": "5432109876", "email": "karan.singh@example.com", "card_number": "3000-0000-0000-04", "address": "90 Brigade Road, Bangalore, Karnataka"},
+        {"firstname": "Ananya", "phone_number": "4321098765", "email": "ananya.reddy@example.com", "card_number": "6011-1111-1111-1117", "address": "45 Jubilee Hills, Hyderabad, Telangana"},
+        {"firstname": "Vikram", "phone_number": "3210987654", "email": "vikram.nair@example.com", "card_number": "4111-2222-3333-4444", "address": "23 Marine Drive, Kochi, Kerala"},
+        {"firstname": "Priya", "phone_number": "2109876543", "email": "priya.chauhan@example.com", "card_number": "5500-1111-2222-3333", "address": "67 Janpath, Jaipur, Rajasthan"},
+        {"firstname": "Rohan", "phone_number": "1098765432", "email": "rohan.patel@example.com", "card_number": "3400-5555-6666-7777", "address": "89 SG Highway, Ahmedabad, Gujarat"},
+        {"firstname": "Meera", "phone_number": "9597220942", "email": "meera.das@example.com", "card_number": "6011-7777-8888-9999", "address": "11 VIP Road, Bhubaneswar, Odisha"}
+    ];
+
+    document.getElementById("userlogin").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent form submission
+        let phoneNumber = document.getElementById("phone_number").value.trim();
+        let mess = document.querySelector("#error");
+
+        // Regular expression to check if the phone number contains exactly 10 digits
+        let phonePattern = /^[0-9]{10}$/;
+
+        if (phoneNumber === "") {
+            mess.textContent = "Phone number cannot be empty.";
+        } 
+        else if (!phonePattern.test(phoneNumber)) {
+            mess.textContent = "Phone number is invalid. Enter a 10-digit number.";
+        } 
+        else {
+            let userExists = users.some(user => user.phone_number === phoneNumber);
+
+            if (userExists){
+                localStorage.setItem("userPhoneNumber", phoneNumber);
+                window.location.href = "planspage.html"; // Redirect to user page
+                document.getElementById("plans-section").style.display = "block"; // Show plans section
+                displayRandomPlans(); 
+            }
+            else {
+                //send error message
+                mess.textContent="Please enter a valid Pre-Zee PhoneNumber";
+            }
         }
+    });
 
+    let scrollBtn = document.getElementById("scrollTopBtn");
 
-    
+    // Show button when user scrolls down 300px
+    window.onscroll = function() {
+        if (document.documentElement.scrollTop > 300) {
+            scrollBtn.style.display = "block";
+        } else {
+            scrollBtn.style.display = "none";
+        }
+    };
 
+    // Scroll to top smoothly
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 </script>
 
-
 <!-- Footer -->
-<footer class="footer mt-5 bg-dark text-white py-4" id="contact">
+<footer class="footer mt-5 text-white py-4" id="contact">
     <div class="container text-center text-md-start">
         <div class="row">
             <!-- About Us -->
@@ -741,19 +775,15 @@ const users = [
                 <p>Email: support@mobileprepay.com</p>
                 <p>Phone: +1 800 123 4567</p>
                 <p>Address: 123, Digital Tower, Tech City</p>
-                <table>
-                    <h5>Follow us on </h5>
-                    <tr>
-                        <td><i class="bi bi-instagram m-2"></i></td>
-                        <td><i class="bi bi-twitter-x  m-2"></i></td>
-                        <td><i class="bi bi-facebook  m-2"></i></td>
-                    </tr>
-                </table>
+                <h5>Follow Us</h5>
+                <div>
+                    <i class="bi bi-instagram m-2"></i>
+                    <i class="bi bi-twitter-x m-2"></i>
+                    <i class="bi bi-facebook m-2"></i>
+                </div>
             </div>
         </div>
-
         <hr class="bg-light">
-
         <!-- Copyright Notice -->
         <div class="text-center mt-3">
             <p class="mb-0">

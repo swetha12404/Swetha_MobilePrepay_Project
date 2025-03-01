@@ -15,33 +15,29 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> <!--for icon-->
     
 <style>
-.navbar {
-    background-color: #1B4D3E !important; /* Bootstrap primary blue */
-    padding-left: 30px;
-    padding-right: 25px ;
-    height: 60px; /* Adjust as needed */
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.navbar .nav-link,
-.navbar .navbar-brand,
-.navbar .nav-link.dropdown-toggle {
-    color: white !important; /* Ensures text is white */
-}
-
-.navbar .nav-link:hover,
-.navbar .nav-link:focus {
-    color: #f8f9fa !important; /* Lighter shade on hover */
-}
-
-
+     body {
+            font-family: 'Poppins', sans-serif;
+        }
+    .navbar {
+            background-color: #1B4D3E !important;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Added shadow */
+            padding: 10px 30px; /* Updated padding */
+            height: 70px; /* Increased height */
+        }
+        .navbar .nav-link,
+        .navbar .navbar-brand {
+            color: white !important;
+            transition: transform 0.3s ease; /* Added transition for hover effect */
+        }
+        .navbar .nav-link:hover {
+            transform: scale(1.1); /* Scale on hover */
+        }
 .breadcrumbs {
     font-size: 16px;
     padding: 10px;
     border-radius: 5px;
     width: fit-content;
-    margin-top: 60px; /* Adjust margin for visibility */
+    margin-top: 70px; /* Adjust margin for visibility */
 }
 
 .breadcrumbs a {
@@ -78,8 +74,10 @@
         .categories-sidebar {
             height: 100vh;
             overflow-y: auto;
-            background-color: #f8f9fa;
+            background-color:#ebf2f0;
             padding: 15px;
+            border-color: #145A32;
+
         }
 
         /* .category:hover {
@@ -134,6 +132,44 @@
         }
 
 
+        /* Search Bar Styles */
+.search-container {
+    position: relative;
+    width: 300px; /* Default width - customizable */
+    margin-left: auto;
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px 35px 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #1B4D3E;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #145A32;
+    box-shadow: 0 0 5px rgba(27, 77, 62, 0.3);
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #1B4D3E;
+    cursor: pointer;
+}
+
+/* No results message */
+.no-results {
+    text-align: center;
+    color: #145A32;
+    padding: 20px;
+    font-size: 1.2rem;
+}
+
 
     </style>
 </head>
@@ -142,7 +178,7 @@
 
 <!-- Navbar -->
 
-<div class="navbar navbar-expand-md bg-body-tertiary fixed-top">
+<div class="navbar navbar-expand-md bg-body-tertiary fixed-top h6">
     <div class="container-fluid">
         <a href="Login_page.html" class="navbar-brand text-decoration-none ms-2">
             <img src="images/prezee2.png" style="width: 50px;">
@@ -173,8 +209,8 @@
 
 
     
-    <div class="container-fluid" style="background-color: #f3f6f4; ">
-        <nav class="breadcrumbs" style="background-color: #f3f6f4; margin-left: 27px;"> 
+    <div class="container-fluid" style="background-color:#ebf2f0;margin-bottom: 25px;">
+        <nav class="breadcrumbs" style="background-color:#ebf2f0; margin-left:27px;"> 
             <a href="Login_page.html">Home</a>&lt; 
             <a href="#"> &nbsp;Plan</a>&lt;
         </nav>
@@ -188,12 +224,12 @@
         <div class="row">
             <!-- Sidebar Categories -->
             <div class="col-md-3 categories-sidebar">
-                <div class="container p-1 mb-3" style="background-color: #f3f6f4;;">
+                <div class="container p-1 mb-3" style="background-color: #ebf2f0">
                     <p class="text-center mb-2" id="userPhone"></p> <!--User entered phone number-->
 
                 </div>
 
-                <h5 class="text-center mb-3 ">Categories</h5>
+                <h5 class="text-center mb-3  ">Plan Categories</h5>
                 <ul class="list-group" id="categories">
                     <li class="list-group-item category p-4" data-category="Popular Plans">Popular Plans</li>
                     <li class="list-group-item category p-4" data-category="Validity Plans">Validity Plans</li>
@@ -208,12 +244,20 @@
             </div>
             
             <!-- Plans Display -->
-            <div class="col-md-9">
-                <h2 id="selected-category"></h2> <!-- Plan category title -->
-                <div id="plan-container" class="row">
-                    
-                </div>
+<div class="col-md-9">
+    <div class="row align-items-center mb-4">
+        <div class="col mt-3">
+            <h3 id="selected-category" style="color:#1B4D3E;"><b></b></h3> <!-- Plan category title -->
+        </div>
+        <div class="col-auto">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search plans...">
+                <i class="bi bi-search search-icon"></i>
             </div>
+        </div>
+    </div>
+    <div id="plan-container" class="row"></div>
+</div>
         </div>
     </div>
 </div>
@@ -258,13 +302,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-   document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const planContainer = document.getElementById("plan-container");
     const categoryTitle = document.getElementById("selected-category");
+    const searchInput = document.getElementById("searchInput");
     let plansData = {}; // Store JSON data
+    let currentCategory = ""; // Track current category
 
     // Fetch plans from JSON file
-    fetch("/Json_files/plans.json")
+    fetch("../Json_files/plans.json")
         .then(response => response.json())
         .then(data => {
             plansData = data;
@@ -273,50 +319,72 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Error fetching plans:", error));
 
     // Function to display plans of a selected category
-    function displayPlans(category) {
+    function displayPlans(category, searchTerm = "") {
+        currentCategory = category;
         categoryTitle.textContent = category;
         planContainer.innerHTML = "";
 
         if (plansData[category]) {
-            plansData[category].forEach(plan => {
-            const amount = plan.name.match(/₹(\d+)/)[1]; // Extract amount from plan name
-            const planCard = `
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">${plan.name}</h5>
-                            <p class="card-text">${plan.details}</p>
-                            <div class="d-flex justify-content-center">
-                                <button class="btn rounded-2 buy-btn" style="background-color:#1B4D3E; color:white;"
-                                    data-plan_id="${plan.plan_id}"
-                                    data-name="${plan.name}" 
-                                    data-details="${plan.details}" 
-                                    data-category="${category}"
-                                    data-amount="${amount}">
-                                    Buy
-                                </button>
+            let filteredPlans = plansData[category];
+            
+            // Apply search filter if search term exists
+            if (searchTerm) {
+                filteredPlans = filteredPlans.filter(plan => 
+                    plan.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    plan.details.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+
+            if (filteredPlans.length > 0) {
+                filteredPlans.forEach(plan => {
+                    const amount = plan.name.match(/₹(\d+)/)?.[1] || "";
+                    const planCard = `
+                        <div class="col-md-4 mb-4 ">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">${plan.name}</h5>
+                                    <p class="card-text">${plan.details}</p>
+                                    <div class="d-flex justify-content-center">
+                                        <button class="btn rounded-2 buy-btn" style="background-color:#1B4D3E; color:white;"
+                                            data-plan_id="${plan.plan_id}"
+                                            data-name="${plan.name}" 
+                                            data-details="${plan.details}" 
+                                            data-category="${category}"
+                                            data-amount="${amount}">
+                                            Buy
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            `;
-            planContainer.innerHTML += planCard;
-        });
-
-            // Attach event listener to "Buy" buttons
-            document.querySelectorAll(".buy-btn").forEach(button => {
-                button.addEventListener("click", function () {
-                    const selectedPlan = {
-                        plan_id:this.getAttribute("data-plan_id"),
-                        name: this.getAttribute("data-name"),
-                        details: this.getAttribute("data-details"),
-                        category: this.getAttribute("data-category"),
-                        amount: this.getAttribute("data-amount"),
-                    };
-                    localStorage.setItem("selectedPlan", JSON.stringify(selectedPlan));
-                    window.location.href = "Payment1.html"; // Redirect to payment page
+                    `;
+                    planContainer.innerHTML += planCard;
                 });
-            });
+
+                // Attach event listener to "Buy" buttons
+                document.querySelectorAll(".buy-btn").forEach(button => {
+                    button.addEventListener("click", function () {
+                        const selectedPlan = {
+                            plan_id: this.getAttribute("data-plan_id"),
+                            name: this.getAttribute("data-name"),
+                            details: this.getAttribute("data-details"),
+                            category: this.getAttribute("data-category"),
+                            amount: this.getAttribute("data-amount"),
+                        };
+                        localStorage.setItem("selectedPlan", JSON.stringify(selectedPlan));
+                        window.location.href = "Payment1.html";
+                    });
+                });
+            } else {
+                planContainer.innerHTML = `
+    <div class="col-12 no-results" style="position: relative; text-align: center; display: flex; justify-content: center;">
+        <img src="images/not found.avif" style="width: 600px; height: auto; opacity: 0.3;">
+        <p style="position: absolute; top: 65%; left: 45%; transform: translate(-50%, -50%); font-size: 20px; font-weight: bold; color: #1B4D3E;">
+           Sorry! No plans available. Check back soon.
+        </p>
+    </div>
+`;
+            }
         }
     }
 
@@ -333,8 +401,13 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".category").forEach(category => {
         category.addEventListener("click", function () {
             const selectedCategory = this.getAttribute("data-category");
-            displayPlans(selectedCategory);
+            displayPlans(selectedCategory, searchInput.value); // Apply current search term
         });
+    });
+
+    // Search functionality
+    searchInput.addEventListener("input", function () {
+        displayPlans(currentCategory, this.value);
     });
 });
 

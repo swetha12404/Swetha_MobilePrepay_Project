@@ -11,28 +11,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-
-     .navbar {
-    background-color: #1B4D3E !important; /* Bootstrap primary blue */
-    padding-left: 30px;
-    padding-right: 25px ;
-    height: 60px; /* Adjust as needed */
-    padding-top: 5px;
-    padding-bottom: 5px;
-    }
-
-
-    .navbar .nav-link,
-    .navbar .navbar-brand,
-    .navbar .nav-link.dropdown-toggle {
-          color: white !important; /* Ensures text is white */
-    }
-
-    .navbar .nav-link:hover,
-    .navbar .nav-link:focus {
-    color: #f8f9fa !important; /* Lighter shade on hover */
-    }
-
+  .navbar {
+            background-color: #1B4D3E !important;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Added shadow */
+            padding: 10px 30px; /* Updated padding */
+            height: 70px; /* Increased height */
+        }
+        .navbar .nav-link,
+        .navbar .navbar-brand {
+            color: white !important;
+            transition: transform 0.3s ease; /* Added transition for hover effect */
+        }
+        .navbar .nav-link:hover {
+            transform: scale(1.1); /* Scale on hover */
+        }
     #scrollTopBtn {
             position: fixed;
             bottom: 20px;
@@ -71,7 +63,7 @@
     padding: 10px;
     border-radius: 5px;
     width: fit-content;
-    margin-top: 50px; /* Adjust margin for visibility */
+    margin-top: 70px; /* Adjust margin for visibility */
 }
 
 .breadcrumbs a {
@@ -93,7 +85,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    margin-top: 100px;
+    margin-top: 120px;
     background-color: #f4f9f6;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     padding-top: 20px;
@@ -119,7 +111,7 @@
 
     
 <!-- Navbar -->
-<div class="navbar navbar-expand-md bg-body-tertiary fixed-top">
+<div class="navbar navbar-expand-md bg-body-tertiary fixed-top h6">
     <div class="container-fluid">
         <a href="Login_page.html" class="navbar-brand text-decoration-none ms-2">
             <img src="images/prezee2.png" style="width: 50px;">
@@ -191,7 +183,7 @@
                     <button class="w-full text-center text-white p-2 rounded mt-3 hover:bg-blue-600" style="background-color: #1B4D3E;width: 100px; margin-left: 120px;">Save Profile</button>
 
                 </form>
-                    <h2 class="text-xl font-bold mb-3 mt-5">Transaction</h2>
+                    <h2 class="text-xl font-bold mb-3 mt-5">Transactions</h2>
     
                     <table>
                         <tr>
@@ -208,7 +200,7 @@
                     <tr><td>#9101</td><td>₹199</td><td>2GB</td><td>28 Days</td><td>10/01/2023</td><td>UPI</td></tr>
                     </table>
 
-                    <h2 class="text-xl font-bold mb-3 mt-5">Plan History</h2>
+                    <h2 class="text-xl font-bold mb-3 mt-5">Recent Plan</h2>
 
                     <div class="row">
                         <div class="col-md-6">

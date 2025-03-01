@@ -15,9 +15,9 @@
     "name": "Ishita Verma",
     "mobile": "8765432109",
     "plan_id": "P002",
-    "expiry": "2025-02-24",
+    "expiry": "2025-03-24",
     "email": "ishita.verma@example.com",
-    "status": "inactive",
+    "status": "active",
     "rechargeHistory": [
       { "planName": "Standard Monthly", "date": "2025-02-02", "paymentType": "Credit Card" },
       { "planName": "OTT", "date": "2025-02-08", "paymentType": "UPI" }
@@ -31,8 +31,8 @@
     "email": "rahul.mishra@example.com",
     "status": "inactive",
     "rechargeHistory": [
-      { "planName": "Premium Monthly", "date": "2025-01-22", "paymentType": "UPI" },
-      { "planName": "Combo/Validity", "date": "2025-02-05", "paymentType": "Debit Card" }
+      { "planName": "Premium Monthly", "date": "2024-07-22", "paymentType": "UPI" },
+      { "planName": "Combo/Validity", "date": "2024-09-05", "paymentType": "Debit Card" }
     ]
   },
   {

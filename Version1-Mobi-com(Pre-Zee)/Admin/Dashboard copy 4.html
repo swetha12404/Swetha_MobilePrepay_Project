@@ -10,11 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
 
 
     <style>
@@ -181,71 +176,12 @@
     .notify-all-btn:hover {
         background-color: #145c3a;
     }
-
-
-    .dataTables_wrapper .dataTables_filter {
-    float: right;
-    margin-bottom: 15px;
-}
-
-.dataTables_wrapper .dataTables_filter input {
-    border: 1px solid #1B4D3E;
-    transition: border-color 0.3s;
-}
-
-.dataTables_wrapper .dataTables_filter input:focus {
-    outline: none;
-    border-color: #28a745;
-    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
-}
-
-.dataTables_wrapper .dataTables_length {
-    float: left;
-    margin-bottom: 15px;
-}
-
-.dataTables_wrapper .dataTables_paginate {
-    margin-top: 15px;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    margin: 0 2px;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button.active .page-link {
-    background-color: #1B4D3E;
-    border-color: #1B4D3E;
-    color: white;
-}
-
-.dataTables_wrapper .dataTables_paginate .page-link {
-    color: #1B4D3E;
-}
-
-.dataTables_wrapper .dataTables_paginate .page-link:hover {
-    background-color: #ebf2f0;
-    border-color: #1B4D3E;
-}
-
-#userDetailsContent p {
-    margin-bottom: 10px;
-    font-size: 16px;
-}
-
-#userDetailsContent strong {
-    display: inline-block;
-    width: 120px;
-    color: #1B4D3E;
-}
-
-#rechargeHistoryTable {
-    margin-top: 15px;
-}
-
 </style>
 
-</head>
 
+
+    </style>
+</head>
 <body>
 
     <!-- Navbar remains the same -->
@@ -349,40 +285,6 @@
     </div>
 </div>
 
-<!-- User Details Modal -->
-<div id="userDetailsModal" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #1B4D3E; color: white;">
-                <h5 class="modal-title">Subscriber Details</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div id="userDetailsContent" class="row">
-                    <!-- User details will be injected here -->
-                </div>
-                <hr>
-                <h6>Recharge History</h6>
-                <table class="table table-bordered" id="rechargeHistoryTable">
-                    <thead>
-                        <tr>
-                            <th>Plan Name</th>
-                            <th>Date</th>
-                            <th>Payment Type</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rechargeHistoryBody">
-                        <!-- Recharge history will be injected here -->
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
     <!-- Main Content Area -->
     <div class="content" id="main-content" style="margin-top: 60px;">
         <!-- Content will be loaded dynamically -->
@@ -417,21 +319,21 @@
     document.getElementById('main-content').innerHTML = `
        <h2 class="ms-4 mb-4 mt-3" style="color: #1B4D3E">Dashboard</h2>
   <div class="row mt-4">
-    <div class="col-md-4 col-sm-6 mb-2">
+    <div class="col-md-3 me-2 ms-3">
         <div class="subscriber-card">
             <i class="fa-solid fa-file-alt"></i>
             <h4>Total Plans</h4>
             <p class="h2" style="color: #1B4D3E">${totalPlans}</p>
         </div>
     </div>
-    <div class="col-md-4 col-sm-6 mb-2">
+    <div class="col-md-3 me-2">
         <div class="subscriber-card">
             <i class="fa-solid fa-users"></i>
             <h4>Total Customers</h4>
             <p class="h2" style="color: #1B4D3E">${totalSubscribers}</p>
         </div>
     </div>
-    <div class="col-md-4 col-sm-6 mb-2">
+    <div class="col-md-3 me-2">
         <div class="subscriber-card">
             <i class="fa-solid fa-chart-line"></i>            
             <h4>Total Revenue</h4>
@@ -462,9 +364,8 @@
                 <td>${getPlanDetails(user.plan_id)}</td>
                 <td>${formatDate(user.expiry)}</td>
                 <td>
-                    <button class="btn btn-sm" style="background-color:#1B4D3E; color:white; border-radius:10px; padding:5px 15px; border:none;" 
-                                    onclick="showUserDetails('${user.email}')">
-                                <i class="bi bi-eye-fill"></i> View
+                    <button style="background-color:#1B4D3E;color:white;border-radius:10px; padding:5px 12px; border:none;">
+                        Notify
                     </button>
                 </td>
             </tr>
@@ -474,16 +375,33 @@
 
     <div class="row mt-5 ms-3 pt-3">
         <div class="col-md-6 d-flex flex-column align-items-center">
-            <h3 class="mb-3">Users grouth</h3>
-            <canvas id="userGrowthChart" style="max-width: 500px; max-height: 300px;"></canvas>
-        </div>
-        <div class="col-md-6 d-flex flex-column align-items-center">
             <h3 class="mb-3">Active vs Inactive Users</h3>
             <canvas id="userPieChart" style="max-width: 400px; max-height: 300px;"></canvas>
+        </div>
+        <div class="col-md-6 d-flex flex-column align-items-center">
+            <h3 class="mb-3">Users grouth</h3>
+            <canvas id="userGrowthChart" style="max-width: 500px; max-height: 300px;"></canvas>
         </div>
     </div>
     `;
 
+    // Render Pie Chart
+    const ctxPie = document.getElementById('userPieChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'pie',
+        data: {
+            labels: ['Active Users', 'Inactive Users'],
+            datasets: [{
+                data: [activeUsers, inactiveUsers],
+                backgroundColor: ['#28a745', '#dc3545'], // Green & Red
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
 
     // Render Line Chart for User Growth
     const ctxLine = document.getElementById('userGrowthChart').getContext('2d');
@@ -509,27 +427,8 @@
             }
         }
     });
-
-    // Render Pie Chart
-    const ctxPie = document.getElementById('userPieChart').getContext('2d');
-    new Chart(ctxPie, {
-        type: 'pie',
-        data: {
-            labels: ['Active Users', 'Inactive Users'],
-            datasets: [{
-                data: [activeUsers, inactiveUsers],
-                backgroundColor: ['#28a745', '#dc3545'], // Green & Red
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
-        }
-    });
-
-    
 }
+
 
 
 
@@ -571,278 +470,162 @@ function setActive(element) {
         }
 
         function loadSubscriberManagement() {
-    const activeSubscribers = usersData.filter(user => user.status.toLowerCase() === 'active');
-    const inactiveSubscribers = usersData.filter(user => user.status.toLowerCase() === 'inactive');
-    const expiringSubscribers = getExpiringUsers(3);
+            const activeSubscribers = usersData.filter(user => user.status.toLowerCase() === 'active');
+            const inactiveSubscribers = usersData.filter(user => user.status.toLowerCase() === 'inactive');
+            const expiringSubscribers = getExpiringUsers(3);
 
-    document.getElementById('main-content').innerHTML = `
-        <h2 class="mb-4 mt-4 pb-2" style="color: #1B4D3E">Subscriber Management</h2>
-        <div class="row"> 
-            <div class="col-md-3">
-                <div class="subscriber-card" onclick="showSubscriberList('active')">
-                    <i class="bi bi-person-check-fill" style="font-size: 2rem; color: #28a745;"></i>
-                    <h4>Active Subscribers</h4>
-                    <p class="h2">${activeSubscribers.length}</p>
+            document.getElementById('main-content').innerHTML = `
+                <h2 class="mb-4 mt-4 pb-2" style="color: #1B4D3E">Subscriber Management</h2>
+                <div class="row"> 
+                    <div class="col-md-3">
+                        <div class="subscriber-card" onclick="showSubscriberList('active')">
+                            <i class="bi bi-person-check-fill" style="font-size: 2rem; color: #28a745;"></i>
+                            <h4>Active Subscribers</h4>
+                            <p class="h2">${activeSubscribers.length}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="subscriber-card" onclick="showSubscriberList('inactive')">
+                            <i class="bi bi-person-dash-fill" style="font-size: 2rem; color: #dc3545;"></i>
+                            <h4>Inactive Subscribers</h4>
+                            <p class="h2">${inactiveSubscribers.length}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="subscriber-card" onclick="showSubscriberList('expiring')">
+                            <i class="bi bi-hourglass-split" style="font-size: 2rem; color: #ffc107;"></i>
+                            <h4>Expiring Soon</h4>
+                            <p class="h2">${expiringSubscribers.length}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="subscriber-card" onclick="showSubscriberList('all')">
+                            <i class="bi bi-people-fill" style="font-size: 2rem; color: #0d6efd;"></i>
+                            <h4>All Subscribers</h4>
+                            <p class="h2">${usersData.length}</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <div class="subscriber-card" onclick="showSubscriberList('inactive')">
-                    <i class="bi bi-person-dash-fill" style="font-size: 2rem; color: #dc3545;"></i>
-                    <h4>Inactive Subscribers</h4>
-                    <p class="h2">${inactiveSubscribers.length}</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="subscriber-card" onclick="showSubscriberList('expiring')">
-                    <i class="bi bi-hourglass-split" style="font-size: 2rem; color: #ffc107;"></i>
-                    <h4>Expiring Soon</h4>
-                    <p class="h2">${expiringSubscribers.length}</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="subscriber-card" onclick="showSubscriberList('all')">
-                    <i class="bi bi-people-fill" style="font-size: 2rem; color: #0d6efd;"></i>
-                    <h4>All Subscribers</h4>
-                    <p class="h2">${usersData.length}</p>
-                </div>
-            </div>
-        </div>
-        <div id="subscriber-list" style="margin-top:40px"></div>
-    `;
+                <div id="subscriber-list" style="margin-top:40px"></div>
+            `;
 
-    showSubscriberList('active');
-}
+            showSubscriberList('active');
+        }
 
-function showSubscriberList(type) {
-    let subscribers, title, showNotifyColumn = false;
+        function showSubscriberList(type) {
+            let subscribers, title, showNotifyColumn = false;
 
-    switch (type) {
-        case 'active':
-            subscribers = usersData.filter(user => user.status.toLowerCase() === 'active');
-            title = 'Active Subscribers';
-            break;
-        case 'inactive':
-            subscribers = usersData.filter(user => user.status.toLowerCase() === 'inactive');
-            title = 'Inactive Subscribers';
-            break;
-        case 'expiring':
-            subscribers = getExpiringUsers(3);
-            title = 'Expiring Soon';
-            showNotifyColumn = true;
-            break;
-        default:
-            subscribers = usersData;
-            title = 'All Subscribers';
-    }
-
-    let notifyAllButton = '';
-    if (showNotifyColumn) {
-        notifyAllButton = `<button class="notify-all-btn mb-3" onclick="showNotifyAllModal()">Notify All</button>`;
-    }
-
-    document.getElementById('subscriber-list').innerHTML = `
-        <h3 class="mt-5 mb-4 pb-2" style="color: #1B4D3E">${title}</h3>
-        ${notifyAllButton}
-        <table id="subscriberTable" class="table table-bordered table-hover" style="width:100%">
-            <thead style="color: #1B4D3E; background-color: #ebf2f0;">
-                <tr>
-                    <th>Name</th>
-                    <th>Mobile</th>
-                    <th>Email</th>
-                    <th>Plan Details</th>
-                    <th>Expiry Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                    ${showNotifyColumn ? '<th>Notify</th>' : ''}
-                </tr>
-            </thead>
-            <tbody>
-                ${subscribers.map(user => `
-                    <tr>
-                        <td>${user.name}</td>
-                        <td>${user.mobile}</td>
-                        <td>${user.email}</td>
-                        <td>${getPlanDetails(user.plan_id)}</td>
-                        <td>${formatDate(user.expiry)}</td>
-                        <td>
-                            <span class="badge ${user.status.toLowerCase() === 'active' ? 'bg-success' : 'bg-danger'}">
-                                ${user.status}
-                            </span>
-                        </td>
-                        <td>
-                            <button class="btn btn-sm" style="background-color:#1B4D3E; color:white; border-radius:10px; padding:5px 15px; border:none;" 
-                                    onclick="showUserDetails('${user.email}')">
-                                <i class="bi bi-eye-fill"></i> View
-                            </button>
-                        </td>
-                        ${showNotifyColumn ? `
-                            <td>
-                                <button class="btn btn-sm" style="background-color:#ffc107; color:white; border-radius:10px; padding:5px 15px; border:none;" 
-                                        onclick="showNotifyModal('${user.email}')">
-                                    <i class="bi bi-bell-fill"></i> Notify
-                                </button>
-                            </td>
-                        ` : ''}
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-    `;
-
-    // Destroy existing DataTable if it exists
-    if ($.fn.DataTable.isDataTable('#subscriberTable')) {
-        $('#subscriberTable').DataTable().destroy();
-    }
-
-    // Initialize DataTable with pagination and search
-    $('#subscriberTable').DataTable({
-        responsive: true,
-        pageLength: 5,
-        lengthMenu: [[5, 10, 25, 50], [5, 10, 25, 50]],
-        paging: true,
-        searching: true,
-        ordering: true,
-        info: true,
-        language: {
-            search: "",
-            searchPlaceholder: "Search subscribers...",
-            emptyTable: "No subscribers found",
-            info: "Showing _START_ to _END_ of _TOTAL_ subscribers",
-            infoEmpty: "Showing 0 to 0 of 0 subscribers",
-            lengthMenu: "Show _MENU_ subscribers per page",
-            paginate: {
-                first: "First",
-                last: "Last",
-                next: "Next",
-                previous: "Previous"
+            switch (type) {
+                case 'active':
+                    subscribers = usersData.filter(user => user.status.toLowerCase() === 'active');
+                    title = 'Active Subscribers';
+                    break;
+                case 'inactive':
+                    subscribers = usersData.filter(user => user.status.toLowerCase() === 'inactive');
+                    title = 'Inactive Subscribers';
+                    break;
+                case 'expiring':
+                    subscribers = getExpiringUsers(3);
+                    title = 'Expiring Soon';
+                    showNotifyColumn = true;
+                    break;
+                default:
+                    subscribers = usersData;
+                    title = 'All Subscribers';
             }
-        },
-        columnDefs: [
-            { orderable: false, targets: -1 }
-        ],
-        dom: '<"row mb-3"<"col-md-6"l><"col-md-6"f>>t<"row mt-3"<"col-md-6"i><"col-md-6"p>>'
-    });
 
-    // Style the search input and pagination
-    $('.dataTables_filter input').addClass('form-control').css({
-        'width': '300px',
-        'margin-left': 'auto',
-        'display': 'block',
-        'border-radius': '20px',
-        'padding': '8px 15px'
-    });
+            let notifyAllButton = '';
+            if (showNotifyColumn) {
+                notifyAllButton = `<button class="notify-all-btn" onclick="showNotifyAllModal()">Notify All</button>`;
+            }
 
-    $('.dataTables_paginate').addClass('pagination').find('a').addClass('page-link');
-    $('.dataTables_paginate .paginate_button').addClass('page-item');
-    $('.dataTables_paginate .paginate_button.current').addClass('active');
-}
+            document.getElementById('subscriber-list').innerHTML = `
+                <h3 class="mt-5 mb-4 pb-2" style="color: #1B4D3E">${title}</h3>
+                ${notifyAllButton}
+                <table id="subscriberTable" class="display nowrap mt-4" style="width:100%">
+                    <thead style="color: #1B4D3E">
+                        <tr>
+                            <th>Name</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
+                            <th>Plan Details</th>
+                            <th>Expiry Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                            ${showNotifyColumn ? '<th>Notify</th>' : ''}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${subscribers.map(user => `
+                            <tr>
+                                <td>${user.name}</td>
+                                <td>${user.mobile}</td>
+                                <td>${user.email}</td>
+                                <td>${getPlanDetails(user.plan_id)}</td>
+                                <td>${formatDate(user.expiry)}</td>
+                                <td>
+                                    <span class="badge ${user.status.toLowerCase() === 'active' ? 'bg-success' : 'bg-danger'}">
+                                        ${user.status}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button style="background-color:#1B4D3E; color:white; border-radius:10px; padding:2px 6px; border:none;">
+                                        <i class="bi bi-eye-fill"></i> View
+                                    </button>
+                                </td>
+                                ${showNotifyColumn ? `
+                                    <td>
+                                        <button style="background-color:#ffc107; color:white; border-radius:10px; padding:2px 6px; border:none;" 
+                                                onclick="showNotifyModal('${user.email}')">
+                                            <i class="bi bi-bell-fill"></i> Notify
+                                        </button>
+                                    </td>
+                                ` : ''}
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
 
-let currentEmail = '';
-function showNotifyModal(email) {
-    currentEmail = email;
-    document.getElementById('notifyEmail').value = email;
-    document.getElementById('notifyMessage').value = 'Your Plan is About to Expire';
-    new bootstrap.Modal(document.getElementById('notifyModal')).show();
-}
+            $('#subscriberTable').DataTable({
+                responsive: true,
+                autoWidth: false,
+                pageLength: 5
+            });
+        }
 
-function sendNotification() {
-    const email = currentEmail;
-    const message = document.getElementById('notifyMessage').value;
-    showToast(`Notification sent to ${email}`, 'success');
-    console.log(`Sending to ${email}: ${message}`);
+        let currentEmail = '';
+        function showNotifyModal(email) {
+            currentEmail = email;
+            document.getElementById('notifyEmail').value = email;
+            document.getElementById('notifyMessage').value = 'Your Plan is About to Expire';
+            new bootstrap.Modal(document.getElementById('notifyModal')).show();
+        }
 
-    // Show success tick
-    const modalBody = document.querySelector('#notifyModal .modal-body');
-    modalBody.innerHTML = `
-        <div class="text-center">
-            <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
-            <p class="mt-3">Notification sent successfully to ${email}</p>
-        </div>
-    `;
-    setTimeout(() => {
-        bootstrap.Modal.getInstance(document.getElementById('notifyModal')).hide();
-        modalBody.innerHTML = `
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" id="notifyEmail" class="form-control" readonly>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Message</label>
-                <textarea id="notifyMessage" class="form-control">Your Plan is About to Expire</textarea>
-            </div>
-        `;
-    }, 2000); // Show tick for 2 seconds
-}
+        function sendNotification() {
+            const email = currentEmail;
+            const message = document.getElementById('notifyMessage').value;
+            showToast(`Notification sent to ${email}`, 'success');
+            console.log(`Sending to ${email}: ${message}`);
+            bootstrap.Modal.getInstance(document.getElementById('notifyModal')).hide();
+        }
 
-function showNotifyAllModal() {
-    document.getElementById('notifyAllMessage').value = 'Your Plan is About to Expire';
-    new bootstrap.Modal(document.getElementById('notifyAllModal')).show();
-}
+        function showNotifyAllModal() {
+            document.getElementById('notifyAllMessage').value = 'Your Plan is About to Expire';
+            new bootstrap.Modal(document.getElementById('notifyAllModal')).show();
+        }
 
-function sendAllNotifications() {
-    const message = document.getElementById('notifyAllMessage').value;
-    const expiringSubscribers = getExpiringUsers(3);
-    expiringSubscribers.forEach(user => {
-        console.log(`Sending to ${user.email}: ${message}`);
-    });
-    showToast(`Notifications sent to ${expiringSubscribers.length} subscribers`, 'success');
+        function sendAllNotifications() {
+            const message = document.getElementById('notifyAllMessage').value;
+            const expiringSubscribers = getExpiringUsers(3);
+            expiringSubscribers.forEach(user => {
+                console.log(`Sending to ${user.email}: ${message}`);
+            });
+            showToast(`Notifications sent to ${expiringSubscribers.length} subscribers`, 'success');
+            bootstrap.Modal.getInstance(document.getElementById('notifyAllModal')).hide();
+        }
 
-    // Show success tick
-    const modalBody = document.querySelector('#notifyAllModal .modal-body');
-    modalBody.innerHTML = `
-        <div class="text-center">
-            <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
-            <p class="mt-3">Notifications sent successfully to ${expiringSubscribers.length} subscribers</p>
-        </div>
-    `;
-    setTimeout(() => {
-        bootstrap.Modal.getInstance(document.getElementById('notifyAllModal')).hide();
-        modalBody.innerHTML = `
-            <div class="mb-3">
-                <label class="form-label">Message</label>
-                <textarea id="notifyAllMessage" class="form-control">Your Plan is About to Expire</textarea>
-            </div>
-        `;
-    }, 2000); // Show tick for 2 seconds
-}
-
-function showUserDetails(email) {
-    const user = usersData.find(u => u.email === email);
-    if (!user) {
-        showToast('User not found', 'error');
-        return;
-    }
-
-    document.getElementById('userDetailsContent').innerHTML = `
-        <div class="col-md-6">
-            <p><strong>Name:</strong> ${user.name}</p>
-            <p><strong>Mobile:</strong> ${user.mobile}</p>
-            <p><strong>Email:</strong> ${user.email}</p>
-        </div>
-        <div class="col-md-6">
-            <p><strong>Plan ID:</strong> ${user.plan_id}</p>
-            <p><strong>Plan Details:</strong> ${getPlanDetails(user.plan_id)}</p>
-            <p><strong>Expiry Date:</strong> ${formatDate(user.expiry)}</p>
-            <p><strong>Status:</strong> 
-                <span class="badge ${user.status.toLowerCase() === 'active' ? 'bg-success' : 'bg-danger'}">
-                    ${user.status}
-                </span>
-            </p>
-        </div>
-    `;
-
-    document.getElementById('rechargeHistoryBody').innerHTML = user.rechargeHistory.map(recharge => `
-        <tr>
-            <td>${recharge.planName}</td>
-            <td>${formatDate(recharge.date)}</td>
-            <td>${recharge.paymentType}</td>
-        </tr>
-    `).join('');
-
-    new bootstrap.Modal(document.getElementById('userDetailsModal')).show();
-}
-
-
+        
 function loadPlanManagement() {
     const categories = Object.keys(plansData);
     document.getElementById('main-content').innerHTML = `
@@ -888,19 +671,23 @@ function loadPlanManagement() {
         </div>
     `;
 
+    // Show Popular plans by default
     if (plansData.hasOwnProperty('Popular')) {
         showPlansForCategory('Popular');
     } else if (categories.length > 0) {
-        showPlansForCategory(categories[0]);
+        showPlansForCategory(categories[0]); // Fallback to first available category
     }
 }
 
+
+// Function to show modal for adding category
 function showAddCategoryModal() {
     document.getElementById('newCategoryName').value = '';
     document.getElementById('categoryError').style.display = 'none';
     new bootstrap.Modal(document.getElementById('categoryModal')).show();
 }
 
+// Function to add a new category
 function handleAddCategory() {
     const newCategory = document.getElementById('newCategoryName').value.trim();
     
@@ -909,19 +696,22 @@ function handleAddCategory() {
         return;
     }
 
-    // Case-insensitive check for existing category
-    const existingCategories = Object.keys(plansData).map(cat => cat.toLowerCase());
-    if (existingCategories.includes(newCategory.toLowerCase())) {
+    if (plansData.hasOwnProperty(newCategory)) {
         document.getElementById('categoryError').style.display = 'block';
         return;
     }
 
-    plansData[newCategory] = [];
+    plansData[newCategory] = []; // Add new category
     showToast(`Category "${newCategory}" added successfully!`, 'success');
+
+    // Close the modal
     bootstrap.Modal.getInstance(document.getElementById('categoryModal')).hide();
+
+    // Refresh category list
     updateCategoryList();
 }
 
+// Function to update category list dynamically
 function updateCategoryList() {
     const categoryList = document.getElementById('categoryList');
     categoryList.innerHTML = Object.keys(plansData).map(category => `
@@ -929,6 +719,7 @@ function updateCategoryList() {
            onclick="showPlansForCategory('${category}')">${category}</a>
     `).join('');
 }
+
 
 function showPlansForCategory(category) {
     const plans = plansData[category];
@@ -978,7 +769,6 @@ function showAddPlanForm(category) {
                 <div class="mb-3">
                     <label class="form-label">Plan ID</label>
                     <input type="text" class="form-control" name="plan_id" required>
-                    <small class="text-danger" id="planIdError" style="display:none;">Plan ID already exists!</small>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Plan Name</label>
@@ -1009,8 +799,7 @@ function showEditPlanForm(category, planId) {
             <form onsubmit="handleEditPlan(event, '${category}', '${planId}')">
                 <div class="mb-3">
                     <label class="form-label">Plan ID</label>
-                    <input type="text" class="form-control" name="plan_id" value="${planId}" required>
-                    <small class="text-danger" id="planIdError" style="display:none;">Plan ID already exists!</small>
+                    <input type="text" class="form-control" value="${planId}" disabled>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Plan Name</label>
@@ -1032,24 +821,18 @@ function handleAddPlan(event, category) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const newPlan = {
-        plan_id: formData.get('plan_id').trim(),
-        name: formData.get('name').trim(),
-        details: formData.get('details').trim()
+        plan_id: formData.get('plan_id'),
+        name: formData.get('name'),
+        details: formData.get('details')
     };
-
-    // Check if any field is empty
-    if (!newPlan.plan_id || !newPlan.name || !newPlan.details) {
-        showToast('All fields are required!', 'error');
-        return;
-    }
 
     // Check if plan ID already exists
     const planExists = Object.values(plansData).some(plans => 
-        plans.some(plan => plan.plan_id.toLowerCase() === newPlan.plan_id.toLowerCase())
+        plans.some(plan => plan.plan_id === newPlan.plan_id)
     );
 
     if (planExists) {
-        document.getElementById('planIdError').style.display = 'block';
+        showToast('Plan ID already exists', 'error');
         return;
     }
 
@@ -1061,38 +844,19 @@ function handleAddPlan(event, category) {
 function handleEditPlan(event, category, planId) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const updatedPlan = {
-        plan_id: formData.get('plan_id').trim(),
-        name: formData.get('name').trim(),
-        details: formData.get('details').trim()
-    };
-
-    // Check if any field is empty
-    if (!updatedPlan.plan_id || !updatedPlan.name || !updatedPlan.details) {
-        showToast('All fields are required!', 'error');
-        return;
-    }
-
     const planIndex = plansData[category].findIndex(p => p.plan_id === planId);
+
     if (planIndex === -1) {
         showToast('Plan not found', 'error');
         return;
     }
 
-    // Check if the new plan ID already exists elsewhere (case insensitive), excluding the current plan
-    const planExistsElsewhere = Object.entries(plansData).some(([cat, plans]) => 
-        cat !== category && plans.some(plan => plan.plan_id.toLowerCase() === updatedPlan.plan_id.toLowerCase())
-    ) || (plansData[category].some((plan, idx) => 
-        idx !== planIndex && plan.plan_id.toLowerCase() === updatedPlan.plan_id.toLowerCase())
-    );
+    plansData[category][planIndex] = {
+        ...plansData[category][planIndex],
+        name: formData.get('name'),
+        details: formData.get('details')
+    };
 
-    if (planExistsElsewhere) {
-        document.getElementById('planIdError').style.display = 'block';
-        return;
-    }
-
-    // Update the plan
-    plansData[category][planIndex] = updatedPlan;
     showToast('Plan updated successfully!', 'success');
     showPlansForCategory(category);
 }
@@ -1217,7 +981,7 @@ function loadReportAnalysis() {
                 datasets: [{
                     label: 'Number of Plans',
                     data: planCounts.map(item => item.count),
-                    backgroundColor: '#bbd0ff',
+                    backgroundColor: '#1B4D3E',
                     borderColor: '#1B4D3E',
                     borderWidth: 1
                 }]

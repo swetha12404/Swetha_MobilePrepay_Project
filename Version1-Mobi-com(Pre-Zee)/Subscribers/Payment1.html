@@ -7,20 +7,24 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> <!--for icon-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-
-
+    <!-- Removed jspdf and jspdf-autotable scripts as they are no longer needed -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script> -->
 
     <style>
 
+body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Your existing CSS remains unchanged */
 .navbar {
     background-color: #1B4D3E !important; /* Bootstrap primary blue */
     padding-left: 30px;
     padding-right: 25px ;
-    height: 50px; /* Adjust as needed */
+    height: 58px; /* Adjust as needed */
     padding-top: 5px;
     padding-bottom: 5px;
+    border-radius: 5px;
 }
 
 
@@ -43,7 +47,7 @@
     padding-bottom: 10px;
     background-color: #eef9eb; /* Light background */
     border-radius: 5px;
-    width: fit-content;
+    height: 25px;
 }
 
 .breadcrumbs a {
@@ -282,37 +286,68 @@ input:focus, select:focus {
     .selected-plan-info strong {
         color: #333;
     }
-    </style> 
 
+
+
+    /* Main Content Row */
+.content-row {
+    display: flex; /* Use flexbox for better alignment */
+    align-items: flex-start; /* Align columns at the top */
+    gap: 4px; /* Space between columns */
+    flex-wrap: wrap; /* Wrap to prevent overlap */
+}
+
+/* Column Styling */
+.content-column {
+    width: 46%; 
+    
+   
+}
+
+/* Adjust payment-card for better fit in columns */
+.payment-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    width: 80%;
+    margin: 50px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .content-row {
+        flex-direction: column; /* Stack columns on smaller screens */
+    }
+
+    .content-column {
+        width: 100%; /* Full width for small screens */
+    }
+}
+    </style> 
 </head>
 
 <body>
-
     <!-- Navbar -->
-<div class="navbar navbar-expand-md bg-body-tertiary fixed-top ">
-    <div class="container-fluid">
-        <a href="Login_page.html" class="navbar-brand text-decoration-none ms-2">
-
-            <img src="images/prezee2.png" style="width: 50px;margin-top: 13px;">
-
-            <!-- <a href="Dashboard.html" download="Report.pdf" style="margin-left: 1250px; padding-top: 15px;"><b><i class="bi bi-download text-white fs-4"></i></b></a>               -->
-
-        </a>
+    <div class="navbar navbar-expand-md bg-body-tertiary fixed-top h6 ">
+        <div class="container-fluid">
+            <a href="Login_page.html" class="navbar-brand text-decoration-none ">
+                <img src="images/prezee2.png" style="width: 50px;margin-top: 13px; margin-left: 20px;">
+            </a>
+        </div>
     </div>
-        
-</div>
 
-<nav class="container-fluid" style="background-color:#f6f8f6;">
-    <nav class="breadcrumbs" style="background-color:#f6f8f6;text-decoration: none;"> 
-        <a href="Login_page.html">Home</a>&lt; 
-        <a href="planspage.html"> &nbsp;Plan</a>&lt;
-        <a href="#"> &nbsp;Payment</a>&lt;
-    </nav>
-</nav>
+    <div class="container-fluid" style="background-color:#ebf2f0 ">
+        <nav class="breadcrumbs" style="background-color:#ebf2f0; margin-left:25px;"> 
+            <a href="Login_page.html">Home</a>< 
+            <a href="planspage.html"><b>Plan</b></a><
+            <a href="#"><b>Payment</b></a><
+        </nav>
+    </div>
 
     <div class="container mt-5 pt-5 ps-5">
         <!-- Sidebar -->
-        <div class="sidebar">
+        <div class="sidebar" style="padding-left: 40px; padding-top: 40px; padding-bottom: 25px;">
             <button class="payment-mode active" data-mode="upi">
                 <i class="fas fa-qrcode"></i>
                 UPI
@@ -329,113 +364,115 @@ input:focus, select:focus {
 
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Selected Plan Details -->
-            <div class="payment-card mb-4">
-                <h2>Selected Plan Details &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <button id="generateInvoiceBtn" class="submit-btn" style="margin-top: 20px;width: 50px;"> <i class="fa-solid fa-download"></i></button>
-                      
-                </h2>
-                <div id="selectedPlanDetails" class="mt-3">
+            <div class="content-row">
+                <!-- Left Column: Payment Forms -->
+                <div class="content-column">
+                    <div class="payment-card">
+                        <!-- UPI Form -->
+                        <form id="upiForm" class="payment-form active">
+                            <h2>Pay using UPI</h2>
+                            <div class="form-group">
+                                <label for="upiId">UPI ID</label>
+                                <input type="text" id="upiId" placeholder="username@bankname">
+                            </div>
+                            <button type="submit" class="submit-btn">Proceed to Pay</button>
+                        </form>
 
-                    <!-- Plan details will be inserted here -->
+                        <!-- Card Form -->
+                        <form id="cardForm" class="payment-form">
+                            <h2>Pay using Card</h2>
+                            <div class="form-group">
+                                <label for="cardHolder">Card Holder Name</label>
+                                <input type="text" id="cardHolder" placeholder="Enter card holder name">
+                            </div>
+                            <div class="form-group">
+                                <label for="cardNumber">Card Number</label>
+                                <input type="text" id="cardNumber" maxlength="16" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="expiryMonth">Expiry Month</label>
+                                    <select id="expiryMonth">
+                                        <option value="">MM</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="expiryYear">Expiry Year</label>
+                                    <select id="expiryYear">
+                                        <option value="">YYYY</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV</label>
+                                    <input type="password" id="cvv" maxlength="3" placeholder="***">
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn">Proceed to Pay</button>
+                        </form>
+
+                        <!-- Net Banking Form -->
+                        <form id="netbankingForm" class="payment-form">
+                            <h2>Pay using Net Banking</h2>
+                            <div class="form-group">
+                                <label for="bankSelect">Select Bank</label>
+                                <select id="bankSelect">
+                                    <option value="">Choose your bank</option>
+                                    <option value="sbi">State Bank of India</option>
+                                    <option value="hdfc">HDFC Bank</option>
+                                    <option value="icici">ICICI Bank</option>
+                                    <option value="axis">Axis Bank</option>
+                                    <option value="kotak">Kotak Mahindra Bank</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pin">Enter 4-digit PIN</label>
+                                <input type="password" id="pin" maxlength="4" placeholder="****">
+                            </div>
+                            <button type="submit" class="submit-btn">Proceed to Pay</button>
+                        </form>
+                    </div>
+                </div>
+           
+                <!-- Right Column: Selected Plan Details -->
+                <div class="content-column">
+                    <div class="payment-card">
+                        <h2>Selected Plan Details</h2> <!-- Removed the download button -->
+                        <div id="selectedPlanDetails" class="mt-3">
+                            <div class="selected-plan-info">
+                                <p id="paymentModeDisplay" class="mb-2"><strong>Payment Mode:</strong> Not Selected</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="payment-card">
-                <!-- UPI Form -->
-                <form id="upiForm" class="payment-form active">
-                    <h2>Pay using UPI</h2>
-                    <div class="form-group">
-                        <label for="upiId">UPI ID</label>
-                        <input type="text" id="upiId" placeholder="username@bankname">
-                    </div>
-                    <button type="submit" class="submit-btn">Proceed to Pay</button>
-                </form>
-
-                <!-- Card Form -->
-                <form id="cardForm" class="payment-form">
-                    <h2>Pay using Card</h2>
-                    <div class="form-group">
-                        <label for="cardHolder">Card Holder Name</label>
-                        <input type="text" id="cardHolder" placeholder="Enter card holder name">
-                    </div>
-                    <div class="form-group">
-                        <label for="cardNumber">Card Number</label>
-                        <input type="text" id="cardNumber" maxlength="16" placeholder="1234 5678 9012 3456">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="expiryMonth">Expiry Month</label>
-                            <select id="expiryMonth">
-                                <option value="">MM</option>
-                                <option value="01">01</option>
-                                <option value="02">02</option>
-                                <option value="03">03</option>
-                                <option value="04">04</option>
-                                <option value="05">05</option>
-                                <option value="06">06</option>
-                                <option value="07">07</option>
-                                <option value="08">08</option>
-                                <option value="09">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="expiryYear">Expiry Year</label>
-                            <select id="expiryYear">
-                                <option value="">YYYY</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="cvv">CVV</label>
-                            <input type="password" id="cvv" maxlength="3" placeholder="***">
-                        </div>
-                    </div>
-                    <button type="submit" class="submit-btn">Proceed to Pay</button>
-                </form>
-
-                <!-- Net Banking Form -->
-                <form id="netbankingForm" class="payment-form">
-                    <h2>Pay using Net Banking</h2>
-                    <div class="form-group">
-                        <label for="bankSelect">Select Bank</label>
-                        <!-- <a id="generateInvoiceBtn" class="fs-4 text-dark" href="#" title="Download Invoice">
-                            <i class="fas fa-download"></i>
-                        </a>                         -->
-                        <select id="bankSelect">
-                            <option value="">Choose your bank</option>
-                            <option value="sbi">State Bank of India</option>
-                            <option value="hdfc">HDFC Bank</option>
-                            <option value="icici">ICICI Bank</option>
-                            <option value="axis">Axis Bank</option>
-                            <option value="kotak">Kotak Mahindra Bank</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="pin">Enter 4-digit PIN</label>
-                        <input type="password" id="pin" maxlength="4" placeholder="****">
-                    </div>
-                    <button type="submit" class="submit-btn">Proceed to Pay</button>
-                </form>
-            </div>
         </div>
-    </div>
 
-    <button id="scrollTopBtn" onclick="scrollToTop()"><i class="bi bi-arrow-up text-color: #1B4D3E"></i></button>
+        <button id="scrollTopBtn" onclick="scrollToTop()"><i class="bi bi-arrow-up text-color: #1B4D3E"></i></button>
 
-    <!-- Toast Container -->
-    <div id="toastContainer" class="toast-container"></div>
+        <!-- Toast Container -->
+        <div id="toastContainer" class="toast-container"></div>
 
-    <script src="script.js"></script>
+        <script src="script.js"></script>
 
-    <script>
-       document.addEventListener('DOMContentLoaded', function() {
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
     // Load and display selected plan details
     const selectedPlan = JSON.parse(localStorage.getItem('selectedPlan'));
     const phoneNumber = localStorage.getItem("userPhoneNumber");
-    
+    let selectedPaymentMode = "Not Selected"; // Default payment mode
+
     if (selectedPlan) {
         const planDetailsHtml = `
             <div class="selected-plan-info">
@@ -445,11 +482,11 @@ input:focus, select:focus {
                 <p class="mb-2"><strong>Category:</strong> ${selectedPlan.category}</p>
                 <p class="mb-2"><strong>Details:</strong> ${selectedPlan.details}</p>
                 <p class="mb-3"><strong>Amount:</strong> ₹${selectedPlan.amount}</p>
+                <p id="paymentModeDisplay" class="mb-2"><strong>Payment Mode:</strong> ${selectedPaymentMode}</p>
             </div>
         `;
         document.getElementById('selectedPlanDetails').innerHTML = planDetailsHtml;
     }
-    
 
     // Initialize year dropdown
     const yearSelect = document.getElementById('expiryYear');
@@ -467,11 +504,12 @@ input:focus, select:focus {
 
     paymentModes.forEach(mode => {
         mode.addEventListener('click', () => {
-            // Update active mode
             paymentModes.forEach(m => m.classList.remove('active'));
             mode.classList.add('active');
 
-            // Show corresponding form
+            selectedPaymentMode = mode.textContent.trim();
+            document.getElementById('paymentModeDisplay').innerHTML = `<strong>Payment Mode:</strong> ${selectedPaymentMode}`;
+
             const formId = mode.dataset.mode + 'Form';
             paymentForms.forEach(form => {
                 form.classList.remove('active');
@@ -512,7 +550,6 @@ input:focus, select:focus {
         }
         showToast('Payment initiated successfully!', 'success');
         window.location.href = "conformation.html";
-
     });
 
     netbankingForm.addEventListener('submit', function(e) {
@@ -530,111 +567,91 @@ input:focus, select:focus {
         }
         showToast('Payment initiated successfully!', 'success');
         window.location.href = "conformation.html";
-
     });
-});
 
-// Toast notification function
-function showToast(message, type = 'success') {
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
+    // Toast notification function
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
 
-    const toastContainer = document.getElementById('toastContainer');
-    toastContainer.appendChild(toast);
+        const toastContainer = document.getElementById('toastContainer');
+        toastContainer.appendChild(toast);
 
-    // Remove toast after 3 seconds
-    setTimeout(() => {
-        toast.style.animation = 'slideIn 0.3s ease reverse';
         setTimeout(() => {
-            toastContainer.removeChild(toast);
-        }, 300);
-    }, 3000);
-}
-
-// Card number formatting
-document.getElementById('cardNumber').addEventListener('input', function(e) {
-    let value = e.target.value.replace(/\D/g, '');
-    e.target.value = value;
-});
-
-// PIN input validation
-document.getElementById('pin').addEventListener('input', function(e) {
-    let value = e.target.value.replace(/\D/g, '');
-    e.target.value = value;
-});
-
-
-
-
-let scrollBtn = document.getElementById("scrollTopBtn");
-
-// Show button when user scrolls down 300px
-window.onscroll = function() {
-    if (document.documentElement.scrollTop > 100) {
-        scrollBtn.style.display = "block";
-    } else {
-        scrollBtn.style.display = "none";
+            toast.style.animation = 'slideIn 0.3s ease reverse';
+            setTimeout(() => {
+                toastContainer.removeChild(toast);
+            }, 300);
+        }, 3000);
     }
-};
 
-// Scroll to top smoothly
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const generateInvoiceBtn = document.getElementById("generateInvoiceBtn");
-
-    generateInvoiceBtn.addEventListener("click", function () {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        // Fetch stored plan details
-        const selectedPlan = JSON.parse(localStorage.getItem("selectedPlan"));
-        const phoneNumber = localStorage.getItem("userPhoneNumber");
-        const paymentDate = new Date().toLocaleDateString();
-        const invoiceNumber = "INV-" + Math.floor(100000 + Math.random() * 900000); // Random Invoice Number
-
-        if (!selectedPlan) {
-            alert("No plan selected!");
-            return;
-        }
-
-        // Invoice Header
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(18);
-        doc.text("Prepay Mobile Recharge Invoice", 20, 20);
-
-        // Invoice Details
-        doc.setFontSize(12);
-        doc.text(`Invoice No: ${invoiceNumber}`, 20, 30);
-        doc.text(`Date: ${paymentDate}`, 150, 30);
-        doc.text(`Customer Mobile: ${phoneNumber}`, 20, 40);
-
-        // Plan Details
-        doc.text("Plan Details:", 20, 50);
-        doc.text(`Plan Name: ${selectedPlan.name}`, 20, 60);
-        doc.text(`Plan ID: ${selectedPlan.plan_id}`, 20, 70);
-        doc.text(`Category: ${selectedPlan.category}`, 20, 80);
-        doc.text(`Details: ${selectedPlan.details}`, 20, 90, { maxWidth: 170 });
-        doc.text(`Amount Paid: ₹${selectedPlan.amount}`, 20, 110);
-
-        // Footer
-        doc.setFont("helvetica", "italic");
-        doc.text("Thank you for using our services!", 20, 140);
-
-        // Save and Download PDF
-        doc.save(`Invoice_${invoiceNumber}.pdf`);
+    // Card number formatting
+    document.getElementById('cardNumber').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        e.target.value = value;
     });
+
+    // PIN input validation
+    document.getElementById('pin').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        e.target.value = value;
+    });
+
+    // Scroll to top functionality
+    let scrollBtn = document.getElementById("scrollTopBtn");
+    window.onscroll = function() {
+        if (document.documentElement.scrollTop > 100) {
+            scrollBtn.style.display = "block";
+        } else {
+            scrollBtn.style.display = "none";
+        }
+    };
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 });
 
-    </script>
-</body>
-</html>
 
+// In upiForm event listener
+upiForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const upiId = document.getElementById('upiId').value;
+    if (!upiId) {
+        showToast('Please enter UPI ID', 'error');
+        return;
+    }
+    localStorage.setItem('selectedPaymentMode', 'UPI');  // Add this line
+    showToast('Payment initiated successfully!', 'success');
+    window.location.href = "conformation.html";
+});
+
+// In cardForm event listener
+cardForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    // ... existing validation ...
+    if (!cardHolder || !cardNumber || !expiryMonth || !expiryYear || !cvv) {
+        showToast('Please enter all card details', 'error');
+        return;
+    }
+    localStorage.setItem('selectedPaymentMode', 'Credit/Debit Card');  // Add this line
+    showToast('Payment initiated successfully!', 'success');
+    window.location.href = "conformation.html";
+});
+
+// In netbankingForm event listener
+netbankingForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    // ... existing validation ...
+    if (!bank || !pin || pin.length !== 4) {
+        showToast('Please enter all details', 'error');
+        return;
+    }
+    localStorage.setItem('selectedPaymentMode', 'Net Banking');  // Add this line
+    showToast('Payment initiated successfully!', 'success');
+    window.location.href = "conformation.html";
+});
+        </script>
+    </body>
+</html>
