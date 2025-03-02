@@ -67,8 +67,8 @@
     "email": "ananya.reddy@example.com",
     "status": "active",
     "rechargeHistory": [
-      { "planName": "Basic Monthly", "date": "2025-02-08", "paymentType": "UPI" },
-      { "planName": "Top Up", "date": "2025-02-12", "paymentType": "Debit Card" }
+      { "planName": "Basic Monthly", "date": "2024-02-08", "paymentType": "UPI" },
+      { "planName": "Top Up", "date": "2024-12-12", "paymentType": "Debit Card" }
     ]
   },
   {
