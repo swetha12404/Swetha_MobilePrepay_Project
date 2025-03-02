@@ -5,303 +5,422 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> <!--for icon-->
-
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-  .navbar {
-            background-color: #1B4D3E !important;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Added shadow */
-            padding: 10px 30px; /* Updated padding */
-            height: 70px; /* Increased height */
+        :root {
+            --primary-color: #1B4D3E;
+            --secondary-color: #145A32;
+            --light-bg: #f4f9f6;
         }
-        .navbar .nav-link,
-        .navbar .navbar-brand {
-            color: white !important;
-            transition: transform 0.3s ease; /* Added transition for hover effect */
-        }
-        .navbar .nav-link:hover {
-            transform: scale(1.1); /* Scale on hover */
-        }
-    #scrollTopBtn {
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 20px;
+            height: 70px;
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            border: none;
-            padding: 10px 15px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: 0.3s;
-        }
-
-        #scrollTopBtn:hover {
-            background-color: #14563C;
-            color: white;
-        }
-
-        table {
+            top: 0;
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
+            z-index: 1030;
         }
 
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
+        .navbar .nav-link, .navbar .navbar-brand {
+            color: white !important;
+            transition: all 0.3s ease;
         }
 
-        th {
-            background-color: #f2f2f2;
+        .navbar .nav-link:hover {
+            color: #f8f9fa !important;
+            transform: translateY(-2px);
         }
 
         .breadcrumbs {
-    font-size: 16px;
-    padding: 10px;
-    border-radius: 5px;
-    width: fit-content;
-    margin-top: 70px; /* Adjust margin for visibility */
-}
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #ebf2f0;
+            border-radius: 5px;
+            position: absolute;
+            top: 70px; /* Below navbar */
+            left: 0;
+            width: 100%;
+            z-index: 1020; /* Above sidebar but below navbar */
+        }
 
-.breadcrumbs a {
-    text-decoration: none;
-    color: #1B4D3E; /* Green color matching navbar */
-    font-weight: bold;
-    margin-right: 5px;
-}
+        .breadcrumbs a {
+            text-decoration: none;
+            color: #1B4D3E;
+            font-weight: bold;
+            margin-right: 5px;
+        }
 
-.breadcrumbs a:hover {
-    text-decoration: underline;
-    color: #145A32; /* Darker shade on hover */
-}
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+            color: #145A32;
+        }
 
-/* Sidebar styles */
-#sidebar {
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    margin-top: 120px;
-    background-color: #f4f9f6;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    padding-top: 20px;
-}
+        .breadcrumbs span {
+            font-weight: bold;
+            color: #555;
+        }
 
-#sidebar ul li button:hover {
-        background-color:#145A32 ;
-        color: white;
-}
+        #sidebar {
+            width: 250px;
+            height: calc(100vh - 110px); /* Adjusted for navbar + breadcrumbs */
+            position: fixed;
+            top: 110px; /* Below navbar + breadcrumbs */
+            left: 0;
+            background-color: var(--light-bg);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            padding: 20px;
+        }
 
-/* Adjust main content margin */
-#content {
-    margin-left: 270px; /* Ensure main content doesn't overlap */
-    transition: margin-left 0.3s ease-in-out;
-}
+        #sidebar .menu-item {
+            border-radius: 8px;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
 
+        #sidebar .menu-item:hover, #sidebar .menu-item.active {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateX(5px);
+        }
 
+        #content {
+            margin-left: 270px;
+            padding: 20px;
+            padding-top: 60px; /* Space for breadcrumbs */
+            transition: margin-left 0.3s ease;
+            min-height: calc(100vh - 70px);
+        }
 
+        @media (max-width: 768px) {
+            #sidebar {
+                transform: translateX(-250px);
+            }
+            #sidebar.active {
+                transform: translateX(0);
+            }
+            #content {
+                margin-left: 0;
+                padding-top: 50px; /* Adjusted for mobile */
+            }
+            .breadcrumbs {
+                top: 70px;
+                padding: 10px;
+            }
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .form-control:disabled {
+            background-color: #f8f9fa;
+            opacity: 0.8;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
-
 <body class="bg-gray-100">
-
-    
-<!-- Navbar -->
-<div class="navbar navbar-expand-md bg-body-tertiary fixed-top h6">
-    <div class="container-fluid">
-        <a href="Login_page.html" class="navbar-brand text-decoration-none ms-2">
-            <img src="images/prezee2.png" style="width: 50px;">
-        </a>    
-        <a href="Profile.html" download="MyFile.pdf" style="margin-left: 1250px;"><b><i class="bi bi-download text-white fs-5 "></i></b></a>              
-        <a href="#" class="nav-link me-2">
-            <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login">
-                <i class="bi bi-person-circle text-white fs-5"></i>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md fixed-top">
+        <div class="container-fluid">
+            <a href="Login_page.html" class="navbar-brand">
+                <img src="images/prezee2.png" style="width: 50px;">
+            </a>
+            <button class="navbar-toggler" type="button" id="sidebarToggle">
+                <span class="navbar-toggler-icon"></span>
             </button>
-
-        </a>  
-    </div>
-</div>
-
-<div class="container-fluid" style="background-color:#f4f9f6">
-    <nav class="breadcrumbs" style="background-color:#f4f9f6; margin-left: 27px; padding-top: 15px;"> 
-        <a href="Login_page.html">Home</a>&lt; 
-        <a href="planspage.html"> &nbsp;Plan</a>&lt;
+            <div class="ms-auto d-flex align-items-center">
+                <a href="Profile.html" download="MyFile.pdf" class="nav-link me-3">
+                    <i class="bi bi-download fs-5"></i>
+                </a>
+                <a href="#" class="nav-link" data-bs-toggle="tooltip" title="Profile">
+                    <i class="bi bi-person-circle fs-5"></i>
+                </a>
+            </div>
+        </div>
     </nav>
-</div>
 
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs">
+        <a href="Login_page.html">Home</a>&lt;
+        <a href="planspage.html">Plan</a>&lt;
+        <span>Profile</span>
+    </nav>
 
-
-    <!-- Sidebar Offcanvas -->
+    <!-- Sidebar -->
     <div id="sidebar">
-        <h2 class="text-lg font-bold ps-5" style="color: rgb(15, 0, 0);">Profile Menu</h2>
-        <nav class="mt-2 ps-4">
-            <ul>
-                <li><button class="menu-item block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200" data-target="details">View Details</button></li>
-                <li><button class="menu-item block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200" data-target="transactions">Transaction History</button></li>
-                <li><button class="menu-item block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200" data-target="plans">Plan History</button></li>
-                <li><button class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-200" onclick="logout()">Logout</button></li>
+        <h2 class="text-lg font-bold mb-4" style="color: var(--primary-color);">Profile Menu</h2>
+        <nav>
+            <ul class="list-unstyled">
+                <li><button class="menu-item active w-100 text-left py-2 px-4" data-target="details">View Details</button></li>
+                <li><button class="menu-item w-100 text-left py-2 px-4" data-target="transactions">Transaction History</button></li>
+                <li><button class="menu-item w-100 text-left py-2 px-4" data-target="plans">Plan History</button></li>
+                <li><button class="w-100 text-left py-2 px-4 text-danger" onclick="logout()">Logout</button></li>
             </ul>
         </nav>
     </div>
-    
 
     <!-- Main Content -->
-    <div class="p-6">
-        
-        <!-- Sections -->
-        <div id="content" class="mt-6 bg-white p-6 rounded-lg shadow-md" style="margin-left: 400px; margin-right: 400px;margin-top: 10px;">
-            
-            <!-- User Details -->
-            <div id="details" class="section">
-                <h2 class="text-xl font-bold mb-4">User Details
-                    
-                </h2>
-                <form>
-                    <label class="block text-sm font-medium text-gray-700">Aadhaar Number</label>
-                    <input type="text" class="w-full p-2 border border-gray-300 rounded mt-1 mb-3 bg-gray-200 cursor-not-allowed" value="XXX XXX 9484" disabled>
-
-                    <label class="block text-sm font-medium text-gray-700">User Name</label>
-                    <input type="text" class="w-full p-2 border border-gray-300 rounded mt-1 mb-3" value="Swetha_Murugan" >
-
-                    <label class="block text-sm font-medium text-gray-700">Phone Number</label>
-                    <input type="tel" class="w-full p-2 border border-gray-300 rounded mt-1 mb-3" pattern="[0-9]{10}" value="9597220942" >
-
-                    <label class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" class="w-full p-2 border border-gray-300 rounded mt-1 mb-3" value="SwethaMurugan@2004.com" >
-
-                    <label class="block text-sm font-medium text-gray-700">Mode of Payment</label>
-                    <input type="text" class="w-full p-2 border border-gray-300 rounded mt-1 mb-3" value="UPI" >
-
-                    <label class="block text-sm font-medium text-gray-700">Address</label>
-                    <textarea class="w-full p-2 border border-gray-300 rounded mt-1 mb-3" rows="2" > South-street,salem</textarea>
-                    
-                    <button class="w-full text-center text-white p-2 rounded mt-3 hover:bg-blue-600" style="background-color: #1B4D3E;width: 100px; margin-left: 150px;">Edit Profile</button>
-                    <button class="w-full text-center text-white p-2 rounded mt-3 hover:bg-blue-600" style="background-color: #1B4D3E;width: 100px; margin-left: 120px;">Save Profile</button>
-
-                </form>
-                    <h2 class="text-xl font-bold mb-3 mt-5">Transactions</h2>
-    
-                    <table>
-                        <tr>
-                            <th>Transaction ID</th>
-                            <th>Amount</th>
-                            <th>Data</th>
-                            <th>Days</th>
-                            <th>Recharged Date</th>
-                            <th>Payment Mode</th>
-
-                        </tr>
-                        <tr><td>#1234</td><td>₹148</td><td>1.5GB</td><td>28 Days</td><td>01/02/2025</td><td>Card</td></tr>
-                    <tr><td>#5678</td><td>₹480</td><td>1.5GB</td><td>48 Days</td><td>15/11/2024</td><td>UPI</td></tr>
-                    <tr><td>#9101</td><td>₹199</td><td>2GB</td><td>28 Days</td><td>10/01/2023</td><td>UPI</td></tr>
-                    </table>
-
-                    <h2 class="text-xl font-bold mb-3 mt-5">Recent Plan</h2>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card m-2 shadow">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title h2"><b>₹ 925</b></h5>
-                                    <p>84 Days - 2GB/DAY</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div id="content">
+        <div class="section" id="details">
+            <h2 class="text-xl font-bold mb-4">User Details</h2>
+            <form class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">User Name</label>
+                    <input type="text" class="form-control" id="userName" readonly>
                 </div>
+                <div class="col-md-6">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="phoneNumber" readonly>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" readonly>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Plan ID</label>
+                    <input type="text" class="form-control" id="planId" readonly>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Address</label>
+                    <textarea class="form-control" id="address" rows="3" readonly>Not provided</textarea>
+                </div>
+                <div class="col-12 text-center">
+                    <button type="button" class="btn btn-primary me-3" onclick="enableEdit()">Edit Profile</button>
+                    <button type="submit" class="btn btn-primary" onclick="saveProfile(event)">Save Profile</button>
+                </div>
+            </form>
 
+            <h2 class="text-xl font-bold mt-5 mb-3">Current Plan</h2>
+            <div class="card shadow-sm" id="currentPlan">
+                <div class="card-body text-center">
+                    <h5 class="card-title h2 mb-3" id="planAmount"></h5>
+                    <p class="card-text" id="planDetails"></p>
+                </div>
+            </div>
+        </div>
 
-            <!-- Transaction History -->
-            <div id="transactions" class="section hidden mb-5 ms-4 me-4 mt-3">
-                <h2 class="text-xl font-bold mb-3">Transaction History</h2>
-
-                <table>
-                    <tr>
-                        <th>Transaction ID</th>
-                        <th>Amount</th>
-                        <th>Data</th>
-                        <th>Days</th>
-                        <th>Recharged Date</th>
-                        <th>Payment Mode</th>
-                    </tr>
-                    <tr><td>#1234</td><td>₹148</td><td>1.5GB</td><td>28 Days</td><td>01/02/2025</td><td>Card</td></tr>
-                    <tr><td>#5678</td><td>₹480</td><td>1.5GB</td><td>48 Days</td><td>15/11/2024</td><td>UPI</td></tr>
-                    <tr><td>#9101</td><td>₹199</td><td>2GB</td><td>28 Days</td><td>10/01/2023</td><td>UPI</td></tr>
-                    <tr><td>#7101</td><td>₹499</td><td>2GB</td><td>88 Days</td><td>24/04/2021</td><td>UPI</td></tr>
-                    <tr><td>#2401</td><td>₹999</td><td>2GB</td><td>180 Days</td><td>30/01/2019</td><td>UPI</td></tr>
-
+        <div class="section hidden" id="transactions">
+            <h2 class="text-xl font-bold mb-4">Transaction History</h2>
+            <div class="table-responsive">
+                <table class="w-100" id="transactionTable">
+                    <thead>
+                        <tr>
+                            <th>Plan Name</th>
+                            <th>Date</th>
+                            <th>Payment Type</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
                 </table>
             </div>
+        </div>
 
-            <!-- Plan History -->
-            <div id="plans" class="section hidden" style="padding-bottom: 350px;">
-                <h2 class="text-xl font-bold mb-4">Plan History</h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card m-2 shadow">
-                            <div class="card-body text-center">
-                                <h5 class="card-title h2"><b>₹ 925</b></h5>
-                                <p>84 Days - 2GB/DAY</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="card m-2 shadow">
-                            <div class="card-body text-center">
-                                <h5 class="card-title h2"><b>₹ 3999</b></h5>
-                                <p>1 Year - 2GB/DAY</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="section hidden" id="plans">
+            <h2 class="text-xl font-bold mb-4">Plan History</h2>
+            <div class="row" id="planHistory"></div>
         </div>
     </div>
 
-    
-<!-- Scroll to Top Button -->
-<button id="scrollTopBtn" onclick="scrollToTop()"><i class="bi bi-arrow-up text-color: #1B4D3E"></i></button>
+    <button id="scrollTopBtn" onclick="scrollToTop()"><i class="bi bi-arrow-up"></i></button>
 
     <script>
+        // Load user and plan data on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            const phoneNumber = localStorage.getItem('userPhoneNumber');
+            if (!phoneNumber) {
+                alert('Please log in first.');
+                window.location.href = 'Login_page.html';
+                return;
+            }
 
-        
-let scrollBtn = document.getElementById("scrollTopBtn");
+            try {
+                // Fetch user data from user.json
+                const userResponse = await fetch('../Json_files/user.json');
+                if (!userResponse.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+                const users = await userResponse.json();
 
-// Show button when user scrolls down 300px
-window.onscroll = function() {
-    if (document.documentElement.scrollTop > 300) {
-        scrollBtn.style.display = "block";
-    } else {
-        scrollBtn.style.display = "none";
-    }
-};
+                // Fetch plan data from plans.json
+                const planResponse = await fetch('../Json_files/plans.json');
+                if (!planResponse.ok) {
+                    throw new Error('Failed to fetch plan data');
+                }
+                const plansData = await planResponse.json();
 
-// Scroll to top smoothly
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-}
-       
-        // Menu item click event
+                // Combine all plan categories into a single array
+                const allPlans = [
+                    ...plansData["Popular Plans"],
+                    ...plansData["Validity Plans"],
+                    ...plansData["Unlimited Plans"],
+                    ...plansData["Data Plans"],
+                    ...plansData["Annual Plans"],
+                    ...plansData["Student Exclusive Plans"],
+                    ...plansData["Work From Home Plans"]
+                ];
+
+                // Find the user based on phone number from localStorage
+                const user = users.find(u => u.mobile === phoneNumber);
+                if (!user) {
+                    alert('User not found.');
+                    window.location.href = 'Login_page.html';
+                    return;
+                }
+
+                // Populate User Details
+                document.getElementById('userName').value = user.name;
+                document.getElementById('phoneNumber').value = user.mobile;
+                document.getElementById('email').value = user.email;
+                document.getElementById('planId').value = user.plan_id;
+
+                // Populate Current Plan
+                const latestRecharge = user.rechargeHistory[user.rechargeHistory.length - 1];
+                const currentPlan = allPlans.find(plan => plan.plan_id === user.plan_id);
+                document.getElementById('planAmount').textContent = currentPlan ? currentPlan.name : '₹Unknown';
+                document.getElementById('planDetails').textContent = `${latestRecharge.planName} - Expires ${user.expiry}`;
+
+                // Populate Transaction History
+                const tbody = document.querySelector('#transactionTable tbody');
+                user.rechargeHistory.forEach(recharge => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${recharge.planName}</td>
+                        <td>${recharge.date}</td>
+                        <td>${recharge.paymentType}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                // Populate Plan History
+                const planHistoryDiv = document.getElementById('planHistory');
+                user.rechargeHistory.forEach(recharge => {
+                    const matchedPlan = allPlans.find(plan => plan.plan_id === user.plan_id);
+                    const col = document.createElement('div');
+                    col.className = 'col-md-6';
+                    col.innerHTML = `
+                        <div class="card m-2 shadow">
+                            <div class="card-body text-center">
+                                <h5 class="card-title h2">${matchedPlan ? matchedPlan.name : '₹Unknown'}</h5>
+                                <p>${recharge.planName} - ${recharge.date}</p>
+                            </div>
+                        </div>
+                    `;
+                    planHistoryDiv.appendChild(col);
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                alert('Error loading profile data. Please try again.');
+                window.location.href = 'Login_page.html';
+            }
+        });
+
+        // Enable editing
+        function enableEdit() {
+            document.getElementById('userName').removeAttribute('readonly');
+            document.getElementById('phoneNumber').removeAttribute('readonly');
+            document.getElementById('email').removeAttribute('readonly');
+            document.getElementById('address').removeAttribute('readonly');
+        }
+
+        // Save profile (placeholder - requires backend integration)
+        function saveProfile(event) {
+            event.preventDefault();
+            alert('Profile saved (placeholder - requires backend integration)');
+            document.getElementById('userName').setAttribute('readonly', true);
+            document.getElementById('phoneNumber').setAttribute('readonly', true);
+            document.getElementById('email').setAttribute('readonly', true);
+            document.getElementById('address').setAttribute('readonly', true);
+        }
+
+        // Sidebar toggle for mobile
+        document.getElementById('sidebarToggle')?.addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Menu items
         document.querySelectorAll('.menu-item').forEach(button => {
             button.addEventListener('click', function() {
+                document.querySelectorAll('.menu-item').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
                 const target = this.getAttribute('data-target');
                 document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
                 document.getElementById(target).classList.remove('hidden');
             });
         });
 
-        // Logout function
-        function logout() {
-            alert("Logging out...");
-            window.location.href = "Login_page.html"; 
+        // Scroll button
+        const scrollBtn = document.getElementById("scrollTopBtn");
+        window.onscroll = () => {
+            scrollBtn.style.display = document.documentElement.scrollTop > 300 ? "flex" : "none";
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
+        function logout() {
+            if (confirm("Are you sure you want to logout?")) {
+                localStorage.removeItem('userPhoneNumber');
+                window.location.href = "Login_page.html";
+            }
+        }
     </script>
 </body>
 </html>

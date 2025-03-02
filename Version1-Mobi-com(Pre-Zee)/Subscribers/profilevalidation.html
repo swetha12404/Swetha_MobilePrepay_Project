@@ -9,78 +9,73 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> <!--for icon-->
 
     <style>
-
-body{
+        body {
             font-family: 'Poppins', sans-serif;
         }
 
-.navbar {
+        .navbar {
             background-color: #1B4D3E !important;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Added shadow */
-            padding: 10px 30px; /* Updated padding */
-            height: 70px; /* Increased height */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 10px 30px;
+            height: 70px;
         }
         .navbar .nav-link,
         .navbar .navbar-brand {
             color: white !important;
-            transition: transform 0.3s ease; /* Added transition for hover effect */
+            transition: transform 0.3s ease;
         }
         .navbar .nav-link:hover {
-            transform: scale(1.1); /* Scale on hover */
+            transform: scale(1.1);
         }
 
+        .breadcrumbs {
+            font-size: 16px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            width: fit-content;
+            margin-top: 70px;
+        }
 
-.breadcrumbs {
-    font-size: 16px;
-    padding: 10px;
-    background-color: #f8f9fa; /* Light background */
-    border-radius: 5px;
-    width: fit-content;
-    margin-top: 70px; /* Adjust margin for visibility */
-}
+        .text-faded {
+            color: rgba(0, 0, 0, 0.5);
+        }
 
-.text-faded {
-    color: rgba(0, 0, 0, 0.5); /* Adjust opacity */
-}
+        .breadcrumbs a {
+            text-decoration: none;
+            color: #1B4D3E;
+            font-weight: bold;
+            margin-right: 5px;
+        }
 
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+            color: #145A32;
+        }
 
-.breadcrumbs a {
-    text-decoration: none;
-    color: #1B4D3E; /* Green color matching navbar */
-    font-weight: bold;
-    margin-right: 5px;
-}
+        .breadcrumbs span {
+            font-weight: bold;
+            color: #555;
+        }
 
-.breadcrumbs a:hover {
-    text-decoration: underline;
-    color: #145A32; /* Darker shade on hover */
-}
+        .plan-card {
+            width: 100%;
+            max-width: 22rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
 
-.breadcrumbs span {
-    font-weight: bold;
-    color: #555;
-}
-
-.plan-card {
-    width: 100%;
-    max-width: 22rem;
-    border-radius: 15px;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.plan-card:hover {
-    transform: translateY(-8px); /* Moves the card slightly up */
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
-}
-
-
+        .plan-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
 
         .body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 50vh;
-            background-color:white;
+            background-color: white;
         }
         .container-box {
             background: white;
@@ -120,74 +115,71 @@ body{
 <body>
 
     <!-- Navbar -->
-<div class="navbar navbar-expand-md bg-body-tertiary fixed-top h6">
-    <div class="container-fluid">
-        <a href="Login_page.html" class="navbar-brand text-decoration-none ms-2">
-            <img src="images/prezee2.png" style="width: 50px;">
-        </a>
-
-        <button class="navbar-toggler" data-bs-target="#links" data-bs-toggle="collapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div id="links" class="collapse navbar-collapse justify-content-end">
-            <ul class="navbar-nav align-items-center">
-                <li class="nav-item"><a href="#services" class="nav-link me-2">Services</a></li>
-                <li class="nav-item"><a href="#plans" class="nav-link me-2">View Plans</a></li>
-                <li class="nav-item"><a href="#terms" class="nav-link me-2">Terms</a></li>
-                <li class="nav-item"><a href="#contact" class="nav-link me-2">Contact Us</a></li>
-                <li class="nav-item">
-                    <a href="profilevalidation.html" class="nav-link me-2">
-                        <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login">
-                            <i class="bi bi-person-circle text-white fs-5"></i>
-                        </button>
-                    </a>                    
-                </li>
-            </ul>
+    <div class="navbar navbar-expand-md bg-body-tertiary fixed-top h6">
+        <div class="container-fluid">
+            <a href="Login_page.html" class="navbar-brand text-decoration-none ms-2">
+                <img src="images/prezee2.png" style="width: 50px;">
+            </a>
+            <button class="navbar-toggler" data-bs-target="#links" data-bs-toggle="collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="links" class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a href="#services" class="nav-link me-2">Services</a></li>
+                    <li class="nav-item"><a href="#plans" class="nav-link me-2">View Plans</a></li>
+                    <li class="nav-item"><a href="#terms" class="nav-link me-2">Terms</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link me-2">Contact Us</a></li>
+                    <li class="nav-item">
+                        <a href="profilevalidation.html" class="nav-link me-2">
+                            <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login">
+                                <i class="bi bi-person-circle text-white fs-5"></i>
+                            </button>
+                        </a>                    
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-
-<div class="container-fluid" style="background-color: #f3f6f4; ">
-    <nav class="breadcrumbs" style="background-color: #f3f6f4; margin-left: 27px; margin-bottom: 30px;">
-        <a href="Login_page.html">Home</a>&lt; 
-        <a href="planspage.html"> &nbsp;Plan</a>&lt;
-    </nav>
-</div>
-
-<div class="body"> 
-    <div class="container-box" style="width: 530px; height: 250px;" id="phone-box">
-        <h5 class="mb-4">Phone Number<span style="color: red;">*</span></h5>
-        <input type="text" id="phone-number" class="form-control me-3 mb-3" placeholder="Enter Phone Number" maxlength="10">
-        <p id="phone-error" class="error-message"></p>
-        <button class="btn mt-3" style="background-color: #1B4D3E; color: white;" onclick="validatePhone()">Validate</button>
-        
+    <div class="container-fluid" style="background-color: #f3f6f4;">
+        <nav class="breadcrumbs" style="background-color: #f3f6f4; margin-left: 27px; margin-bottom: 30px;">
+            <a href="Login_page.html">Home</a> < 
+            <a href="planspage.html">Plan</a> <
+        </nav>
     </div>
-    
-    <div class="container-box" id="otp-box" style="display: none;">
-        <img src="https://cdn-icons-png.flaticon.com/512/2950/2950656.png" width="50" alt="OTP Icon">
-        <h5 class="mt-3">Please check your phone</h5>
-        <p>We've sent a code to your phone.</p>
-        
-        <div>
-            <input type="text" class="otp-input" maxlength="1" onkeyup="moveNext(this, 0)">
-            <input type="text" class="otp-input" maxlength="1" onkeyup="moveNext(this, 1)">
-            <input type="text" class="otp-input" maxlength="1" onkeyup="moveNext(this, 2)">
-            <input type="text" class="otp-input" maxlength="1" onkeyup="moveNext(this, 3)">
+
+    <!-- Verification -->
+    <div class="body"> 
+        <div class="container-box" style="width: 530px; height: 250px;" id="phone-box">
+            <h5 class="mb-4">Phone Number<span style="color: red;">*</span></h5>
+            <input type="text" id="phone-number" class="form-control me-3 mb-3" placeholder="Enter Phone Number" maxlength="10" onkeypress="return isNumberKey(event)">
+            <p id="phone-error" class="error-message"></p>
+            <button class="btn mt-3" style="background-color: #1B4D3E; color: white;" onclick="validatePhone()">Validate</button>
         </div>
         
-        <p class="mt-2">Didn't get the code? <a class="resend-link" onclick="generateOTP()">Click to resend</a></p>
-        
-        <div class="d-flex justify-content-between mt-3">
-            <button class="btn btn-secondary" onclick="cancelOTP()">Cancel</button>
-            <button class="btn btn-success" onclick="verifyOTP()">Verify</button>
+        <div class="container-box" id="otp-box" style="display: none;">
+            <img src="https://cdn-icons-png.flaticon.com/512/2950/2950656.png" width="50" alt="OTP Icon">
+            <h5 class="mt-3">Please check your phone</h5>
+            <p>We've sent a code to your phone.</p>
+            
+            <div>
+                <input type="text" class="otp-input" maxlength="1" onkeyup="moveNext(this, 0)">
+                <input type="text" class="otp-input" maxlength="1" onkeyup="moveNext(this, 1)">
+                <input type="text" class="otp-input" maxlength="1" onkeyup="moveNext(this, 2)">
+                <input type="text" class="otp-input" maxlength="1" onkeyup="moveNext(this, 3)">
+            </div>
+            
+            <p class="mt-2">Didn't get the code? <a class="resend-link" onclick="generateOTP()">Click to resend</a></p>
+            
+            <div class="d-flex justify-content-between mt-3">
+                <button class="btn btn-secondary" onclick="cancelOTP()">Cancel</button>
+                <button class="btn btn-success" onclick="verifyOTP()">Verify</button>
+            </div>
+            <p id="otp-error" class="error-message"></p>
         </div>
-        <p id="otp-error" class="error-message"></p>
     </div>
-</div>
 
-    <!--For plans-->
+    <!-- For plans -->
     <div class="container" id="plans">
         <h2 class="text-center mb-4" style="color: #1B4D3E;"><b>Choose Your Plan</b></h2>
         <div class="row g-4 justify-content-center">
@@ -210,7 +202,6 @@ body{
                         <h5 class="card-title display-6 mb-3"><b>₹ 3999</b></h5>
                         <h6 class="text-muted">1 Year | 2GB/DAY</h6>
                         <h6 class="text-muted">Validity | Data</h6>
-                        <a href="QuickProfileValidation.html" class="btn mt-3" style="background-color: #1B4D3E; color:white;">Recharge</a>
                     </div>
                 </div>
             </div>
@@ -222,60 +213,55 @@ body{
                         <h5 class="card-title display-6 mb-3"><b>₹ 769</b></h5>
                         <h6 class="text-muted">64 Days | 1.5GB/DAY</h6>
                         <h6 class="text-muted">Validity | Data</h6>
-                        <a href="QuickProfileValidation.html" class="btn mt-3" style="background-color: #1B4D3E; color:white;">Recharge</a>
                     </div>
                 </div>
             </div>
         </div>
-
-
-<!--for services-->
-
-<!-- Services Section -->
-<section id="services" class="container py-5" >
-    <h2 class="text-center mb-4" style="color: #1B4D3E;"><b>Our Services</b></h2>
-    <div class="row g-4">
-        <!-- Mobile Recharge -->
-        <div class="col-md-4">
-            <div class="card text-center shadow service-card">
-                <div class="card-body">
-                    <i class="bi bi-phone-fill fs-1 text-success"></i>
-                    <h4 class="mt-3">Instant Mobile Recharge</h4>
-                    <p>Recharge your mobile anytime, anywhere with our fast and secure prepay service.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- WiFi Recharge -->
-        <div class="col-md-4">
-            <div class="card text-center shadow service-card">
-                <div class="card-body">
-                    <i class="bi bi-wifi fs-1 text-primary"></i>
-                    <h4 class="mt-3">WiFi Subscription</h4>
-                    <p>Prepay for your WiFi plans seamlessly and enjoy uninterrupted connectivity.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Subscription Management -->
-        <div class="col-md-4">
-            <div class="card text-center shadow service-card">
-                <div class="card-body">
-                    <i class="bi bi-credit-card-fill fs-1 text-warning"></i>
-                    <h4 class="mt-3">Smart Auto-Prepay</h4>
-                    <p>Enable auto-prepay for stress-free, uninterrupted service renewals.</p>
-                </div>
-            </div>
-        </div>
     </div>
-</section>
 
+    <!-- Services Section -->
+    <section id="services" class="container py-5">
+        <h2 class="text-center mb-4" style="color: #1B4D3E;"><b>Our Services</b></h2>
+        <div class="row g-4">
+            <!-- Mobile Recharge -->
+            <div class="col-md-4">
+                <div class="card text-center shadow service-card">
+                    <div class="card-body">
+                        <i class="bi bi-phone-fill fs-1 text-success"></i>
+                        <h4 class="mt-3">Instant Mobile Recharge</h4>
+                        <p>Recharge your mobile anytime, anywhere with our fast and secure prepay service.</p>
+                    </div>
+                </div>
+            </div>
 
+            <!-- WiFi Recharge -->
+            <div class="col-md-4">
+                <div class="card text-center shadow service-card">
+                    <div class="card-body">
+                        <i class="bi bi-wifi fs-1 text-primary"></i>
+                        <h4 class="mt-3">WiFi Subscription</h4>
+                        <p>Prepay for your WiFi plans seamlessly and enjoy uninterrupted connectivity.</p>
+                    </div>
+                </div>
+            </div>
 
-    <!--Terms and condition-->
+            <!-- Subscription Management -->
+            <div class="col-md-4">
+                <div class="card text-center shadow service-card">
+                    <div class="card-body">
+                        <i class="bi bi-credit-card-fill fs-1 text-warning"></i>
+                        <h4 class="mt-3">Smart Auto-Prepay</h4>
+                        <p>Enable auto-prepay for stress-free, uninterrupted service renewals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terms and condition -->
     <div id="terms">
         <br>
-        <h1 class="text-center pb-4"  style="color: #1B4D3E;">Terms and Conditions</h1>
+        <h1 class="text-center pb-4" style="color: #1B4D3E;">Terms and Conditions</h1>
         <div class="container mt-2" id="terms">
             <div class="row">
                 <!-- Card 1: Introduction -->
@@ -303,7 +289,7 @@ body{
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Eligibility</h5>
-                            <p class="card-text"> You must have a valid Mobi-Comm SIM to purchase and use our services. Our platform is exclusively available for Mobi-Comm users, and services will not be accessible with other network providers.</p>
+                            <p class="card-text">You must have a valid Mobi-Comm SIM to purchase and use our services. Our platform is exclusively available for Mobi-Comm users, and services will not be accessible with other network providers.</p>
                         </div>
                     </div>
                 </div>
@@ -320,78 +306,7 @@ body{
             </div>
         </div>
     </div>
- </div>
-       
-        <!-- Swiper Initialization -->
-        <script>
-    
-        document.addEventListener("DOMContentLoaded", function () {
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl, { placement: 'bottom' });
-            });
-        });
-    
-            var swiper = new Swiper(".mySwiper", {
-                effect: "coverflow",
-                grabCursor: true,
-                centeredSlides: true,
-                slidesPerView: "auto",
-                coverflowEffect: {
-                    rotate: 0,  
-                    stretch: 0,
-                    depth: 400,
-                    modifier: 1,
-                    slideShadows: false,
-                },
-                loop: true,
-                autoplay: {
-                    delay: 2500,  
-                    disableOnInteraction: false,
-                },
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                }
-            });
-    
-            // Toggle Switch Logic with Auto-Navigation
-            document.getElementById("toggle-role").addEventListener("change", function() {
-                if (this.checked) {
-                    window.location.href = "admin.html";  // Redirect to Admin page
-                } 
-                else {
-                    window.location.href = "Login_page.html";   // Redirect to Login_page
-                }
-            });
-    
-    
-            // Subscriber login checking using  phonenumber(empty or not)
-            //userlogin is my Login button ID
-        document.getElementById("userlogin").addEventListener("click", function(event) {
-        event.preventDefault(); // Prevent form submission
-        let phoneNumber = document.getElementById("phone_number").value.trim();
-        let mess = document.querySelector("#error");
-    
-        // Regular expression to check if the phone number contains exactly 10 digits
-        let phonePattern = /^[0-9]{10}$/;
-    
-        if (phoneNumber === "") {
-            mess.textContent = "Phone number cannot be empty.";
-        } 
-        else if (!phonePattern.test(phoneNumber)) {
-            mess.textContent = "Phone number is invalid. Enter a 10-digit number.";
-        } 
-        else {            
-            window.location.href = "user.html"; // Redirect to user page
-            document.getElementById("plans-section").style.display = "block"; // Show plans section
-                displayRandomPlans(); 
-        } 
-    });
-    
-    </script>
-    
-    
+
     <!-- Footer -->
     <footer class="footer mt-5 bg-dark text-white py-4" id="contact">
         <div class="container text-center text-md-start">
@@ -441,32 +356,86 @@ body{
             </div>
         </div>
     </footer>
-    
-    
 
-    
     <script>
         let generatedOTP = "";
 
-        function validatePhone() {
-            let phoneInput = document.getElementById("phone-number").value;
-            let phoneError = document.getElementById("phone-error");
-            
-            if (phoneInput.length === 10 && !isNaN(phoneInput)) {
-                phoneError.innerText = "";
-                document.getElementById("phone-box").style.display = "none";
-                generateOTP();
-            } else {
-                phoneError.innerText = "Please enter a valid 10-digit phone number";
+        // Fetch users from user.json when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, { placement: 'bottom' });
+            });
+
+            // Toggle Switch Logic with Auto-Navigation
+            document.getElementById("toggle-role").addEventListener("change", function() {
+                if (this.checked) {
+                    window.location.href = "admin.html";
+                } else {
+                    window.location.href = "Login_page.html";
+                }
+            });
+        });
+
+        // Restrict input to numbers only
+        function isNumberKey(evt) {
+            var charCode = evt.which ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
             }
+            return true;
         }
-        
+
+        // Validate phone number and fetch user data
+        function validatePhone() {
+            let phoneInput = document.getElementById("phone-number").value.trim();
+            let phoneError = document.getElementById("phone-error");
+            let phonePattern = /^[0-9]{10}$/;
+
+            // Validation 1: Check if empty
+            if (phoneInput === "") {
+                phoneError.innerText = "Phone number cannot be empty.";
+                return;
+            }
+
+            // Validation 3: Check if exactly 10 digits
+            if (!phonePattern.test(phoneInput)) {
+                phoneError.innerText = "Phone number is invalid. Enter a 10-digit number.";
+                return;
+            }
+
+            // Fetch user.json and validate phone number against it
+            fetch('../Json_files/user.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch user data');
+                    }
+                    return response.json();
+                })
+                .then(users => {
+                    // Validation 4: Check if phone number exists in user.json
+                    let userExists = users.some(user => user.mobile === phoneInput);
+                    if (userExists) {
+                        phoneError.innerText = "";
+                        localStorage.setItem("userPhoneNumber", phoneInput); // Store phone number for Profile.html
+                        document.getElementById("phone-box").style.display = "none";
+                        generateOTP();
+                    } else {
+                        phoneError.innerText = "Please enter a valid Pre-Zee Phone Number";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching users:', error);
+                    phoneError.innerText = "Error loading user data. Please try again later.";
+                });
+        }
+
         function generateOTP() {
             generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
             alert("Your OTP is: " + generatedOTP);
             document.getElementById("otp-box").style.display = "block";
         }
-        
+
         function moveNext(input, index) {
             let otpInputs = document.querySelectorAll('.otp-input');
             if (input.value.length === 1 && index < otpInputs.length - 1) {
@@ -487,7 +456,7 @@ body{
                 otpError.innerText = "Please check your OTP";
             }
         }
-        
+
         function cancelOTP() {
             window.location.href = 'Login_page.html';
         }

@@ -48,14 +48,19 @@ body {
     background-color: #eef9eb; /* Light background */
     border-radius: 5px;
     height: 25px;
+    margin-left: 40px;
 }
 
 .breadcrumbs a {
     text-decoration: none;
     color: #1B4D3E; /* Green color matching navbar */
     font-weight: bold;
-    padding-left: 27px;
-    margin-right: 5px;
+    padding-left: 10px;
+   
+}
+.breadcrumbs span{
+    padding-left: 15px;
+
 }
 
 .breadcrumbs a:hover {
@@ -63,10 +68,10 @@ body {
     color: #145A32; /* Darker shade on hover */
 }
 
-.breadcrumbs span {
+/* .breadcrumbs span {
     font-weight: bold;
     color: #555;
-}
+} */
 
 
 .container {
@@ -338,10 +343,10 @@ input:focus, select:focus {
     </div>
 
     <div class="container-fluid" style="background-color:#ebf2f0 ">
-        <nav class="breadcrumbs" style="background-color:#ebf2f0; margin-left:25px;"> 
-            <a href="Login_page.html">Home</a>< 
-            <a href="planspage.html"><b>Plan</b></a><
-            <a href="#"><b>Payment</b></a><
+        <nav class="breadcrumbs" style="background-color:#ebf2f0;"> 
+            <a href="Login_page.html">Home</a>&lt;
+            <a href="planspage.html">Plan</a>&lt;
+            <a href="#" style=" font-weight: bold;color: #555; text-decoration: none;">&nbsp;&nbsp;Payment</a>&lt;
         </nav>
     </div>
 

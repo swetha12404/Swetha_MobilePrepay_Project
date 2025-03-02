@@ -11,6 +11,8 @@
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
     <style>
         .navbar {
             background-color:#1B4D3E !important;
@@ -148,7 +150,6 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide" style="background-image: url('images/Screenshot\ \(753\).png');"></div>
             <div class="swiper-slide" style="background-image: url('images/happy.jpg');"></div>
-            <div class="swiper-slide" style="background-image: url('images/boy.jpg');"></div>
             <div class="swiper-slide" style="background-image: url('images/pexels-photo-3791664.webp');"></div>
         </div>
         <div class="swiper-pagination"></div>
@@ -190,6 +191,26 @@
 <!-- JavaScript -->
 <script>
 
+const swiper = new Swiper('.mySwiper', {
+        // Optional parameters
+        loop: true,
+        effect: 'slide',  // You can use 'cube', 'coverflow', 'flip', or 'fade' for different effects
+        grabCursor: true,
+        
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+
+
 document.getElementById("toggle-role").addEventListener("change", function() {
             if (this.checked) {
            
@@ -220,7 +241,7 @@ document.getElementById("toggle-role").addEventListener("change", function() {
         }
 
         if (isValid) {
-            window.location.href = "Dashboard copy 2.html";
+            window.location.href = "Dashboard.html";
         }
     });
 </script>
