@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Razorpay Checkout -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background: #f5f7fa; /* Fallback color */
+            position: relative;
+        }
+
+        /* Particle Animation */
+        .background-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f0fe 100%);
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(27, 77, 62, 0.7); /* Primary app color */
+            border-radius: 50%;
+            animation: floatParticle 10s infinite ease-in-out;
+            box-shadow: 0 0 10px rgba(27, 77, 62, 0.5);
+        }
+
+        .particle:nth-child(2n) {
+            width: 12px;
+            height: 12px;
+            background: rgba(40, 167, 69, 0.6); /* Secondary green */
+            animation-duration: 12s;
+        }
+
+        .particle:nth-child(3n) {
+            width: 6px;
+            height: 6px;
+            background: rgba(21, 90, 50, 0.8);
+            animation-duration: 8s;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(50vh) scale(1.2);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1B4D3E !important;
+            padding: 10px 30px; /* Match Plans Page */
+            height: 70px; /* Match Plans Page */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Match Plans Page */
+        }
+        .navbar-brand img {
+            width: 50px;
+            margin-top: 5px;
+        }
+        .navbar .nav-link,
+        .navbar .navbar-brand {
+            color: white !important;
+        }
+        .navbar .nav-link:hover {
+            color: #f8f9fa !important;
+        }
+
+        /* Breadcrumbs */
+        .breadcrumbs {
+            font-size: 16px;
+            padding: 10px; /* Match Plans Page */
+            background-color: #dce8e4;
+            border-radius: 5px;
+            margin: 74px 0 20px 27px; /* Match Plans Page */
+            width: fit-content; /* Match Plans Page */
+        }
+        .breadcrumbs a {
+            text-decoration: none;
+            color: #1B4D3E;
+            font-weight: bold;
+            padding-left: 10px;
+        }
+        .breadcrumbs span {
+            padding-left: 15px;
+        }
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+            color: #145A32;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+        }
+        .payment-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 600px;
+            margin: auto 3rem ;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .selected-plan-info {
+            padding: 45px;
+            border-radius: 8px;
+            background-color: #f2f6f9;
+            width: 100%;
+        }
+        .selected-plan-info h4 {
+            color: #1B4D3E;
+            margin-bottom: 15px;
+        }
+        .selected-plan-info p {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .selected-plan-info strong {
+            color: #333;
+        }
+
+        /* Pay Button */
+        #payButton {
+            margin-top: 10px;
+            padding: 14px 50px;
+            background-color: #28a745;
+            margin-left: 10px;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #payButton:hover {
+            background-color: #218838;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .toast {
+            background-color: white;
+            color: #333;
+            padding: 12px 24px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease;
+        }
+        .toast.error {
+            background-color: #dc3545;
+            color: white;
+        }
+        .toast.success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        /* Scroll to Top Button */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 15px;
+            right: 20px;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            background-color: #1B4D3E;
+            color: white;
+        }
+        #scrollTopBtn:hover {
+            background-color: #145A32;
+        }
+
+        /* Responsive Adjustments with Bootstrap */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            .payment-card {
+                margin: 1rem auto;
+                padding: 1rem;
+            }
+            .breadcrumbs {
+                margin: 74px 0 20px 1rem; /* Slightly adjust for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Particle Animation -->
+    <div class="background-particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: -2s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: -4s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: -6s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: -8s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: -1s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: -3s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: -5s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: -7s;"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md fixed-top">
+        <div class="container-fluid">
+            <a href="Login_page.html" class="navbar-brand ms-4">
+                <img src="images/prezee2.png" alt="Logo">
+            </a>
+        </div>
+    </nav>
+
+    <!-- Breadcrumbs -->
+    <div class="container-fluid" style="background-color: #dce8e4;">
+        <nav class="breadcrumbs">
+            <a href="Login_page.html">Home</a> >
+            <a href="planspage.html">Plan</a> >
+            <a href="#" style="font-weight: bold; color: #555; text-decoration: none;">Payment</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container pt-3">
+        <div class="main-content">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <div class="payment-card">
+                        <h2>Selected Plan Details</h2>
+                        <div id="selectedPlanDetails" class="mt-3">
+                            <div class="selected-plan-info">
+                                <p id="paymentModeDisplay" class="mb-2"><strong>Payment Mode:</strong> Not Selected</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button id="scrollTopBtn" onclick="scrollToTop()"><i class="bi bi-arrow-up"></i></button>
+        <div id="toastContainer" class="toast-container"></div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedPlan = JSON.parse(localStorage.getItem('selectedPlan'));
+            const phoneNumber = localStorage.getItem("userPhoneNumber");
+            const token = localStorage.getItem('jwtToken');
+
+            if (selectedPlan) {
+                const planDetailsHtml = `
+                    <div class="selected-plan-info">
+                        <h4 class="mb-3">${selectedPlan.name}</h4>
+                        <p class="mb-2"><strong>Phone Number:</strong> ${phoneNumber}</p>
+                        <p class="mb-2"><strong>Plan ID:</strong> ${selectedPlan.plan_id}</p>
+                        <p class="mb-2"><strong>Category:</strong> ${selectedPlan.category}</p>
+                        <p class="mb-2"><strong>Details:</strong> ${selectedPlan.details}</p>
+                        <p class="mb-3"><strong>Amount:</strong> ₹${selectedPlan.amount}</p>
+                    </div>
+                    <button id="payButton" class="btn btn-primary">Pay with Razorpay</button>
+                `;
+                document.getElementById('selectedPlanDetails').innerHTML = planDetailsHtml;
+            }
+
+            document.getElementById('payButton').addEventListener('click', async function() {
+                try {
+                    // Step 1: Create order via backend
+                    const orderResponse = await fetch('http://localhost:8083/api/payment/create-order', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            amount: parseFloat(selectedPlan.amount),
+                            planId: selectedPlan.plan_id,
+                            subscriberMobile: phoneNumber
+                        })
+                    });
+
+                    if (!orderResponse.ok) {
+                        const errorText = await orderResponse.text();
+                        throw new Error(`Failed to create order: ${orderResponse.status} - ${errorText}`);
+                    }
+
+                    const orderData = JSON.parse(await orderResponse.text());
+                    console.log('Order Data:', orderData);
+
+                    // Step 2: Open Razorpay checkout
+                    const options = {
+                        key: orderData.key,
+                        amount: orderData.amount * 100, // Convert to paise
+                        currency: "INR",
+                        name: "Prepay Mobile",
+                        description: selectedPlan.details,
+                        order_id: orderData.orderId,
+                        handler: async function(response) {
+                            // Step 3: Verify payment
+                            const verificationData = {
+                                razorpayOrderId: response.razorpay_order_id,
+                                razorpayPaymentId: response.razorpay_payment_id,
+                                razorpaySignature: response.razorpay_signature,
+                                planId: orderData.planId,
+                                subscriberMobile: orderData.subscriberMobile,
+                                planName: selectedPlan.name,
+                                category: selectedPlan.category,
+                                details: selectedPlan.details,
+                                amount: orderData.amount
+                            };
+
+                            const verifyResponse = await fetch('http://localhost:8083/api/payment/verify', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token}`
+                                },
+                                body: JSON.stringify(verificationData)
+                            });
+
+                            if (!verifyResponse.ok) {
+                                const errorText = await verifyResponse.text();
+                                throw new Error(`Payment verification failed: ${verifyResponse.status} - ${errorText}`);
+                            }
+
+                            const savedTransaction = await verifyResponse.json();
+                            localStorage.setItem('transactionDetails', JSON.stringify(savedTransaction));
+                            showToast('Payment successful!', 'success');
+                            setTimeout(() => {
+                                window.location.href = "conformation.html";
+                            }, 1000);
+                        },
+                        prefill: {
+                            contact: phoneNumber,
+                            email: "user@example.com" // Replace with actual email if available
+                        },
+                        theme: {
+                            color: "#1B4D3E"
+                        }
+                    };
+
+                    const razorpay = new Razorpay(options);
+                    razorpay.open();
+                } catch (error) {
+                    console.error('Payment error:', error);
+                    showToast(`Error: ${error.message}`, 'error');
+                }
+            });
+
+            function showToast(message, type = 'success') {
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.textContent = message;
+                const toastContainer = document.getElementById('toastContainer');
+                toastContainer.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.animation = 'slideIn 0.3s ease reverse';
+                    setTimeout(() => toastContainer.removeChild(toast), 300);
+                }, 3000);
+            }
+
+            // Scroll to top function
+            function scrollToTop() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+</html>
