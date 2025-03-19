@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #f2f5fa 100%);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            margin-top: 80px;
+        }
+        .confirmation-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+        }
+        .success-icon {
+            color: #28a745;
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #1B4D3E;
+            margin-bottom: 20px;
+        }
+        .payment-details {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .payment-details p {
+            margin: 10px 0;
+            color: #333;
+        }
+        .payment-details strong {
+            color: #1B4D3E;
+            min-width: 150px;
+            display: inline-block;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .download-btn {
+            background-color: #1B4D3E;
+            color: white;
+            border: none;
+        }
+        .download-btn:hover {
+            background-color: #145A32;
+        }
+        .back-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+        }
+        .back-btn:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container ">
+        <div class="confirmation-card">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h1>Payment Successful!</h1>
+            <div id="paymentDetails" class="payment-details"></div>
+            <div class="button-container">
+                <button class="btn download-btn" onclick="downloadInvoice()">Download Invoice</button>
+                <a href="planspage.html" class="btn back-btn">Back to Plans</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const transactionDetails = JSON.parse(localStorage.getItem('transactionDetails'));
+            if (transactionDetails) {
+                const detailsHtml = `
+                    <p><strong>Phone Number:</strong> ${transactionDetails.phoneNumber || 'Not Available'}</p>
+                    <p><strong>Plan Name:</strong> ${transactionDetails.planName}</p>
+                    <p><strong>Plan ID:</strong> ${transactionDetails.planId}</p>
+                    <p><strong>Category:</strong> ${transactionDetails.category}</p>
+                    <p><strong>Details:</strong> ${transactionDetails.details}</p>
+                    <p><strong>Amount Paid:</strong> ₹${transactionDetails.amountPaid}</p>
+                    <p><strong>Payment Mode:</strong> ${transactionDetails.paymentMode}</p>
+                    <p><strong>Transaction Date:</strong> ${new Date(transactionDetails.transactionDate).toLocaleString()}</p>
+                `;
+                document.getElementById('paymentDetails').innerHTML = detailsHtml;
+            }
+        });
+
+        function downloadInvoice() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const transactionDetails = JSON.parse(localStorage.getItem('transactionDetails'));
+
+            if (!transactionDetails) return;
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(18);
+            doc.text("Prepay Mobile Recharge Invoice", 20, 20);
+
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "normal");
+            const dateText = `Date: ${new Date(transactionDetails.transactionDate).toLocaleString()}`;
+            const textWidth = doc.getTextWidth(dateText);
+            doc.text(dateText, 210 - textWidth - 10, 20);
+
+            const invoiceNumber = `INV-${transactionDetails.planId}-${Date.now()}`;
+            doc.text(`Invoice No: ${invoiceNumber}`, 20, 30);
+            doc.text(`Customer Mobile: ${transactionDetails.phoneNumber || 'Not Available'}`, 20, 40);
+
+            doc.autoTable({
+                startY: 50,
+                head: [['Field', 'Details']],
+                body: [
+                    ['Plan Name', transactionDetails.planName],
+                    ['Plan ID', transactionDetails.planId],
+                    ['Category', transactionDetails.category],
+                    ['Details', transactionDetails.details],
+                    ['Amount Paid', `₹${transactionDetails.amountPaid}`],
+                    ['Payment Mode', transactionDetails.paymentMode],
+                    ['Transaction Date', new Date(transactionDetails.transactionDate).toLocaleString()]
+                ],
+                styles: { fontSize: 10, cellPadding: 3, overflow: 'linebreak' },
+                headStyles: { fillColor: [27, 77, 62], textColor: [255, 255, 255], fontStyle: 'bold' },
+                columnStyles: { 0: { fontStyle: 'bold', textColor: [51, 51, 51] }, 1: { maxWidth: 120 } },
+                margin: { left: 20, right: 20 },
+            });
+
+            doc.save(`Invoice_${transactionDetails.planId}.pdf`);
+        }
+    </script>
+</body>
+</html>
