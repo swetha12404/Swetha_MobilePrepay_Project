@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<<<<<<< HEAD
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
@@ -26,88 +25,13 @@
         .body { margin-top: 64px; }
         .subscriber-card { padding: 20px; text-align: center; border: 1px solid #ddd; border-radius: 10px; cursor: pointer; transition: transform 0.3s ease; }
         .subscriber-card:hover { transform: translateY(-5px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
-=======
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        .navbar {
-            background-color: #1B4D3E !important;
-        }
-        .navbar .nav-link,
-        .navbar .navbar-brand,
-        .navbar .nav-link.dropdown-toggle {
-            color: white !important;
-        }
-        .navbar .nav-link:hover,
-        .navbar .nav-link:focus {
-            color: #f8f9fa !important;
-        }
-        .sidebar {
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 250px;
-            background-color: #1B4D3E;
-            padding-top: 110px;
-            color: white;
-        }
-        .sidebar a {
-            color: white;
-            padding: 15px;
-            text-decoration: none;
-            display: block;
-        }
-        .sidebar a.active {
-            background-color: white;
-            color: black;
-        }
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-        }
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1050;
-        }
-        .plan-form {
-            max-width: 500px;
-        }
-        .body {
-            margin-top: 64px;
-        }
-        .subscriber-card {
-            padding: 20px;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            cursor: pointer;
-        }
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <div class="navbar navbar-expand-md bg-body-tertiary fixed-top">
         <div class="container-fluid">
-<<<<<<< HEAD
             <a href="admin.html" class="navbar-brand text-decoration-none ms-2">
-=======
-            <a href="../Subscribers/Login_page.html" class="navbar-brand text-decoration-none ms-2">
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
                 <img src="images/prezee2.png" style="width: 50px;">
             </a>
             <button class="navbar-toggler" data-bs-target="#links" data-bs-toggle="collapse">
@@ -125,10 +49,7 @@
         </div>
     </div>
 
-<<<<<<< HEAD
     <!-- Body -->
-=======
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
     <div class="body">
         <!-- Sidebar -->
         <div class="sidebar">
@@ -140,52 +61,32 @@
             <a href="#" onclick="logout()"><i class="bi bi-box-arrow-right ps-4"></i> Logout</a>
         </div>
 
-<<<<<<< HEAD
         <!-- Content -->
-=======
-        <!-- Main Content -->
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
         <div class="content">
             <div id="main-content">
                 <!-- Dynamic content will be loaded here -->
             </div>
         </div>
 
-<<<<<<< HEAD
-=======
-        <!-- Toast Container -->
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
         <div class="toast-container"></div>
     </div>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-<<<<<<< HEAD
         const BASE_URL = 'http://localhost:8083/api';
         let jwtToken = localStorage.getItem('jwtToken');
 
         // Sidebar Active Link
-=======
-        const BASE_URL = 'http://localhost:8083/api'; // Define your backend base URL
-        let jwtToken = localStorage.getItem('jwtToken'); // Get token from localStorage
-
-        // Set active sidebar link
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
         document.addEventListener("DOMContentLoaded", function () {
             const sidebarLinks = document.querySelectorAll(".sidebar a");
             sidebarLinks.forEach(link => {
                 link.addEventListener("click", function (e) {
-<<<<<<< HEAD
                     e.preventDefault();
-=======
-                    e.preventDefault(); // Prevent default link behavior
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
                     sidebarLinks.forEach(item => item.classList.remove("active"));
                     this.classList.add("active");
                 });
             });
-<<<<<<< HEAD
             loadDashboard();
         });
 
@@ -194,16 +95,6 @@
             if (!jwtToken) {
                 showToast('Please login first', 'error');
                 window.location.href = 'admin.html';
-=======
-            loadDashboard(); // Load dashboard by default
-        });
-
-        // Helper function for API calls
-        async function apiFetch(url, method = 'GET', body = null) {
-            if (!jwtToken) {
-                showToast('Please login first', 'error');
-                window.location.href = '../Subscribers/Login_page.html';
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
                 return null;
             }
             try {
@@ -243,11 +134,7 @@
             toast.addEventListener('hidden.bs.toast', () => toast.remove());
         }
 
-<<<<<<< HEAD
         // Date Formatting
-=======
-        // Date formatting helper
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
         function formatDate(dateString) {
             if (!dateString) return 'N/A';
             const date = new Date(dateString);
@@ -255,7 +142,6 @@
         }
 
         // Load Dashboard
-<<<<<<< HEAD
         // Load Dashboard
 async function loadDashboard() {
     const [summary, expiringSubscribers, monthlyGrowth] = await Promise.all([
@@ -411,147 +297,11 @@ async function loadDashboard() {
             const inactiveSubscribersWithPlans = linkPlans(inactiveSubscribers);
             const expiringSubscribersWithPlans = linkPlans(expiringSubscribers);
             const allSubscribersWithPlans = linkPlans(allSubscribers);
-=======
-        async function loadDashboard() {
-            const [summary, expiringSubscribers, monthlyGrowth] = await Promise.all([
-                apiFetch(`${BASE_URL}/admins/dashboard-summary`),
-                apiFetch(`${BASE_URL}/admins/expiring-subscribers?days=3`),
-                apiFetch(`${BASE_URL}/admins/monthly-growth`)
-            ]);
-            if (!summary || !expiringSubscribers || !monthlyGrowth) return;
-
-            const totalPlans = summary.totalPlans;
-            const totalSubscribers = summary.totalSubscribers;
-            const totalRevenue = summary.totalRevenue.toFixed(2);
-            const activeUsers = summary.activeSubscribers;
-            const inactiveUsers = summary.inactiveSubscribers;
-
-            const months = Object.keys(monthlyGrowth).sort();
-            const userCounts = months.map(month => monthlyGrowth[month]);
-
-            document.getElementById('main-content').innerHTML = `
-                <h2 class="ms-4 mb-4 mt-3" style="color: #1B4D3E;">Dashboard</h2>
-                <div class="row mt-4">
-                    <div class="col-md-4 col-sm-6 mb-2">
-                        <div class="subscriber-card">
-                            <i class="fa-solid fa-file-alt"></i>
-                            <h4>Total Plans</h4>
-                            <p class="h2" style="color: #1B4D3E">${totalPlans}</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 mb-2">
-                        <div class="subscriber-card">
-                            <i class="fa-solid fa-users"></i>
-                            <h4>Total Customers</h4>
-                            <p class="h2" style="color: #1B4D3E">${totalSubscribers}</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 mb-2">
-                        <div class="subscriber-card">
-                            <i class="fa-solid fa-chart-line"></i>
-                            <h4>Total Revenue</h4>
-                            <p class="h2" style="color: #1B4D3E">₹${totalRevenue}</p>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="ms-4 mb-4 mt-5" style="color: #1B4D3E">Subscriber's Plan Expiring Soon</h3>
-                <table class="table table-bordered ms-3">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Plan Details</th>
-                            <th>Expiry Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${expiringSubscribers.slice(0, 2).map(user => `
-                            <tr>
-                                <td>${user.name}</td>
-                                <td>${user.email}</td>
-                                <td>${user.plan ? user.plan.details : 'No Plan'}</td>
-                                <td>${formatDate(user.expiryDate)}</td>
-                                <td>
-                                    <button class="btn btn-sm" style="background-color:#1B4D3E; color:white; border-radius:10px; padding:5px 15px; border:none;" 
-                                            onclick="showUserDetails('${user.mobile}')">
-                                        <i class="bi bi-eye-fill"></i> View
-                                    </button>
-                                </td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-                <div class="row mt-5 ms-3 pt-3">
-                    <div class="col-md-6 d-flex flex-column align-items-center">
-                        <h3 class="mb-3">Users Growth</h3>
-                        <canvas id="userGrowthChart" style="max-width: 500px; max-height: 300px;"></canvas>
-                    </div>
-                    <div class="col-md-6 d-flex flex-column align-items-center">
-                        <h3 class="mb-3">Active vs Inactive Users</h3>
-                        <canvas id="userPieChart" style="max-width: 400px; max-height: 300px;"></canvas>
-                    </div>
-                </div>
-            `;
-
-            const ctxLine = document.getElementById('userGrowthChart').getContext('2d');
-            new Chart(ctxLine, {
-                type: 'line',
-                data: {
-                    labels: months,
-                    datasets: [{
-                        label: 'User Growth',
-                        data: userCounts,
-                        borderColor: '#007bff',
-                        backgroundColor: 'rgba(0, 123, 255, 0.2)',
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { title: { display: true, text: 'Month' } },
-                        y: { title: { display: true, text: 'Expiring Users' }, beginAtZero: true }
-                    }
-                }
-            });
-
-            const ctxPie = document.getElementById('userPieChart').getContext('2d');
-            new Chart(ctxPie, {
-                type: 'pie',
-                data: {
-                    labels: ['Active Users', 'Inactive Users'],
-                    datasets: [{
-                        data: [activeUsers, inactiveUsers],
-                        backgroundColor: ['#28a745', '#dc3545'],
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-        }
-
-        // Load Subscriber Management
-        async function loadSubscriberManagement() {
-            const [activeSubscribers, inactiveSubscribers, expiringSubscribers, allSubscribers] = await Promise.all([
-                apiFetch(`${BASE_URL}/admins/subscribers/ACTIVE`),
-                apiFetch(`${BASE_URL}/admins/subscribers/INACTIVE`),
-                apiFetch(`${BASE_URL}/admins/expiring-subscribers?days=3`),
-                apiFetch(`${BASE_URL}/admins/subscribers`)
-            ]);
-            if (!activeSubscribers || !inactiveSubscribers || !expiringSubscribers || !allSubscribers) return;
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
 
             document.getElementById('main-content').innerHTML = `
                 <h2 class="mb-4 mt-4 pb-2" style="color: #1B4D3E">Subscriber Management</h2>
                 <div class="row">
                     <div class="col-md-3">
-<<<<<<< HEAD
                         <div class="subscriber-card" onclick="showSubscriberList('active', '${encodeURIComponent(JSON.stringify(activeSubscribersWithPlans))}')">
                             <i class="bi bi-person-check-fill" style="font-size: 2rem; color: #28a745;"></i>
                             <h4>Active Subscribers</h4>
@@ -577,39 +327,11 @@ async function loadDashboard() {
                             <i class="bi bi-people-fill" style="font-size: 2rem; color: #0d6efd;"></i>
                             <h4>All Subscribers</h4>
                             <p class="h2">${allSubscribersWithPlans.length}</p>
-=======
-                        <div class="subscriber-card" onclick="showSubscriberList('active')">
-                            <i class="bi bi-person-check-fill" style="font-size: 2rem; color: #28a745;"></i>
-                            <h4>Active Subscribers</h4>
-                            <p class="h2">${activeSubscribers.length}</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="subscriber-card" onclick="showSubscriberList('inactive')">
-                            <i class="bi bi-person-dash-fill" style="font-size: 2rem; color: #dc3545;"></i>
-                            <h4>Inactive Subscribers</h4>
-                            <p class="h2">${inactiveSubscribers.length}</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="subscriber-card" onclick="showSubscriberList('expiring')">
-                            <i class="bi bi-hourglass-split" style="font-size: 2rem; color: #ffc107;"></i>
-                            <h4>Expiring Soon</h4>
-                            <p class="h2">${expiringSubscribers.length}</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="subscriber-card" onclick="showSubscriberList('all')">
-                            <i class="bi bi-people-fill" style="font-size: 2rem; color: #0d6efd;"></i>
-                            <h4>All Subscribers</h4>
-                            <p class="h2">${allSubscribers.length}</p>
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
                         </div>
                     </div>
                 </div>
                 <div id="subscriber-list" style="margin-top:40px"></div>
             `;
-<<<<<<< HEAD
             showSubscriberList('active', JSON.stringify(activeSubscribersWithPlans));
         }
 
@@ -634,28 +356,11 @@ async function loadDashboard() {
                     break;
                 default:
                     title = 'Subscribers';
-=======
-            showSubscriberList('active', activeSubscribers, inactiveSubscribers, expiringSubscribers, allSubscribers);
-        }
-
-        // Show Subscriber List
-        function showSubscriberList(type, activeSubscribers, inactiveSubscribers, expiringSubscribers, allSubscribers) {
-            let subscribers, title, showNotifyColumn = false;
-            switch (type) {
-                case 'active': subscribers = activeSubscribers; title = 'Active Subscribers'; break;
-                case 'inactive': subscribers = inactiveSubscribers; title = 'Inactive Subscribers'; break;
-                case 'expiring': subscribers = expiringSubscribers; title = 'Expiring Soon'; showNotifyColumn = true; break;
-                default: subscribers = allSubscribers; title = 'All Subscribers';
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
             }
 
             document.getElementById('subscriber-list').innerHTML = `
                 <h3 class="mt-5 mb-4 pb-2" style="color: #1B4D3E">${title}</h3>
-<<<<<<< HEAD
                 ${showNotifyColumn ? `<button class="btn btn-warning mb-3" onclick="notifyAllExpiring()">Notify All</button>` : ''}
-=======
-                ${showNotifyColumn ? `<button class="btn btn-warning mb-3" onclick="alert('Notify All not implemented yet')">Notify All</button>` : ''}
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
                 <table id="subscriberTable" class="table table-bordered table-hover" style="width:100%">
                     <thead style="color: #1B4D3E; background-color: #ebf2f0;">
                         <tr>
@@ -675,11 +380,7 @@ async function loadDashboard() {
                                 <td>${user.name}</td>
                                 <td>${user.mobile}</td>
                                 <td>${user.email}</td>
-<<<<<<< HEAD
                                 <td>${user.planDetails}</td>
-=======
-                                <td>${user.plan ? user.plan.details : 'No Plan'}</td>
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
                                 <td>${formatDate(user.expiryDate)}</td>
                                 <td><span class="badge ${user.status === 'ACTIVE' ? 'bg-success' : 'bg-danger'}">${user.status}</span></td>
                                 <td>
@@ -691,11 +392,7 @@ async function loadDashboard() {
                                 ${showNotifyColumn ? `
                                     <td>
                                         <button class="btn btn-sm" style="background-color:#ffc107; color:white; border-radius:10px; padding:5px 15px; border:none;" 
-<<<<<<< HEAD
                                                 onclick="notifySubscriber('${user.mobile}')">
-=======
-                                                onclick="alert('Notify not implemented yet')">
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
                                             <i class="bi bi-bell-fill"></i> Notify
                                         </button>
                                     </td>
@@ -705,7 +402,6 @@ async function loadDashboard() {
                     </tbody>
                 </table>
             `;
-<<<<<<< HEAD
             if ($.fn.DataTable.isDataTable('#subscriberTable')) {
                 $('#subscriberTable').DataTable().destroy();
             }
@@ -732,11 +428,6 @@ async function notifyAllExpiring() {
         showToast(result.message, 'success');
     }
 }
-=======
-            $('#subscriberTable').DataTable({ responsive: true, pageLength: 5 });
-        }
-
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
         // Load Plan Management
         async function loadPlanManagement() {
             const categories = await apiFetch(`${BASE_URL}/plans/categories`);
@@ -953,7 +644,6 @@ async function notifyAllExpiring() {
 
         // Load Report Analysis
         async function loadReportAnalysis() {
-<<<<<<< HEAD
             try {
                 const expiringUsers = await apiFetch(`${BASE_URL}/admins/expiring-subscribers?days=3`) || [];
                 const categories = await apiFetch(`${BASE_URL}/plans/categories`) || [];
@@ -1036,125 +726,6 @@ async function notifyAllExpiring() {
                 console.error('Error in loadReportAnalysis:', error.message);
                 showToast(`Failed to load Report & Analysis: ${error.message}`, 'error');
             }
-=======
-            const [expiringUsers, categories, transactions] = await Promise.all([
-                apiFetch(`${BASE_URL}/admins/expiring-subscribers?days=3`),
-                apiFetch(`${BASE_URL}/plans/categories`),
-                apiFetch(`${BASE_URL}/admins/subscriber-details/*`) // Adjust endpoint as needed
-            ]);
-            if (!expiringUsers || !categories || !transactions) return;
-
-            const planCounts = categories.map(category => ({
-                category: category.name,
-                count: category.plans ? category.plans.length : 0
-            }));
-
-            const incomeData = {};
-            transactions.forEach(t => {
-                if (!incomeData[t.planName]) incomeData[t.planName] = 0;
-                incomeData[t.planName] += t.amountPaid;
-            });
-
-            const paymentMethods = { "UPI": 0, "Debit Card": 0, "Credit Card": 0 };
-            transactions.forEach(t => {
-                if (paymentMethods[t.paymentMode]) paymentMethods[t.paymentMode]++;
-            });
-
-            document.getElementById('main-content').innerHTML = `
-                <h2 class="mb-5 mt-4" style="color: #1B4D3E">Report & Analysis</h2>
-                <h3 class="pb-4" style="color: #1B4D3E">Users with Expiring Plans (Next 3 Days)</h3>
-                <table class="table table-bordered mb-4">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Mobile</th>
-                            <th>Email</th>
-                            <th>Plan Details</th>
-                            <th>Expiry Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${expiringUsers.map(user => `
-                            <tr>
-                                <td>${user.name}</td>
-                                <td>${user.mobile}</td>
-                                <td>${user.email}</td>
-                                <td>${user.plan ? user.plan.details : 'No Plan'}</td>
-                                <td>${formatDate(user.expiryDate)}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h3 class="mt-5 ms-4 mb-3" style="color: #1B4D3E">Plans Distribution</h3>
-                        <div style="height: 350px;">
-                            <canvas id="plansChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h3 class="mt-5 ms-5 mb-3" style="color: #1B4D3E">Income Trend</h3>
-                        <div style="height: 350px;">
-                            <canvas id="incomeChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-5">
-                    <div class="col-md-6">
-                        <h3 class="ms-4" style="color: #1B4D3E">Payment Method Distribution</h3>
-                        <div style="height: 300px;">
-                            <canvas id="paymentChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            setTimeout(() => {
-                new Chart(document.getElementById('plansChart').getContext('2d'), {
-                    type: 'bar',
-                    data: {
-                        labels: planCounts.map(item => item.category),
-                        datasets: [{
-                            label: 'Number of Plans',
-                            data: planCounts.map(item => item.count),
-                            backgroundColor: '#bbd0ff',
-                            borderColor: '#1B4D3E',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
-                });
-
-                new Chart(document.getElementById('incomeChart').getContext('2d'), {
-                    type: 'line',
-                    data: {
-                        labels: Object.keys(incomeData),
-                        datasets: [{
-                            label: 'Total Income (₹)',
-                            data: Object.values(incomeData),
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: '#ff9800',
-                            borderWidth: 2,
-                            tension: 0.4
-                        }]
-                    },
-                    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
-                });
-
-                new Chart(document.getElementById('paymentChart').getContext('2d'), {
-                    type: 'pie',
-                    data: {
-                        labels: Object.keys(paymentMethods),
-                        datasets: [{
-                            label: 'Payments',
-                            data: Object.values(paymentMethods),
-                            backgroundColor: ['#4caf50', '#f44336', '#2196f3']
-                        }]
-                    },
-                    options: { responsive: true, maintainAspectRatio: false }
-                });
-            }, 100);
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
         }
 
         // Logout
@@ -1162,7 +733,6 @@ async function notifyAllExpiring() {
             localStorage.removeItem('jwtToken');
             jwtToken = null;
             showToast('Logged out successfully!', 'success');
-<<<<<<< HEAD
             setTimeout(() => window.location.href = 'admin.html', 1000);
         }
 
@@ -1170,13 +740,6 @@ async function notifyAllExpiring() {
         function showUserDetails(mobile) {
             alert(`Show details for mobile: ${mobile} - Not implemented yet`);
         }
-=======
-            setTimeout(() => window.location.href = '../Subscribers/Login_page.html', 1000);
-        }
-
-        // Placeholder for unimplemented functions
-        function showUserDetails(mobile) { alert(`Show details for mobile: ${mobile} - Not implemented yet`); }
->>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
     </script>
 </body>
 </html>
