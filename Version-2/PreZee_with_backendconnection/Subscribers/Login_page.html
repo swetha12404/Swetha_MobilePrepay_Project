@@ -272,10 +272,16 @@
         }
 
         /* Toast Styling */
+<<<<<<< HEAD
         /* .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 1050; } */
         .toast {
             position: fixed;
             top: 80px;
+=======
+        .toast {
+            position: fixed;
+            top: 20px;
+>>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
             right: 20px;
             z-index: 1050;
             min-width: 200px;
@@ -398,7 +404,11 @@
                     <li class="nav-item"><a href="#contact" class="nav-link me-2">Contact Us</a></li>
                     <li class="nav-item">
                         <a href="profilevalidation.html" class="nav-link me-2">
+<<<<<<< HEAD
                             <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Profile">
+=======
+                            <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Login">
+>>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
                                 <i class="bi bi-person-circle text-white fs-5"></i>
                             </button>
                         </a>
@@ -511,7 +521,11 @@
             </div>
         </div>
         <div class="text-center mt-4">
+<<<<<<< HEAD
             <a href="QuickPay_planPage.html" class="btn mt-3 w-35 pt-3 pb-3 ps-5 pe-5 fs-5 rounded-3" style="background-color: #1B4D3E; color:white;">Explore plan</a>
+=======
+            <a href="QuickPay_planPage.html" class="btn mt-3 w-35 pt-3 pb-3 ps-5 pe-5 fs-5 rounded-3" style="background-color: #1B4D3E; color:white;">Quick Pay</a>
+>>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
         </div>
     </div>
 
@@ -853,8 +867,13 @@
                     })
                     .then(token => {
                         localStorage.setItem("jwtToken", token);
+<<<<<<< HEAD
                         localStorage.setItem("userPhoneNumber", phoneNumber); //get it from payload
                         showToast("Login successful ! ✔", "success"); 
+=======
+                        localStorage.setItem("userPhoneNumber", phoneNumber);
+                        showToast("Login successful ! ✔", "success"); // Show green toast
+>>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
                         setTimeout(() => {
                             window.location.href = "planspage.html";
                         }, 1000); // Redirect after 1 second to allow toast visibility

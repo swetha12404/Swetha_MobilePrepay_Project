@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Confirmation</title>
+<<<<<<< HEAD
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Bootstrap CSS -->
@@ -11,6 +12,9 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <!-- jsPDF and AutoTable -->
+=======
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+>>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     <style>
@@ -20,6 +24,7 @@
             margin: 0;
             padding: 20px;
         }
+<<<<<<< HEAD
         .navbar {
             background-color: #1B4D3E !important;
             padding: 10px 30px;
@@ -41,6 +46,13 @@
             max-width: 800px;
             margin: 80px auto 0;
             padding: 20px;
+=======
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            margin-top: 80px;
+>>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
         }
         .confirmation-card {
             background-color: white;
@@ -100,6 +112,7 @@
     </style>
 </head>
 <body>
+<<<<<<< HEAD
     <nav class="navbar navbar-expand-md fixed-top">
         <div class="container-fluid">
             <a href="Login_page.html" class="navbar-brand ms-4">
@@ -109,6 +122,9 @@
     </nav>
 
     <div class="container">
+=======
+    <div class="container ">
+>>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
         <div class="confirmation-card">
             <i class="fas fa-check-circle success-icon"></i>
             <h1>Payment Successful!</h1>
@@ -120,6 +136,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -141,18 +158,41 @@
                 document.getElementById('paymentDetails').innerHTML = detailsHtml;
             } else {
                 document.getElementById('paymentDetails').innerHTML = '<p>No transaction details available.</p>';
+=======
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const transactionDetails = JSON.parse(localStorage.getItem('transactionDetails'));
+            if (transactionDetails) {
+                const detailsHtml = `
+                    <p><strong>Phone Number:</strong> ${transactionDetails.phoneNumber || 'Not Available'}</p>
+                    <p><strong>Plan Name:</strong> ${transactionDetails.planName}</p>
+                    <p><strong>Plan ID:</strong> ${transactionDetails.planId}</p>
+                    <p><strong>Category:</strong> ${transactionDetails.category}</p>
+                    <p><strong>Details:</strong> ${transactionDetails.details}</p>
+                    <p><strong>Amount Paid:</strong> ₹${transactionDetails.amountPaid}</p>
+                    <p><strong>Payment Mode:</strong> ${transactionDetails.paymentMode}</p>
+                    <p><strong>Transaction Date:</strong> ${new Date(transactionDetails.transactionDate).toLocaleString()}</p>
+                `;
+                document.getElementById('paymentDetails').innerHTML = detailsHtml;
+>>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
             }
         });
 
         function downloadInvoice() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
+<<<<<<< HEAD
             const paymentResponse = JSON.parse(localStorage.getItem('transactionDetails'));
 
             if (!paymentResponse || !paymentResponse.transaction) return;
 
             const transaction = paymentResponse.transaction;
             const subscriberMobile = transaction.subscriber.mobile;
+=======
+            const transactionDetails = JSON.parse(localStorage.getItem('transactionDetails'));
+
+            if (!transactionDetails) return;
+>>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
 
             doc.setFont("helvetica", "bold");
             doc.setFontSize(18);
@@ -160,6 +200,7 @@
 
             doc.setFontSize(12);
             doc.setFont("helvetica", "normal");
+<<<<<<< HEAD
             const dateText = `Date: ${new Date(transaction.transactionDate).toLocaleString()}`;
             const textWidth = doc.getTextWidth(dateText);
             doc.text(dateText, 210 - textWidth - 10, 20);
@@ -167,11 +208,21 @@
             const invoiceNumber = `INV-${transaction.planId}-${Date.now()}`;
             doc.text(`Invoice No: ${invoiceNumber}`, 20, 30);
             doc.text(`Customer Mobile: ${subscriberMobile}`, 20, 40);
+=======
+            const dateText = `Date: ${new Date(transactionDetails.transactionDate).toLocaleString()}`;
+            const textWidth = doc.getTextWidth(dateText);
+            doc.text(dateText, 210 - textWidth - 10, 20);
+
+            const invoiceNumber = `INV-${transactionDetails.planId}-${Date.now()}`;
+            doc.text(`Invoice No: ${invoiceNumber}`, 20, 30);
+            doc.text(`Customer Mobile: ${transactionDetails.phoneNumber || 'Not Available'}`, 20, 40);
+>>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
 
             doc.autoTable({
                 startY: 50,
                 head: [['Field', 'Details']],
                 body: [
+<<<<<<< HEAD
                     ['Plan Name', transaction.planName],
                     ['Plan ID', transaction.planId],
                     ['Category', transaction.category],
@@ -179,6 +230,15 @@
                     ['Amount Paid', `₹${transaction.amountPaid}`],
                     ['Payment Mode', transaction.paymentMode],
                     ['Transaction Date', new Date(transaction.transactionDate).toLocaleString()]
+=======
+                    ['Plan Name', transactionDetails.planName],
+                    ['Plan ID', transactionDetails.planId],
+                    ['Category', transactionDetails.category],
+                    ['Details', transactionDetails.details],
+                    ['Amount Paid', `₹${transactionDetails.amountPaid}`],
+                    ['Payment Mode', transactionDetails.paymentMode],
+                    ['Transaction Date', new Date(transactionDetails.transactionDate).toLocaleString()]
+>>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
                 ],
                 styles: { fontSize: 10, cellPadding: 3, overflow: 'linebreak' },
                 headStyles: { fillColor: [27, 77, 62], textColor: [255, 255, 255], fontStyle: 'bold' },
@@ -186,7 +246,11 @@
                 margin: { left: 20, right: 20 },
             });
 
+<<<<<<< HEAD
             doc.save(`Invoice_${transaction.planId}.pdf`);
+=======
+            doc.save(`Invoice_${transactionDetails.planId}.pdf`);
+>>>>>>> 7285de0f7e996c39dea7c21914f23bf5307492b7
         }
     </script>
 </body>
