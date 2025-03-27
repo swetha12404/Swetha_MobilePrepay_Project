@@ -12,6 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 
     <style>
+        /* Existing styles unchanged */
         :root {
             --primary-color: #1B4D3E;
             --secondary-color: #145A32;
@@ -186,37 +187,6 @@
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-
-        /* Card styling for current plan */
-        .current-plan-card {
-            margin-top: 20px;
-            border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            max-width: 500px; /* Set a fixed maximum width */
-            width: 100%; /* Ensure it scales responsively */
-       
-        }
-
-        .current-plan-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .current-plan-card .card-header {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: bold;
-            padding: 10px 15px;
-        }
-
-        .current-plan-card .card-body {
-            background-color: #f9f9f9;
-            padding: 15px;
-        }
-
-        .current-plan-card p {
-            margin: 5px 0;
-        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -283,13 +253,9 @@
                         <label class="form-label">Address</label>
                         <textarea class="form-control" id="address" rows="3" readonly></textarea>
                     </div>
-                    <!-- Buttons moved above the current plan card -->
-                    <div class="col-12 text-center mb-3 mt-3">
+                    <div class="col-12 text-center">
                         <button type="button" class="btn btn-primary me-3" onclick="enableEdit()">Edit Profile</button>
                         <button type="submit" class="btn btn-primary" onclick="saveProfile(event)">Save Profile</button>
-                    </div>
-                    <div class="col-12" id="currentPlan">
-                        <!-- Dynamic current plan card will be injected here -->
                     </div>
                 </form>
             </div>
@@ -321,9 +287,8 @@
                     <table class="w-100" id="planHistoryTable">
                         <thead>
                             <tr>
-                                <th>Plan Details</th>
                                 <th>Amount</th>
-                                <th>Payment Mode</th>
+                                <th>Amount Paid</th>
                                 <th>Recharge ID</th>
                                 <th>Validity Start</th>
                                 <th>Validity End</th>
@@ -347,14 +312,7 @@
         let planHistory = [];
         let transactions = [];
 
-        // Helper function to format dates
-        function formatDate(dateString) {
-            if (!dateString) return 'N/A';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-        }
-
-        // Load subscriber data dynamically on page load
+        // Load subscriber data on page load
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('jwtToken');
             const phoneNumber = localStorage.getItem('userPhoneNumber');
@@ -364,6 +322,8 @@
                 window.location.href = 'Login_page.html';
                 return;
             }
+
+            console.log('JWT Token:', token);
 
             try {
                 // Fetch subscriber profile data
@@ -404,7 +364,7 @@
 
                 if (!transactionResponse.ok) {
                     const errorText = await transactionResponse.text();
-                    if (transactionResponse.status === 401 || profileResponse.status === 403) {
+                    if (transactionResponse.status === 401 || transactionResponse.status === 403) {
                         throw new Error('Session expired. Please log in again.');
                     }
                     throw new Error(`Failed to fetch transactions: ${errorText}`);
@@ -418,7 +378,7 @@
                         row.innerHTML = `
                             <td>${tx.transaction_id || 'N/A'}</td>
                             <td>${tx.amountPaid ? `₹${tx.amountPaid}` : 'N/A'}</td>
-                            <td>${formatDate(tx.transactionDate)}</td>
+                            <td>${tx.transactionDate ? new Date(tx.transactionDate).toLocaleDateString() : 'N/A'}</td>
                             <td>${tx.category || 'N/A'}</td>
                             <td>${tx.planName || 'N/A'}</td>
                             <td>${tx.details || 'N/A'}</td>
@@ -431,7 +391,7 @@
                     transactionTbody.innerHTML = '<tr><td colspan="8">No transactions found</td></tr>';
                 }
 
-                // Fetch and populate Plan History dynamically
+                // Fetch and populate Plan History
                 const planHistoryResponse = await fetch('http://localhost:8083/api/subscriber/plan-history', {
                     method: 'GET',
                     headers: {
@@ -449,79 +409,24 @@
                 }
 
                 planHistory = await planHistoryResponse.json();
-                console.log('Plan History:', planHistory);
-
-                // Populate Plan History Table
+                console.log('Plan History:', planHistory); // Debug the response
                 const planHistoryTbody = document.getElementById('planHistoryTable').querySelector('tbody');
                 if (planHistory && planHistory.length > 0) {
                     planHistory.forEach((plan, index) => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                            <td>${plan.plan?.details || 'N/A'}</td>
                             <td>${plan.amount ? `₹${plan.amount}` : 'N/A'}</td>
-                            <td>${plan.payment_mode || 'N/A'}</td>
+                            <td>${plan.payment_mode || plan.payName || 'N/A'}</td>
                             <td>${plan.recharge_id || 'N/A'}</td>
-                            <td>${formatDate(plan.validity_start)}</td>
-                            <td>${formatDate(plan.validity_end)}</td>
-                            <td>${formatDate(plan.recharge_date)}</td>
+                            <td>${plan.validity_start ? new Date(plan.validity_start).toLocaleDateString() : 'N/A'}</td>
+                            <td>${plan.validity_end ? new Date(plan.validity_end).toLocaleDateString() : 'N/A'}</td>
+                            <td>${plan.recharge_date ? new Date(plan.recharge_date).toLocaleDateString() : 'N/A'}</td>
                             <td><button class="btn btn-download" onclick="downloadPlanInvoice(${index})">Download</button></td>
                         `;
                         planHistoryTbody.appendChild(row);
                     });
-
-                    // Determine and display the current plan in card format
-                    const currentDate = new Date(); // Real-time current date
-                    const currentPlan = planHistory
-                        .filter(plan => {
-                            const validityEnd = new Date(plan.validity_end);
-                            return validityEnd >= currentDate; // Active plans only
-                        })
-                        .sort((a, b) => new Date(b.recharge_date) - new Date(a.recharge_date))[0]; // Most recent recharge
-
-                    const currentPlanDiv = document.getElementById('currentPlan');
-                    if (currentPlan) {
-                        const daysLeft = Math.ceil((new Date(currentPlan.validity_end) - currentDate) / (1000 * 60 * 60 * 24));
-                        currentPlanDiv.innerHTML = `
-                            <div class="card current-plan-card">
-                                <div class="card-header">
-                                    Current Plan
-                                </div>
-                                <div class="card-body">
-                                    <p><strong>Plan Details:</strong> ${currentPlan.plan?.details || 'N/A'}</p>
-                                    <p><strong>Amount:</strong> ₹${currentPlan.amount || 'N/A'}</p>
-                                    <p><strong>Category:</strong> ${currentPlan.plan?.category?.name || 'N/A'}</p>
-                                    <p><strong>Validity Start:</strong> ${formatDate(currentPlan.validity_start)}</p>
-                                    <p><strong>Validity End:</strong> ${formatDate(currentPlan.validity_end)}</p>
-                                    <p><strong>Days Remaining:</strong> ${daysLeft > 0 ? daysLeft + ' days' : 'Expired'}</p>
-                                    <p><strong>Recharge Date:</strong> ${formatDate(currentPlan.recharge_date)}</p>
-                                    <p><strong>Payment Mode:</strong> ${currentPlan.payment_mode || 'N/A'}</p>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        currentPlanDiv.innerHTML = `
-                            <div class="card current-plan-card">
-                                <div class="card-header">
-                                    Current Plan
-                                </div>
-                                <div class="card-body">
-                                    <p>No active plan found. Please recharge to activate a plan.</p>
-                                </div>
-                            </div>
-                        `;
-                    }
                 } else {
-                    planHistoryTbody.innerHTML = '<tr><td colspan="8">No plan history available</td></tr>';
-                    document.getElementById('currentPlan').innerHTML = `
-                        <div class="card current-plan-card">
-                            <div class="card-header">
-                                Current Plan
-                            </div>
-                            <div class="card-body">
-                                <p>No active plan found. Please recharge to activate a plan.</p>
-                            </div>
-                        </div>
-                    `;
+                    planHistoryTbody.innerHTML = '<tr><td colspan="7">No plan history available</td></tr>';
                 }
 
             } catch (error) {
@@ -591,7 +496,7 @@
             }
         }
 
-        // Download Transaction Invoice
+        // Download Transaction Invoice in Table Format
         function downloadTransactionInvoice(index) {
             const tx = transactions[index];
             const doc = new jsPDF();
@@ -605,7 +510,7 @@
             const data = [
                 { field: 'Transaction ID', value: tx.transaction_id || 'N/A' },
                 { field: 'Amount Paid', value: tx.amountPaid ? `₹${tx.amountPaid}` : 'N/A' },
-                { field: 'Transaction Date', value: formatDate(tx.transactionDate) },
+                { field: 'Transaction Date', value: tx.transactionDate ? new Date(tx.transactionDate).toLocaleDateString() : 'N/A' },
                 { field: 'Category', value: tx.category || 'N/A' },
                 { field: 'Plan Name', value: tx.planName || 'N/A' },
                 { field: 'Details', value: tx.details || 'N/A' },
@@ -626,7 +531,7 @@
             doc.save(`transaction_invoice_${tx.transaction_id || 'unknown'}.pdf`);
         }
 
-        // Download Plan Invoice
+        // Download Plan Invoice in Table Format
         function downloadPlanInvoice(index) {
             const plan = planHistory[index];
             const doc = new jsPDF();
@@ -639,12 +544,11 @@
             ];
             const data = [
                 { field: 'Recharge ID', value: plan.recharge_id || 'N/A' },
-                { field: 'Plan Details', value: plan.plan?.details || 'N/A' },
                 { field: 'Amount', value: plan.amount ? `₹${plan.amount}` : 'N/A' },
-                { field: 'Payment Mode', value: plan.payment_mode || 'N/A' },
-                { field: 'Validity Start', value: formatDate(plan.validity_start) },
-                { field: 'Validity End', value: formatDate(plan.validity_end) },
-                { field: 'Recharge Date', value: formatDate(plan.recharge_date) },
+                { field: 'Payment Mode', value: plan.payment_mode || plan.payName || 'N/A' },
+                { field: 'Validity Start', value: plan.validity_start ? new Date(plan.validity_start).toLocaleDateString() : 'N/A' },
+                { field: 'Validity End', value: plan.validity_end ? new Date(plan.validity_end).toLocaleDateString() : 'N/A' },
+                { field: 'Recharge Date', value: plan.recharge_date ? new Date(plan.recharge_date).toLocaleDateString() : 'N/A' },
                 { field: 'Subscriber', value: document.getElementById('userName').value },
                 { field: 'Phone', value: document.getElementById('phoneNumber').value }
             ];

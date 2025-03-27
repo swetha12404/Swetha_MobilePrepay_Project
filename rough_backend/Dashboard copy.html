@@ -45,10 +45,10 @@
             <a href="admin.html" class="navbar-brand text-decoration-none ms-2">
                 <img src="images/prezee2.png" style="width: 50px;">
             </a>
-            <!-- <button class="navbar-toggler" data-bs-target="#links" data-bs-toggle="collapse">
+            <button class="navbar-toggler" data-bs-target="#links" data-bs-toggle="collapse">
                 <span class="navbar-toggler-icon"></span>
-            </button> -->
-            <!-- <div id="links" class="collapse navbar-collapse justify-content-end">
+            </button>
+            <div id="links" class="collapse navbar-collapse justify-content-end">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a href="profilevalidation.html" id="profilelogo" class="nav-link me-4">
@@ -56,7 +56,7 @@
                         </a>
                     </li>
                 </ul>
-            </div> -->
+            </div>
         </div>
     </div>
 
@@ -105,7 +105,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const BASE_URL = 'http://localhost:8083/api';
-        let jwtToken = localStorage.getItem('jwtToken'); //stores the token ahich is got from login
+        let jwtToken = localStorage.getItem('jwtToken');
 
         // Sidebar Active Link
         document.addEventListener("DOMContentLoaded", function () {
@@ -127,7 +127,6 @@
                 window.location.href = 'admin.html';
                 return null;
             }
-            
             try {
                 const options = {
                     method,

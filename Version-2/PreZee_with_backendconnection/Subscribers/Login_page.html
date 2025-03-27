@@ -836,9 +836,11 @@
 
                 if (phoneNumber === "") {
                     mess.textContent = "Phone number cannot be empty.";
-                } else if (!phonePattern.test(phoneNumber)) {
+                } 
+                else if (!phonePattern.test(phoneNumber)) {
                     mess.textContent = "Phone number is invalid. Enter a 10-digit number.";
-                } else {
+                } 
+                else {
                     fetch('http://localhost:8083/api/public/login', {
                         method: 'POST',
                         headers: {
@@ -846,7 +848,7 @@
                         },
                         body: JSON.stringify({
                             username: phoneNumber,
-                            password: "" // Optional for subscribers
+                            password: "" // it is Optional for subscribers
                         })
                     })
                     .then(response => {
